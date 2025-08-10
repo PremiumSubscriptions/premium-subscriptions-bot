@@ -16,7 +16,7 @@ const ADMIN_TELEGRAM_LINK = 'https://t.me/Mehedi_X71';
 
 // Admin management
 const adminUsers = new Set([ADMIN_ID]);
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 // bKash API URLs
 const BKASH_BASE_URL = 'https://tokenized.pay.bka.sh/v1.2.0-beta';
