@@ -1,30 +1,32 @@
 app = "hsc-courses-bot"
-primary_region = "sin"  # Singapore for Bangladesh users
+primary_region = "sin"
 
 [build]
-  builder = "heroku/buildpacks:20"
-  buildpacks = ["heroku/nodejs"]  # Only Node.js needed
+  # Let Fly auto-detect Node.js
 
 [env]
   NODE_ENV = "production"
-  PORT = "3000"  # Must match your Express port
 
 [[services]]
-  internal_port = 3000
+  internal_port = 10000  # or whatever port your app uses
   processes = ["app"]
   protocol = "tcp"
+  
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
 
-  # HTTPS is mandatory for Telegram webhooks
   [[services.ports]]
     handlers = ["tls", "http"]
     port = 443
-    force_https = true  # Auto-redirect HTTP to HTTPS
+    force_https = true
 
-  # Health checks
   [[services.http_checks]]
     path = "/health"
     interval = "10s"
     timeout = "2s"
 
-[deploy]
-  strategy = "rolling"  # Avoid downtime during updates
+[vm]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1
