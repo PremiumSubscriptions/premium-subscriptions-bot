@@ -779,7 +779,7 @@ bot.on('callback_query', async (callbackQuery) => {
         const course = courses.get(courseId);
         userData.pendingPaymentMethod = 'bKash';
         
-        const paymentText = `💳 bKash Payment for ${course.name}\n\n💰 Amount: ${course.price} TK\n📱 bKash Number: ${BKASH_NUMBER}\n\n💡 Payment Instructions:\n1. Send ${course.price} TK to above bKash number\n2. Take screenshot of payment\n3. Click "Submit Payment Proof" button\n\n🔹 bKash payment auto approve হবে!`;
+        const paymentText = `💳 bKash Payment for ${course.name}\n\n💰 Amount: ${course.price} TK\n📱 bKash Number: ${BKASH_NUMBER}\n\n💡 Payment Instructions:\n1. Send ${course.price} TK to above bKash number\n2. ✅ bKash থেকে যে Transaction ID পেয়েছেন সেটি type করুন\n3 ✅ Example: 9BG4R2G5N8\n4 ✅ শুধু ID লিখুন, অন্য কিছু না\n5. Click "Submit Payment Proof" button\n\n🔹 bKash payment auto approve হবে!`;
         
         bot.editMessageText(paymentText, {
             chat_id: msg.chat.id,
