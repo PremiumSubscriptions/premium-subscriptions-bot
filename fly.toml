@@ -1,0 +1,30 @@
+app = "hsc-courses-bot"
+primary_region = "sin"  # Singapore for Bangladesh users
+
+[build]
+  builder = "heroku/buildpacks:20"
+  buildpacks = ["heroku/nodejs"]  # Only Node.js needed
+
+[env]
+  NODE_ENV = "production"
+  PORT = "3000"  # Must match your Express port
+
+[[services]]
+  internal_port = 3000
+  processes = ["app"]
+  protocol = "tcp"
+
+  # HTTPS is mandatory for Telegram webhooks
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+    force_https = true  # Auto-redirect HTTP to HTTPS
+
+  # Health checks
+  [[services.http_checks]]
+    path = "/health"
+    interval = "10s"
+    timeout = "2s"
+
+[deploy]
+  strategy = "rolling"  # Avoid downtime during updates
