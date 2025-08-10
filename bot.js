@@ -722,7 +722,7 @@ bot.on('callback_query', async (callbackQuery) => {
             courseText += `💰 Payment Instructions:\n`;
             courseText += `1. Click on "Pay Now" button\n`;
             courseText += `2. Complete payment\n`;
-            courseText += `3. Payment proof screenshot নিন\n`;
+            courseText += `3. Bkash থেকে payment করলে Transaction ID copy করুন, Nagad থেকে payment করলে payment এর screenshot নিন\n`;
             courseText += `4. "Submit Payment Proof" button এ click করুন`;
         } else {
             courseText += `Status: ❌ Not Purchased\n`;
@@ -753,7 +753,7 @@ bot.on('callback_query', async (callbackQuery) => {
 
 💡 Payment Options:
 1. bKash or Nagad এ payment করুন
-2. Payment proof screenshot নিন
+2. Bkash থেকে payment করলে Transaction ID copy করুন, Nagad থেকে payment করলে payment এর screenshot নিন
 3. "Submit Payment Proof" button এ click করুন`;
 
         bot.editMessageText(paymentText, {
@@ -779,7 +779,7 @@ bot.on('callback_query', async (callbackQuery) => {
         const course = courses.get(courseId);
         userData.pendingPaymentMethod = 'bKash';
         
-        const paymentText = `💳 bKash Payment for ${course.name}\n\n💰 Amount: ${course.price} TK\n📱 bKash Number: ${BKASH_NUMBER}\n\n💡 Payment Instructions:\n1. Send ${course.price} TK to above bKash number\n2. ✅ bKash থেকে যে Transaction ID পেয়েছেন সেটি type করুন\n3 ✅ Example: 9BG4R2G5N8\n4 ✅ শুধু ID লিখুন, অন্য কিছু না\n5. Click "Submit Payment Proof" button\n\n🔹 bKash payment auto approve হবে!`;
+        const paymentText = `💳 bKash Payment for ${course.name}\n\n💰 Amount: ${course.price} TK\n📱 bKash Number: ${BKASH_NUMBER}\n\n💡 Payment Instructions:\n✅ Make Payment ${course.price} TK to above bKash number- অবশ্যই Make Payment এ পেমেন্ট করবেন । ❌Send Money করলে হবে না!\n ✅ bKash থেকে যে Transaction ID পেয়েছেন সেটি copy করুন\n ✅ Click "Submit Payment Proof" button\n ✅ Transaction Id টা লিখেন। Example: 9BG4R2G5N8\n ✅ শুধু ID লিখুন, অন্য কিছু না\n\n🔹 bKash payment auto approve হবে!`;
         
         bot.editMessageText(paymentText, {
             chat_id: msg.chat.id,
@@ -797,7 +797,7 @@ bot.on('callback_query', async (callbackQuery) => {
         const course = courses.get(courseId);
         userData.pendingPaymentMethod = 'Nagad';
         
-        const paymentText = `💳 Nagad Payment for ${course.name}\n\n💰 Amount: ${course.price} TK\n📱 Nagad Number: ${NAGAD_NUMBER}\n\n💡 Payment Instructions:\n1. Send ${course.price} TK to above Nagad number\n2. Take screenshot of payment\n3. Click "Submit Payment Proof" button\n\n⚠️ Nagad payment manually approve হবে!\nPayment এর screenshot & course name সহ এডমিন কে মেসেজ দাও: https://t.me/${ADMIN_USERNAME}`;
+        const paymentText = `💳 Nagad Payment for ${course.name}\n\n💰 Amount: ${course.price} TK\n📱 Nagad Number: ${NAGAD_NUMBER}\n\n💡 Payment Instructions:\n✅ Send ${course.price} TK to above Nagad number- নগদ থেকে Send Money করুন\n✅ Take screenshot of payment\n✅ Click "Submit Payment Proof" button\n\n⚠️ Nagad payment manually approve হবে!\nPayment এর screenshot & course name সহ এডমিন কে মেসেজ দাও: https://t.me/${ADMIN_USERNAME}`;
         
         bot.editMessageText(paymentText, {
             chat_id: msg.chat.id,
@@ -816,7 +816,7 @@ bot.on('callback_query', async (callbackQuery) => {
         const course = courses.get(courseId);
         const paymentMethod = userData.pendingPaymentMethod || 'bKash';
         
-        const trxText = `📝 Submit Your Payment Proof\n\n💡 Instructions:\n✅ ${paymentMethod} payment এর screenshot আপলোড করুন\n✅ অথবা Transaction ID লিখুন\n\n📱 ${course.name} এর জন্য payment verification\n💰 Amount: ${course.price} TK\n💳 Method: ${paymentMethod}`;
+        const trxText = `📝 Submit Your Payment Proof\n\n💡 Instructions:\n✅ ${paymentMethod} Bkash থেকে payment করলে Transaction ID copy করুন, Nagad থেকে payment করলে payment এর screenshot নেন\n\n📱 ${course.name} এর জন্য payment verification\n💰 Amount: ${course.price} TK\n💳 Method: ${paymentMethod}`;
         
         bot.sendMessage(msg.chat.id, trxText, {
             reply_markup: {
