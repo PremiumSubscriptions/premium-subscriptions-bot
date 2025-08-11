@@ -1,0 +1,98 @@
+{
+  "hsc27": {
+    "name": "🔥HSC 2027 All Courses🔥",
+    "type": "menu",
+    "submenus": {
+      "acs_hm": {
+        "name": "🎯 ACS HM All Course",
+        "type": "submenu",
+        "courses": {
+          "acs_hm_cycle1": {
+            "name": "🧮 ACS HM Cycle 1",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027ACSMATH1",
+            "paymentLink": "https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt100/ceGy7t",
+            "imageLink": "",
+            "description": "📖 Complete ACS Higher Math Cycle 1 Course\n\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support\n✅ Lifetime Access\n\n🎯 Perfect for HSC 2027 students!"
+          },
+          "acs_hm_cycle2": {
+            "name": "🧮 ACS HM Cycle 2",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027ACSMATH2",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete ACS Higher Math Cycle 2 Course\n\n✅ Advanced Topics Coverage\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support\n✅ Lifetime Access"
+          }
+        }
+      },
+      "acs_physics": {
+        "name": "⚛️ ACS Physics All Course",
+        "type": "submenu",
+        "courses": {
+          "physics_1st": {
+            "name": "⚛️ Physics 1st Paper",
+            "type": "course",
+            "price": 150,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "physics_2nd": {
+            "name": "⚛️ Physics 2nd Paper",
+            "type": "course",
+            "price": 150,
+            "groupLink": "https://t.me/+HSC2027Physics2nd",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 2nd Paper Course\n\n✅ Electricity & Magnetism\n✅ Modern Physics\n✅ Electronics & Communication\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          }
+        }
+      }
+    }
+  },
+  "hsc26": {
+    "name": "🔥HSC 2026 All Courses🔥",
+    "type": "menu",
+    "submenus": {
+      "bondi_pathshala": {
+        "name": "📚 Bondi Pathshala",
+        "type": "submenu",
+        "courses": {
+          "biology_cycle1": {
+            "name": "🧬 Biology Cycle 1",
+            "type": "course",
+            "price": 200,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+          }
+        }
+      }
+    }
+  },
+  "admission25": {
+    "name": "HSC 2025 সকল Admission কোর্স 🟢",
+    "type": "menu",
+    "submenus": {
+      "university_prep": {
+        "name": "🎓 University Preparation",
+        "type": "submenu",
+        "courses": {
+          "medical_prep": {
+            "name": "🏥 Medical Admission Prep",
+            "type": "course",
+            "price": 300,
+            "groupLink": "https://t.me/+Medical2025",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+          }
+        }
+      }
+    }
+  }
+}
