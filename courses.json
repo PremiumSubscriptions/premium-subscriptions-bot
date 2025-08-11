@@ -534,7 +534,7 @@
         "courses": {
           "acs27_ict_all": {
             "name": "🔥 ACS 27 ICT DECODER",
-            "type": "course",
+            "type": "course", 
             "price": 100,
             "groupLink": "https://t.me/+HSC2027Physics1st",
             "paymentLink": "",
