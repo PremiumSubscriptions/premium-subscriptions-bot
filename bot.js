@@ -4,28 +4,34 @@ const axios = require('axios');
 const fs = require('fs').promises;
 const path = require('path');
 
+// Remove the chokidar import and replace the file watching code with:
 
-// Add near the top with other requires
-const chokidar = require('chokidar');
+const fs = require('fs');
 
-// Add after initializeBot() call
-if (process.env.NODE_ENV !== 'production') {
-    const watcher = chokidar.watch(COURSES_FILE, {
-        persistent: true,
-        ignoreInitial: true
-    });
-
-    watcher.on('change', async (path) => {
-        console.log(`Detected change in ${path}, reloading...`);
+// Simple polling-based file watcher
+function watchCoursesFile() {
+    let lastUpdate = 0;
+    
+    setInterval(async () => {
         try {
-            await loadCourses();
-            updateMainMenuKeyboard();
-            console.log('Courses reloaded successfully from file change');
+            const stats = await fs.promises.stat(COURSES_FILE);
+            if (stats.mtimeMs > lastUpdate) {
+                lastUpdate = stats.mtimeMs;
+                console.log('Detected courses.json change, reloading...');
+                await loadCourses();
+                updateMainMenuKeyboard();
+            }
         } catch (error) {
-            console.error('Error reloading courses from file change:', error);
+            console.error('Error watching courses file:', error);
         }
-    });
+    }, 5000); // Check every 5 seconds
 }
+
+// Call this after initializeBot()
+if (process.env.NODE_ENV !== 'production') {
+    watchCoursesFile();
+}
+
 
 // Bot Configuration 
 const BOT_TOKEN = process.env.BOT_TOKEN;
