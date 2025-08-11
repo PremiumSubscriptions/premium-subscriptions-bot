@@ -4,10 +4,6 @@ const axios = require('axios');
 const fs = require('fs').promises;
 const path = require('path');
 
-// Remove the chokidar import and replace the file watching code with:
-
-const fs = require('fs');
-
 // Simple polling-based file watcher
 function watchCoursesFile() {
     let lastUpdate = 0;
