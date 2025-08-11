@@ -140,9 +140,17 @@ const defaultCourses = {
 async function loadCourses() {
     try {
         const data = await fs.readFile(COURSES_FILE, 'utf8');
-        return JSON.parse(data);
+        const parsed = JSON.parse(data);
+        
+        // Clear the existing courses object
+        Object.keys(courses).forEach(key => delete courses[key]);
+        
+        // Copy all properties from the parsed data
+        Object.assign(courses, parsed);
+        
+        return courses;
     } catch (error) {
-        console.log('Creating default courses file...');
+        console.log('Error loading courses, creating default:', error);
         await saveCourses(defaultCourses);
         return defaultCourses;
     }
