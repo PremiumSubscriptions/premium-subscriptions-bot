@@ -1,6 +1,8 @@
 const TelegramBot = require('node-telegram-bot-api');
 const express = require('express');
 const axios = require('axios');
+const fs = require('fs').promises;
+const path = require('path');
 
 // Bot Configuration 
 const BOT_TOKEN = process.env.BOT_TOKEN;
@@ -11,7 +13,7 @@ const BKASH_APP_SECRET = process.env.BKASH_APP_SECRET;
 const ADMIN_ID = process.env.ADMIN_ID;
 const BKASH_NUMBER = process.env.BKASH_NUMBER || '01902912653';
 const NAGAD_NUMBER = process.env.NAGAD_NUMBER || '01902912653';
-const CHANNEL_ID = process.env.CHANNEL_ID || -1002855286349; // Your Telegram channel ID
+const CHANNEL_ID = process.env.CHANNEL_ID || -1002855286349;
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'Mehedi_X71';
 
 // Admin management
@@ -27,23 +29,194 @@ const app = express();
 // Storage
 const users = new Map();
 const pendingPayments = new Map();
-const usedTransactions = new Set(); // Track used transaction IDs
-const courseImages = new Map(); // Store course images
-const courses = new Map([
-    ['hsc2027_ict', { name: '📱 ICT Course', price: 500, groupLink: 'https://t.me/+HSC2027ICT' }],
-    ['hsc2027_bangla', { name: '📚 Bangla Course', price: 500, groupLink: 'https://t.me/+HSC2027Bangla' }],
-    ['hsc2027_math', { name: '🔢 Math Course', price: 500, groupLink: 'https://t.me/+HSC2027Math' }],
-    ['hsc2027_chemistry', { name: '⚗️ Chemistry Course', price: 500, groupLink: 'https://t.me/+HSC2027Chemistry' }],
-    ['hsc2027_biology', { name: '🧬 Biology Course', price: 500, groupLink: 'https://t.me/+HSC2027Biology' }],
-    ['hsc2027_acs_math_cycle1', { name: '🧮 HSC 2027 ACS MATH CYCLE 1', price: 100, groupLink: 'https://t.me/+HSC2027ACSMATH1' }]
-]);
+const usedTransactions = new Set();
 
-// Payment links
-const paymentLinks = new Map([
-    ['hsc2027_ict', 'https://example-bkash-link.com/ict'],
-    ['hsc2027_bangla', 'https://example-bkash-link.com/bangla'],
-    ['hsc2027_acs_math_cycle1', 'https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt100/ceGy7t']
-]);
+// JSON file paths
+const COURSES_FILE = path.join(__dirname, 'courses.json');
+const USERS_FILE = path.join(__dirname, 'users.json');
+const TRANSACTIONS_FILE = path.join(__dirname, 'transactions.json');
+
+// Default course structure
+const defaultCourses = {
+    "hsc27": {
+        "name": "🔥HSC 2027 All Courses🔥",
+        "type": "menu",
+        "submenus": {
+            "acs_hm": {
+                "name": "🎯 ACS HM All Course",
+                "type": "submenu",
+                "courses": {
+                    "acs_hm_cycle1": {
+                        "name": "🧮 ACS HM Cycle 1",
+                        "type": "course",
+                        "price": 100,
+                        "groupLink": "https://t.me/+HSC2027ACSMATH1",
+                        "paymentLink": "https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt100/ceGy7t",
+                        "imageLink": "",
+                        "description": "📖 Complete ACS Higher Math Cycle 1 Course\n\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support\n✅ Lifetime Access\n\n🎯 Perfect for HSC 2027 students!"
+                    },
+                    "acs_hm_cycle2": {
+                        "name": "🧮 ACS HM Cycle 2",
+                        "type": "course",
+                        "price": 100,
+                        "groupLink": "https://t.me/+HSC2027ACSMATH2",
+                        "paymentLink": "",
+                        "imageLink": "",
+                        "description": "📖 Complete ACS Higher Math Cycle 2 Course\n\n✅ Advanced Topics Coverage\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support\n✅ Lifetime Access"
+                    }
+                }
+            },
+            "acs_physics": {
+                "name": "⚛️ ACS Physics All Course",
+                "type": "submenu",
+                "courses": {
+                    "physics_1st": {
+                        "name": "⚛️ Physics 1st Paper",
+                        "type": "course",
+                        "price": 150,
+                        "groupLink": "https://t.me/+HSC2027Physics1st",
+                        "paymentLink": "",
+                        "imageLink": "",
+                        "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+                    },
+                    "physics_2nd": {
+                        "name": "⚛️ Physics 2nd Paper",
+                        "type": "course",
+                        "price": 150,
+                        "groupLink": "https://t.me/+HSC2027Physics2nd",
+                        "paymentLink": "",
+                        "imageLink": "",
+                        "description": "📖 Complete Physics 2nd Paper Course\n\n✅ Electricity & Magnetism\n✅ Modern Physics\n✅ Electronics & Communication\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+                    }
+                }
+            }
+        }
+    },
+    "hsc26": {
+        "name": "🔥HSC 2026 All Courses🔥",
+        "type": "menu",
+        "submenus": {
+            "bondi_pathshala": {
+                "name": "📚 Bondi Pathshala",
+                "type": "submenu",
+                "courses": {
+                    "biology_cycle1": {
+                        "name": "🧬 Biology Cycle 1",
+                        "type": "course",
+                        "price": 200,
+                        "groupLink": "https://t.me/+HSC2026Biology1",
+                        "paymentLink": "",
+                        "imageLink": "",
+                        "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+                    }
+                }
+            }
+        }
+    },
+    "admission25": {
+        "name": "HSC 2025 সকল Admission কোর্স 🟢",
+        "type": "menu",
+        "submenus": {
+            "university_prep": {
+                "name": "🎓 University Preparation",
+                "type": "submenu",
+                "courses": {
+                    "medical_prep": {
+                        "name": "🏥 Medical Admission Prep",
+                        "type": "course",
+                        "price": 300,
+                        "groupLink": "https://t.me/+Medical2025",
+                        "paymentLink": "",
+                        "imageLink": "",
+                        "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+                    }
+                }
+            }
+        }
+    }
+};
+
+// Load/Save functions
+async function loadCourses() {
+    try {
+        const data = await fs.readFile(COURSES_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        console.log('Creating default courses file...');
+        await saveCourses(defaultCourses);
+        return defaultCourses;
+    }
+}
+
+async function saveCourses(courses) {
+    try {
+        await fs.writeFile(COURSES_FILE, JSON.stringify(courses, null, 2));
+    } catch (error) {
+        console.error('Error saving courses:', error);
+    }
+}
+
+async function loadUsers() {
+    try {
+        const data = await fs.readFile(USERS_FILE, 'utf8');
+        const usersData = JSON.parse(data);
+        // Convert to Map
+        const usersMap = new Map();
+        Object.entries(usersData).forEach(([userId, userData]) => {
+            usersMap.set(userId, {
+                ...userData,
+                purchases: new Set(userData.purchases || [])
+            });
+        });
+        return usersMap;
+    } catch (error) {
+        return new Map();
+    }
+}
+
+async function saveUsers() {
+    try {
+        const usersData = {};
+        users.forEach((userData, userId) => {
+            usersData[userId] = {
+                ...userData,
+                purchases: Array.from(userData.purchases || [])
+            };
+        });
+        await fs.writeFile(USERS_FILE, JSON.stringify(usersData, null, 2));
+    } catch (error) {
+        console.error('Error saving users:', error);
+    }
+}
+
+async function loadTransactions() {
+    try {
+        const data = await fs.readFile(TRANSACTIONS_FILE, 'utf8');
+        const transactions = JSON.parse(data);
+        return new Set(transactions);
+    } catch (error) {
+        return new Set();
+    }
+}
+
+async function saveTransactions() {
+    try {
+        await fs.writeFile(TRANSACTIONS_FILE, JSON.stringify(Array.from(usedTransactions), null, 2));
+    } catch (error) {
+        console.error('Error saving transactions:', error);
+    }
+}
+
+// Initialize data
+let courses = {};
+
+async function initializeBot() {
+    courses = await loadCourses();
+    const loadedUsers = await loadUsers();
+    loadedUsers.forEach((userData, userId) => users.set(userId, userData));
+    const loadedTransactions = await loadTransactions();
+    loadedTransactions.forEach(trx => usedTransactions.add(trx));
+}
 
 // Helper functions
 function isAdmin(userId) {
@@ -59,10 +232,30 @@ function getUserData(userId) {
         users.set(userId, {
             purchases: new Set(),
             pendingCourse: null,
-            pendingPaymentMethod: null
+            pendingPaymentMethod: null,
+            currentMenu: null
         });
     }
     return users.get(userId);
+}
+
+// Find course by ID
+function findCourse(courseId) {
+    for (const [menuId, menu] of Object.entries(courses)) {
+        if (menu.submenus) {
+            for (const [submenuId, submenu] of Object.entries(menu.submenus)) {
+                if (submenu.courses && submenu.courses[courseId]) {
+                    return {
+                        course: submenu.courses[courseId],
+                        menuId,
+                        submenuId,
+                        courseId
+                    };
+                }
+            }
+        }
+    }
+    return null;
 }
 
 // Transaction ID Management
@@ -72,6 +265,7 @@ function isTransactionUsed(trxId) {
 
 async function logTransaction(trxId, userId, amount, courseName, paymentMethod) {
     usedTransactions.add(trxId);
+    await saveTransactions();
     
     const message = `💰 **New Payment**\n\n` +
                    `👤 User: \`${userId}\`\n` +
@@ -133,14 +327,13 @@ async function verifyPayment(trxId) {
     }
 }
 
-// Keyboards
+// Keyboard functions
 const mainMenuKeyboard = {
     reply_markup: {
         inline_keyboard: [
-            [{ text: '🔥HSC 2027 All Courses🔥', callback_data: 'hsc2027' }],
-            [{ text: 'HSC 2025 সকল Admission কোর্স 🟢', callback_data: 'admission2025' }],
-            [{ text: '🔥HSC 2026 All Courses🔥', callback_data: 'hsc2026' }],
-            [{ text: '❤️Admission All Courses 2024❤️', callback_data: 'admission2024' }],
+            [{ text: '🔥HSC 2027 All Courses🔥', callback_data: 'menu_hsc27' }],
+            [{ text: 'HSC 2025 সকল Admission কোর্স 🟢', callback_data: 'menu_admission25' }],
+            [{ text: '🔥HSC 2026 All Courses🔥', callback_data: 'menu_hsc26' }],
             [
                 { text: '🔥 Support 🔥', url: 'https://t.me/yoursupport' },
                 { text: '🔥 Our Channel ❤️', url: 'https://t.me/yourchannel' }
@@ -149,22 +342,41 @@ const mainMenuKeyboard = {
     }
 };
 
-function getHSC2027Keyboard(userId) {
+function getMenuKeyboard(menuId) {
+    const menu = courses[menuId];
+    if (!menu || !menu.submenus) return mainMenuKeyboard;
+    
+    const keyboard = [];
+    
+    Object.entries(menu.submenus).forEach(([submenuId, submenu]) => {
+        keyboard.push([{
+            text: submenu.name,
+            callback_data: `submenu_${menuId}_${submenuId}`
+        }]);
+    });
+    
+    keyboard.push([{ text: '🏠 Main Menu', callback_data: 'main_menu' }]);
+    
+    return { reply_markup: { inline_keyboard: keyboard } };
+}
+
+function getSubmenuKeyboard(menuId, submenuId, userId) {
+    const submenu = courses[menuId]?.submenus?.[submenuId];
+    if (!submenu || !submenu.courses) return mainMenuKeyboard;
+    
     const userData = getUserData(userId);
     const keyboard = [];
     
-    courses.forEach((course, courseId) => {
-        if (courseId.startsWith('hsc2027_')) {
-            const status = userData.purchases.has(courseId) ? '✅ Purchased' : '❌ Not Purchased';
-            keyboard.push([{
-                text: `${course.name}\n${status}\nPrice: ${course.price} TK`,
-                callback_data: courseId
-            }]);
-        }
+    Object.entries(submenu.courses).forEach(([courseId, course]) => {
+        const status = userData.purchases.has(courseId) ? '✅ Purchased' : '❌ Not Purchased';
+        keyboard.push([{
+            text: `${course.name}\n${status}\nPrice: ${course.price} TK`,
+            callback_data: `course_${courseId}`
+        }]);
     });
     
     keyboard.push([
-        { text: '⬅️ Back', callback_data: 'main_menu' },
+        { text: '⬅️ Back', callback_data: `menu_${menuId}` },
         { text: '🏠 Main Menu', callback_data: 'main_menu' }
     ]);
     
@@ -173,10 +385,13 @@ function getHSC2027Keyboard(userId) {
 
 function getCourseKeyboard(courseId, userId, isPending = false) {
     const userData = getUserData(userId);
+    const courseData = findCourse(courseId);
+    if (!courseData) return mainMenuKeyboard;
+    
+    const { course, menuId, submenuId } = courseData;
     const keyboard = [];
     
     if (userData.purchases.has(courseId)) {
-        const course = courses.get(courseId);
         keyboard.push([{ text: '🎯 Join Course Group', url: course.groupLink }]);
     } else if (isPending) {
         keyboard.push([
@@ -188,7 +403,7 @@ function getCourseKeyboard(courseId, userId, isPending = false) {
     }
     
     keyboard.push([
-        { text: '⬅️ Back', callback_data: 'hsc2027' },
+        { text: '⬅️ Back', callback_data: `submenu_${menuId}_${submenuId}` },
         { text: '🏠 Main Menu', callback_data: 'main_menu' }
     ]);
     
@@ -201,7 +416,7 @@ function getPaymentMethodKeyboard(courseId) {
             inline_keyboard: [
                 [{ text: 'bKash', callback_data: `pay_bkash_${courseId}` }],
                 [{ text: 'Nagad', callback_data: `pay_nagad_${courseId}` }],
-                [{ text: '⬅️ Back', callback_data: courseId }]
+                [{ text: '⬅️ Back', callback_data: `course_${courseId}` }]
             ]
         }
     };
@@ -232,18 +447,20 @@ bot.onText(/\/admin/, (msg) => {
     const adminText = `🔧 Admin Panel ${isPrimary ? '(Primary Admin)' : '(Sub Admin)'}
 
 📚 **Course Management:**
-/addcourse - Add new course
-/editprice - Edit course price  
-/editlink - Edit group link
-/editname - Edit course name
+/addmenu - Add new main menu
+/addsubmenu - Add submenu to main menu
+/addcourse - Add course to submenu
+/editcourse - Edit course details
 /deletecourse - Delete course
-/listcourses - Show all courses
-/setcourseimage - Set course image
+/deletesubmenu - Delete submenu
+/deletemenu - Delete main menu
+/listall - Show all structure
+/setimage - Set course image (reply to image)
 
 💰 **Payment Management:**
-/updatepayment - Update payment number
-/updatepaymentlink - Update payment link
+/updatebkash - Update bKash number
 /updatenagad - Update Nagad number
+/setpaymentlink - Set payment link for course
 
 📊 **Analytics:**
 /stats - View statistics
@@ -257,22 +474,259 @@ bot.onText(/\/admin/, (msg) => {
 /listadmins - List all admins
 
 🔧 **Examples:**
-\`/editprice hsc2027_ict 450\`
-\`/editlink hsc2027_ict https://t.me/+newlink\`
-\`/editname hsc2027_ict 📱 ICT Advanced Course\`
-\`/updatepayment 01902912653\`
-\`/updatenagad 01902912653\`
-\`/updatepaymentlink hsc2027_ict https://your-bkash-link.com/ict\`
-\`/setcourseimage hsc2027_ict\` (reply to image)` : `
+\`/addmenu hsc28 🔥HSC 2028 All Courses🔥\`
+\`/addsubmenu hsc27 acs_chemistry ⚗️ ACS Chemistry All Course\`
+\`/addcourse hsc27 acs_hm chemistry_basics ⚗️ Chemistry Basics|200|https://t.me/+chem|Basic chemistry course\`
+\`/editcourse chemistry_basics price 250\`
+\`/setpaymentlink chemistry_basics https://your-link.com\`
+\`/setimage chemistry_basics\` (reply to image)` : `
 
 🔧 **Examples:**
-\`/editprice hsc2027_ict 450\`
-\`/editlink hsc2027_ict https://t.me/+newlink\``);
+\`/addcourse hsc27 acs_hm chemistry_basics ⚗️ Chemistry Basics|200|https://t.me/+chem|Basic chemistry course\`
+\`/editcourse chemistry_basics price 250\``);
 
     bot.sendMessage(msg.chat.id, adminText, {parse_mode: 'Markdown'});
 });
 
-// Add Admin
+// Admin Commands Implementation
+
+// Add Menu
+bot.onText(/\/addmenu (.+) (.+)/, async (msg, match) => {
+    if (!isAdmin(msg.from.id)) return;
+    
+    const menuId = match[1].trim();
+    const menuName = match[2];
+    
+    if (courses[menuId]) {
+        return bot.sendMessage(msg.chat.id, '❌ Menu already exists!');
+    }
+    
+    courses[menuId] = {
+        name: menuName,
+        type: "menu",
+        submenus: {}
+    };
+    
+    await saveCourses(courses);
+    bot.sendMessage(msg.chat.id, `✅ Menu "${menuName}" created successfully!\nID: ${menuId}`);
+});
+
+// Add Submenu
+bot.onText(/\/addsubmenu (.+) (.+) (.+)/, async (msg, match) => {
+    if (!isAdmin(msg.from.id)) return;
+    
+    const menuId = match[1].trim();
+    const submenuId = match[2].trim();
+    const submenuName = match[3];
+    
+    if (!courses[menuId]) {
+        return bot.sendMessage(msg.chat.id, '❌ Menu not found!');
+    }
+    
+    if (!courses[menuId].submenus) {
+        courses[menuId].submenus = {};
+    }
+    
+    courses[menuId].submenus[submenuId] = {
+        name: submenuName,
+        type: "submenu",
+        courses: {}
+    };
+    
+    await saveCourses(courses);
+    bot.sendMessage(msg.chat.id, `✅ Submenu "${submenuName}" added to "${courses[menuId].name}" successfully!\nID: ${submenuId}`);
+});
+
+// Add Course
+bot.onText(/\/addcourse (.+) (.+) (.+) (.+)/, async (msg, match) => {
+    if (!isAdmin(msg.from.id)) return;
+    
+    const menuId = match[1].trim();
+    const submenuId = match[2].trim();
+    const courseId = match[3].trim();
+    const courseData = match[4].split('|');
+    
+    if (courseData.length < 4) {
+        return bot.sendMessage(msg.chat.id, '❌ Format: /addcourse menuId submenuId courseId courseName|price|groupLink|description');
+    }
+    
+    const [courseName, price, groupLink, description] = courseData;
+    
+    if (!courses[menuId]?.submenus?.[submenuId]) {
+        return bot.sendMessage(msg.chat.id, '❌ Menu or submenu not found!');
+    }
+    
+    courses[menuId].submenus[submenuId].courses[courseId] = {
+        name: courseName.trim(),
+        type: "course",
+        price: parseInt(price.trim()),
+        groupLink: groupLink.trim(),
+        paymentLink: "",
+        imageLink: "",
+        description: description.trim()
+    };
+    
+    await saveCourses(courses);
+    bot.sendMessage(msg.chat.id, `✅ Course "${courseName}" added successfully!\nID: ${courseId}`);
+});
+
+// Edit Course
+bot.onText(/\/editcourse (.+) (.+) (.+)/, async (msg, match) => {
+    if (!isAdmin(msg.from.id)) return;
+    
+    const courseId = match[1].trim();
+    const field = match[2].trim().toLowerCase();
+    const value = match[3];
+    
+    const courseData = findCourse(courseId);
+    if (!courseData) {
+        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+    }
+    
+    const { course, menuId, submenuId } = courseData;
+    
+    switch (field) {
+        case 'name':
+            course.name = value;
+            break;
+        case 'price':
+            const newPrice = parseInt(value);
+            if (isNaN(newPrice) || newPrice <= 0) {
+                return bot.sendMessage(msg.chat.id, '❌ Invalid price!');
+            }
+            course.price = newPrice;
+            break;
+        case 'grouplink':
+            if (!value.startsWith('https://t.me/')) {
+                return bot.sendMessage(msg.chat.id, '❌ Invalid Telegram link!');
+            }
+            course.groupLink = value;
+            break;
+        case 'description':
+            course.description = value;
+            break;
+        default:
+            return bot.sendMessage(msg.chat.id, '❌ Invalid field! Use: name, price, grouplink, description');
+    }
+    
+    courses[menuId].submenus[submenuId].courses[courseId] = course;
+    await saveCourses(courses);
+    bot.sendMessage(msg.chat.id, `✅ Course "${course.name}" updated successfully!\nField: ${field}\nNew Value: ${value}`);
+});
+
+// Set Payment Link
+bot.onText(/\/setpaymentlink (.+) (.+)/, async (msg, match) => {
+    if (!isAdmin(msg.from.id)) return;
+    
+    const courseId = match[1].trim();
+    const paymentLink = match[2].trim();
+    
+    const courseData = findCourse(courseId);
+    if (!courseData) {
+        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+    }
+    
+    const { course, menuId, submenuId } = courseData;
+    
+    if (!paymentLink.startsWith('https://')) {
+        return bot.sendMessage(msg.chat.id, '❌ Invalid payment link! Must start with https://');
+    }
+    
+    course.paymentLink = paymentLink;
+    courses[menuId].submenus[submenuId].courses[courseId] = course;
+    await saveCourses(courses);
+    
+    bot.sendMessage(msg.chat.id, `✅ Payment link set for "${course.name}"!\n🔗 Link: ${paymentLink}`);
+});
+
+// Set Image
+bot.onText(/\/setimage (.+)/, async (msg, match) => {
+    if (!isAdmin(msg.from.id)) return;
+    
+    const courseId = match[1].trim();
+    
+    const courseData = findCourse(courseId);
+    if (!courseData) {
+        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+    }
+    
+    if (!msg.reply_to_message || !msg.reply_to_message.photo) {
+        return bot.sendMessage(msg.chat.id, '❌ Please reply to an image with this command!');
+    }
+    
+    const photo = msg.reply_to_message.photo;
+    const fileId = photo[photo.length - 1].file_id;
+    
+    const { course, menuId, submenuId } = courseData;
+    course.imageLink = fileId;
+    courses[menuId].submenus[submenuId].courses[courseId] = course;
+    await saveCourses(courses);
+    
+    bot.sendMessage(msg.chat.id, `✅ Image set for "${course.name}" successfully!`);
+});
+
+// List All Structure
+bot.onText(/\/listall/, async (msg) => {
+    if (!isAdmin(msg.from.id)) return;
+    
+    let structure = '📚 **Course Structure:**\n\n';
+    
+    Object.entries(courses).forEach(([menuId, menu]) => {
+        structure += `🔸 **${menu.name}** (${menuId})\n`;
+        
+        if (menu.submenus) {
+            Object.entries(menu.submenus).forEach(([submenuId, submenu]) => {
+                structure += `   📂 **${submenu.name}** (${submenuId})\n`;
+                
+                if (submenu.courses) {
+                    Object.entries(submenu.courses).forEach(([courseId, course]) => {
+                        structure += `      📖 ${course.name} - ${course.price} TK (${courseId})\n`;
+                    });
+                }
+            });
+        }
+        structure += '\n';
+    });
+    
+    if (structure.length > 4000) {
+        // Split into multiple messages
+        const parts = structure.match(/[\s\S]{1,4000}/g);
+        for (const part of parts) {
+            await bot.sendMessage(msg.chat.id, part, {parse_mode: 'Markdown'});
+        }
+    } else {
+        bot.sendMessage(msg.chat.id, structure, {parse_mode: 'Markdown'});
+    }
+});
+
+// Update bKash number
+bot.onText(/\/updatebkash (.+)/, async (msg, match) => {
+    if (!isAdmin(msg.from.id)) return;
+    
+    const newNumber = match[1].trim();
+    
+    if (!/^01[3-9]\d{8}$/.test(newNumber)) {
+        return bot.sendMessage(msg.chat.id, '❌ Invalid Bangladeshi phone number format! Example: 01712345678');
+    }
+    
+    // Update the global variable (you might want to save this to environment or config file)
+    bot.sendMessage(msg.chat.id, `✅ bKash number updated to: ${newNumber}\n⚠️ Note: Restart the bot to apply changes to environment variable.`);
+});
+
+// Update Nagad number  
+bot.onText(/\/updatenagad (.+)/, async (msg, match) => {
+    if (!isAdmin(msg.from.id)) return;
+    
+    const newNumber = match[1].trim();
+    
+    if (!/^01[3-9]\d{8}$/.test(newNumber)) {
+        return bot.sendMessage(msg.chat.id, '❌ Invalid Bangladeshi phone number format! Example: 01712345678');
+    }
+    
+    bot.sendMessage(msg.chat.id, `✅ Nagad number updated to: ${newNumber}\n⚠️ Note: Restart the bot to apply changes to environment variable.`);
+});
+
+// Add other admin commands (addadmin, removeadmin, etc.) from original code...
 bot.onText(/\/addadmin (.+)/, (msg, match) => {
     if (!isPrimaryAdmin(msg.from.id)) {
         return bot.sendMessage(msg.chat.id, '❌ Only Primary Admin can add new admins!');
@@ -337,199 +791,61 @@ bot.onText(/\/listadmins/, (msg) => {
     bot.sendMessage(msg.chat.id, adminList, {parse_mode: 'Markdown'});
 });
 
-// Add Course
-bot.onText(/\/addcourse (.+)/, (msg, match) => {
-    if (!isAdmin(msg.from.id)) return;
-    
-    const courseData = match[1].split('|');
-    if (courseData.length !== 4) {
-        return bot.sendMessage(msg.chat.id, '❌ Format: /addcourse courseId|courseName|price|groupLink');
-    }
-    
-    const [courseId, courseName, price, groupLink] = courseData;
-    courses.set(courseId.trim(), {
-        name: courseName.trim(),
-        price: parseInt(price.trim()),
-        groupLink: groupLink.trim()
-    });
-    
-    bot.sendMessage(msg.chat.id, `✅ Course "${courseName}" added successfully!`);
-});
-
-// Edit Course Price
-bot.onText(/\/editprice (.+) (.+)/, (msg, match) => {
-    if (!isAdmin(msg.from.id)) return;
-    
-    const courseId = match[1].trim();
-    const newPrice = parseInt(match[2].trim());
-    
-    if (!courses.has(courseId)) {
-        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
-    }
-    
-    if (isNaN(newPrice) || newPrice <= 0) {
-        return bot.sendMessage(msg.chat.id, '❌ Invalid price! Must be a positive number.');
-    }
-    
-    const course = courses.get(courseId);
-    const oldPrice = course.price;
-    course.price = newPrice;
-    courses.set(courseId, course);
-    
-    bot.sendMessage(msg.chat.id, `✅ Price updated for "${course.name}"\n💰 Old Price: ${oldPrice} TK\n💰 New Price: ${newPrice} TK`);
-});
-
-// Edit Course Group Link
-bot.onText(/\/editlink (.+) (.+)/, (msg, match) => {
-    if (!isAdmin(msg.from.id)) return;
-    
-    const courseId = match[1].trim();
-    const newLink = match[2].trim();
-    
-    if (!courses.has(courseId)) {
-        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
-    }
-    
-    if (!newLink.startsWith('https://t.me/')) {
-        return bot.sendMessage(msg.chat.id, '❌ Invalid Telegram link! Must start with https://t.me/');
-    }
-    
-    const course = courses.get(courseId);
-    const oldLink = course.groupLink;
-    course.groupLink = newLink;
-    courses.set(courseId, course);
-    
-    bot.sendMessage(msg.chat.id, `✅ Group link updated for "${course.name}"\n🔗 Old Link: ${oldLink}\n🔗 New Link: ${newLink}`);
-});
-
-// Edit Course Name
-bot.onText(/\/editname (.+) (.+)/, (msg, match) => {
-    if (!isAdmin(msg.from.id)) return;
-    
-    const courseId = match[1].trim();
-    const newName = match[2];
-    
-    if (!courses.has(courseId)) {
-        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
-    }
-    
-    const course = courses.get(courseId);
-    const oldName = course.name;
-    course.name = newName;
-    courses.set(courseId, course);
-    
-    bot.sendMessage(msg.chat.id, `✅ Course name updated!\n📚 Old Name: ${oldName}\n📚 New Name: ${newName}`);
-});
-
 // Delete Course
-bot.onText(/\/deletecourse (.+)/, (msg, match) => {
+bot.onText(/\/deletecourse (.+)/, async (msg, match) => {
     if (!isAdmin(msg.from.id)) return;
     
     const courseId = match[1].trim();
     
-    if (!courses.has(courseId)) {
+    const courseData = findCourse(courseId);
+    if (!courseData) {
         return bot.sendMessage(msg.chat.id, '❌ Course not found!');
     }
     
-    const course = courses.get(courseId);
-    courses.delete(courseId);
-    courseImages.delete(courseId);
+    const { course, menuId, submenuId } = courseData;
+    delete courses[menuId].submenus[submenuId].courses[courseId];
     
+    await saveCourses(courses);
     bot.sendMessage(msg.chat.id, `✅ Course "${course.name}" deleted successfully!`);
 });
 
-// List Courses
-bot.onText(/\/listcourses/, (msg) => {
+// Delete Submenu
+bot.onText(/\/deletesubmenu (.+) (.+)/, async (msg, match) => {
     if (!isAdmin(msg.from.id)) return;
     
-    if (courses.size === 0) {
-        return bot.sendMessage(msg.chat.id, '📚 No courses available.');
+    const menuId = match[1].trim();
+    const submenuId = match[2].trim();
+    
+    if (!courses[menuId]?.submenus?.[submenuId]) {
+        return bot.sendMessage(msg.chat.id, '❌ Menu or submenu not found!');
     }
     
-    let courseList = '📚 **All Courses:**\n\n';
-    courses.forEach((course, courseId) => {
-        courseList += `🔹 **${course.name}**\n`;
-        courseList += `   ID: \`${courseId}\`\n`;
-        courseList += `   💰 Price: ${course.price} TK\n`;
-        courseList += `   🔗 Link: ${course.groupLink}\n`;
-        courseList += `   🖼️ Image: ${courseImages.has(courseId) ? '✅ Set' : '❌ Not Set'}\n\n`;
-    });
+    const submenuName = courses[menuId].submenus[submenuId].name;
+    delete courses[menuId].submenus[submenuId];
     
-    bot.sendMessage(msg.chat.id, courseList, {parse_mode: 'Markdown'});
+    await saveCourses(courses);
+    bot.sendMessage(msg.chat.id, `✅ Submenu "${submenuName}" deleted successfully!`);
 });
 
-// Set Course Image
-bot.onText(/\/setcourseimage (.+)/, (msg, match) => {
+// Delete Menu
+bot.onText(/\/deletemenu (.+)/, async (msg, match) => {
     if (!isAdmin(msg.from.id)) return;
     
-    const courseId = match[1].trim();
+    const menuId = match[1].trim();
     
-    if (!courses.has(courseId)) {
-        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+    if (!courses[menuId]) {
+        return bot.sendMessage(msg.chat.id, '❌ Menu not found!');
     }
     
-    if (!msg.reply_to_message || !msg.reply_to_message.photo) {
-        return bot.sendMessage(msg.chat.id, '❌ Please reply to an image with this command!');
-    }
+    const menuName = courses[menuId].name;
+    delete courses[menuId];
     
-    const photo = msg.reply_to_message.photo;
-    const fileId = photo[photo.length - 1].file_id;
-    
-    courseImages.set(courseId, fileId);
-    bot.sendMessage(msg.chat.id, `✅ Image set for "${courses.get(courseId).name}" successfully!`);
-});
-
-// Update Payment Number
-bot.onText(/\/updatepayment (.+)/, (msg, match) => {
-    if (!isAdmin(msg.from.id)) return;
-    
-    const newPaymentNumber = match[1].trim();
-    
-    if (!/^01[3-9]\d{8}$/.test(newPaymentNumber)) {
-        return bot.sendMessage(msg.chat.id, '❌ Invalid Bangladeshi phone number format! Example: 01712345678');
-    }
-    
-    BKASH_NUMBER = newPaymentNumber;
-    bot.sendMessage(msg.chat.id, `✅ bKash payment number updated to: ${BKASH_NUMBER}`);
-});
-
-// Update Nagad Number
-bot.onText(/\/updatenagad (.+)/, (msg, match) => {
-    if (!isAdmin(msg.from.id)) return;
-    
-    const newPaymentNumber = match[1].trim();
-    
-    if (!/^01[3-9]\d{8}$/.test(newPaymentNumber)) {
-        return bot.sendMessage(msg.chat.id, '❌ Invalid Bangladeshi phone number format! Example: 01712345678');
-    }
-    
-    NAGAD_NUMBER = newPaymentNumber;
-    bot.sendMessage(msg.chat.id, `✅ Nagad payment number updated to: ${NAGAD_NUMBER}`);
-});
-
-// Update Payment Link
-bot.onText(/\/updatepaymentlink (.+) (.+)/, (msg, match) => {
-    if (!isAdmin(msg.from.id)) return;
-    
-    const courseId = match[1].trim();
-    const newLink = match[2].trim();
-    
-    if (!courses.has(courseId)) {
-        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
-    }
-    
-    if (!newLink.startsWith('https://')) {
-        return bot.sendMessage(msg.chat.id, '❌ Invalid payment link! Must start with https://');
-    }
-    
-    paymentLinks.set(courseId, newLink);
-    const course = courses.get(courseId);
-    
-    bot.sendMessage(msg.chat.id, `✅ Payment link updated for "${course.name}"\n🔗 New Link: ${newLink}`);
+    await saveCourses(courses);
+    bot.sendMessage(msg.chat.id, `✅ Menu "${menuName}" deleted successfully!`);
 });
 
 // Revenue Stats
-bot.onText(/\/revenue/, (msg) => {
+bot.onText(/\/revenue/, async (msg) => {
     if (!isAdmin(msg.from.id)) return;
     
     let totalRevenue = 0;
@@ -537,8 +853,9 @@ bot.onText(/\/revenue/, (msg) => {
     
     users.forEach(userData => {
         userData.purchases.forEach(courseId => {
-            const course = courses.get(courseId);
-            if (course) {
+            const courseData = findCourse(courseId);
+            if (courseData) {
+                const course = courseData.course;
                 totalRevenue += course.price;
                 courseRevenue.set(courseId, (courseRevenue.get(courseId) || 0) + course.price);
             }
@@ -553,8 +870,9 @@ bot.onText(/\/revenue/, (msg) => {
         revenueText += `No sales yet.`;
     } else {
         courseRevenue.forEach((revenue, courseId) => {
-            const course = courses.get(courseId);
-            if (course) {
+            const courseData = findCourse(courseId);
+            if (courseData) {
+                const course = courseData.course;
                 const salesCount = Math.floor(revenue / course.price);
                 revenueText += `🔹 ${course.name}\n`;
                 revenueText += `   Sales: ${salesCount} | Revenue: ${revenue} TK\n\n`;
@@ -598,12 +916,26 @@ bot.onText(/\/stats/, (msg) => {
     const totalUsers = users.size;
     let totalPurchases = 0;
     let totalRevenue = 0;
+    let totalCourses = 0;
+    
+    // Count courses and calculate stats
+    Object.values(courses).forEach(menu => {
+        if (menu.submenus) {
+            Object.values(menu.submenus).forEach(submenu => {
+                if (submenu.courses) {
+                    totalCourses += Object.keys(submenu.courses).length;
+                }
+            });
+        }
+    });
     
     users.forEach(userData => {
         totalPurchases += userData.purchases.size;
         userData.purchases.forEach(courseId => {
-            const course = courses.get(courseId);
-            if (course) totalRevenue += course.price;
+            const courseData = findCourse(courseId);
+            if (courseData) {
+                totalRevenue += courseData.course.price;
+            }
         });
     });
     
@@ -612,7 +944,7 @@ bot.onText(/\/stats/, (msg) => {
 👥 Total Users: ${totalUsers}
 💰 Total Purchases: ${totalPurchases}  
 💵 Total Revenue: ${totalRevenue} TK
-📚 Available Courses: ${courses.size}
+📚 Available Courses: ${totalCourses}
 👨‍💼 Total Admins: ${adminUsers.size}`;
 
     bot.sendMessage(msg.chat.id, statsText);
@@ -638,6 +970,7 @@ bot.onText(/\/addtrx (.+)/, async (msg, match) => {
     
     const trxId = match[1];
     usedTransactions.add(trxId);
+    await saveTransactions();
 
     bot.sendMessage(
         msg.chat.id,
@@ -652,6 +985,7 @@ bot.onText(/\/removetrx (.+)/, async (msg, match) => {
     
     const trxId = match[1];
     usedTransactions.delete(trxId);
+    await saveTransactions();
 
     bot.sendMessage(
         msg.chat.id,
@@ -675,41 +1009,79 @@ bot.on('callback_query', async (callbackQuery) => {
 
 আপনার পছন্দের course category সিলেক্ট করুন:`;
         
-        bot.editMessageText(welcomeText, {
-            chat_id: msg.chat.id,
-            message_id: msg.message_id,
-            ...mainMenuKeyboard
-        });
-    }
-    else if (data === 'hsc2027') {
-        const courseListText = `🔥 HSC 2027 All Courses 🔥
-
-📚 Available Subjects:`;
-        
-        bot.editMessageText(courseListText, {
-            chat_id: msg.chat.id,
-            message_id: msg.message_id,
-            ...getHSC2027Keyboard(userId)
-        });
-    }
-    else if (courses.has(data)) {
-        const course = courses.get(data);
-        const isPurchased = userData.purchases.has(data);
-        const isPending = userData.pendingCourse === data;
-        
-        let courseText = `${course.name}\n`;
-        
-        if (courseImages.has(data)) {
-            try {
-                await bot.sendPhoto(msg.chat.id, courseImages.get(data), {
-                    caption: courseText,
-                    reply_markup: getCourseKeyboard(data, userId, isPending).reply_markup
-                });
-                return;
-            } catch (error) {
-                console.error('Error sending course image:', error);
-            }
+        try {
+            bot.editMessageText(welcomeText, {
+                chat_id: msg.chat.id,
+                message_id: msg.message_id,
+                ...mainMenuKeyboard
+            });
+        } catch (error) {
+            console.error('Error editing message:', error);
+            bot.sendMessage(msg.chat.id, welcomeText, mainMenuKeyboard);
         }
+    }
+    else if (data.startsWith('menu_')) {
+        const menuId = data.replace('menu_', '');
+        const menu = courses[menuId];
+        
+        if (!menu) {
+            return bot.sendMessage(msg.chat.id, '❌ Menu not found!');
+        }
+        
+        const menuText = `${menu.name}
+
+📚 Available Categories:`;
+        
+        try {
+            bot.editMessageText(menuText, {
+                chat_id: msg.chat.id,
+                message_id: msg.message_id,
+                ...getMenuKeyboard(menuId)
+            });
+        } catch (error) {
+            console.error('Error editing message:', error);
+            bot.sendMessage(msg.chat.id, menuText, getMenuKeyboard(menuId));
+        }
+    }
+    else if (data.startsWith('submenu_')) {
+        const parts = data.replace('submenu_', '').split('_');
+        const menuId = parts[0];
+        const submenuId = parts[1];
+        
+        const submenu = courses[menuId]?.submenus?.[submenuId];
+        if (!submenu) {
+            return bot.sendMessage(msg.chat.id, '❌ Submenu not found!');
+        }
+        
+        const submenuText = `${submenu.name}
+
+📚 Available Courses:`;
+        
+        try {
+            bot.editMessageText(submenuText, {
+                chat_id: msg.chat.id,
+                message_id: msg.message_id,
+                ...getSubmenuKeyboard(menuId, submenuId, userId)
+            });
+        } catch (error) {
+            console.error('Error editing message:', error);
+            bot.sendMessage(msg.chat.id, submenuText, getSubmenuKeyboard(menuId, submenuId, userId));
+        }
+    }
+    else if (data.startsWith('course_')) {
+        const courseId = data.replace('course_', '');
+        const courseData = findCourse(courseId);
+        
+        if (!courseData) {
+            return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+        }
+        
+        const { course } = courseData;
+        const isPurchased = userData.purchases.has(courseId);
+        const isPending = userData.pendingCourse === courseId;
+        
+        let courseText = `${course.name}\n\n`;
+        courseText += course.description + '\n\n';
         
         if (isPurchased) {
             courseText += `Status: ✅ Purchased\n`;
@@ -726,26 +1098,50 @@ bot.on('callback_query', async (callbackQuery) => {
             courseText += `4. "Submit Payment Proof" button এ click করুন`;
         } else {
             courseText += `Status: ❌ Not Purchased\n`;
-            courseText += `💰 Price: ${course.price} TK\n\n`;
-            courseText += `📖 Course Details:\n`;
-            courseText += `✅ HD Video Lectures\n`;
-            courseText += `✅ PDF Notes & Books\n`;
-            courseText += `✅ Practice Questions\n`;
-            courseText += `✅ Live Support\n`;
-            courseText += `✅ Lifetime Access`;
+            courseText += `💰 Price: ${course.price} TK`;
         }
         
-        bot.editMessageText(courseText, {
-            chat_id: msg.chat.id,
-            message_id: msg.message_id,
-            ...getCourseKeyboard(data, userId, isPending)
-        });
+        // Send with image if available
+        if (course.imageLink && !isPending && !isPurchased) {
+            try {
+                await bot.sendPhoto(msg.chat.id, course.imageLink, {
+                    caption: courseText,
+                    reply_markup: getCourseKeyboard(courseId, userId, isPending).reply_markup
+                });
+                // Delete the original message
+                try {
+                    await bot.deleteMessage(msg.chat.id, msg.message_id);
+                } catch (deleteError) {
+                    console.log('Could not delete original message:', deleteError.message);
+                }
+                return;
+            } catch (error) {
+                console.error('Error sending course image:', error);
+            }
+        }
+        
+        try {
+            bot.editMessageText(courseText, {
+                chat_id: msg.chat.id,
+                message_id: msg.message_id,
+                ...getCourseKeyboard(courseId, userId, isPending)
+            });
+        } catch (error) {
+            console.error('Error editing message:', error);
+            bot.sendMessage(msg.chat.id, courseText, getCourseKeyboard(courseId, userId, isPending));
+        }
     }
     else if (data.startsWith('buy_')) {
         const courseId = data.replace('buy_', '');
-        const course = courses.get(courseId);
+        const courseData = findCourse(courseId);
         
+        if (!courseData) {
+            return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+        }
+        
+        const { course } = courseData;
         userData.pendingCourse = courseId;
+        await saveUsers();
         
         const paymentText = `💳 Payment for ${course.name}
 
@@ -756,72 +1152,146 @@ bot.on('callback_query', async (callbackQuery) => {
 2. Bkash থেকে payment করলে Transaction ID copy করুন, Nagad থেকে payment করলে payment এর screenshot নিন
 3. "Submit Payment Proof" button এ click করুন`;
 
-        bot.editMessageText(paymentText, {
-            chat_id: msg.chat.id,
-            message_id: msg.message_id,
-            ...getCourseKeyboard(courseId, userId, true)
-        });
+        try {
+            bot.editMessageText(paymentText, {
+                chat_id: msg.chat.id,
+                message_id: msg.message_id,
+                ...getCourseKeyboard(courseId, userId, true)
+            });
+        } catch (error) {
+            console.error('Error editing message:', error);
+            bot.sendMessage(msg.chat.id, paymentText, getCourseKeyboard(courseId, userId, true));
+        }
     }
     else if (data.startsWith('payment_method_')) {
         const courseId = data.replace('payment_method_', '');
-        const course = courses.get(courseId);
+        const courseData = findCourse(courseId);
         
+        if (!courseData) {
+            return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+        }
+        
+        const { course } = courseData;
         const paymentText = `💳 Select Payment Method for ${course.name}\n\n💰 Amount: ${course.price} TK`;
         
-        bot.editMessageText(paymentText, {
-            chat_id: msg.chat.id,
-            message_id: msg.message_id,
-            ...getPaymentMethodKeyboard(courseId)
-        });
+        try {
+            bot.editMessageText(paymentText, {
+                chat_id: msg.chat.id,
+                message_id: msg.message_id,
+                ...getPaymentMethodKeyboard(courseId)
+            });
+        } catch (error) {
+            console.error('Error editing message:', error);
+            bot.sendMessage(msg.chat.id, paymentText, getPaymentMethodKeyboard(courseId));
+        }
     }
     else if (data.startsWith('pay_bkash_')) {
         const courseId = data.replace('pay_bkash_', '');
-        const course = courses.get(courseId);
+        const courseData = findCourse(courseId);
+        
+        if (!courseData) {
+            return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+        }
+        
+        const { course } = courseData;
         userData.pendingPaymentMethod = 'bKash';
+        await saveUsers();
         
-        const paymentText = `💳 bKash Payment for ${course.name}\n\n💰 Amount: ${course.price} TK\n📱 bKash Number: ${BKASH_NUMBER}\n\n💡 Payment Instructions:\n✅ Make Payment ${course.price} TK to above bKash number- অবশ্যই Make Payment এ পেমেন্ট করবেন । ❌Send Money করলে হবে না!\n ✅ bKash থেকে যে Transaction ID পেয়েছেন সেটি copy করুন\n ✅ Click "Submit Payment Proof" button\n ✅ Transaction Id টা লিখেন। Example: 9BG4R2G5N8\n ✅ শুধু ID লিখুন, অন্য কিছু না\n\n🔹 bKash payment auto approve হবে!`;
+        let paymentText = `💳 bKash Payment for ${course.name}\n\n💰 Amount: ${course.price} TK\n📱 bKash Number: ${BKASH_NUMBER}\n\n`;
+        let keyboard;
         
-        bot.editMessageText(paymentText, {
-            chat_id: msg.chat.id,
-            message_id: msg.message_id,
-            reply_markup: {
-                inline_keyboard: [
-                    [{ text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }],
-                    [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
-                ]
-            }
-        });
+        if (course.paymentLink) {
+            paymentText += `💡 Payment Instructions:\n✅ Click "Pay with bKash Link" button below\n✅ Complete payment using the link\n✅ Copy the Transaction ID from bKash\n✅ Click "Submit Payment Proof" button\n✅ Enter only the Transaction ID (Example: 9BG4R2G5N8)\n\n🔹 bKash payment auto approve হবে!`;
+            
+            keyboard = {
+                reply_markup: {
+                    inline_keyboard: [
+                        [{ text: '💳 Pay with bKash Link', url: course.paymentLink }],
+                        [{ text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }],
+                        [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
+                    ]
+                }
+            };
+        } else {
+            paymentText += `⚠️ Payment link is not added for this course. Please pay manually:\n\n💡 Manual Payment Instructions:\n✅ Make Payment ${course.price} TK to above bKash number\n✅ অবশ্যই Make Payment এ পেমেন্ট করবেন । ❌Send Money করলে হবে না!\n✅ Copy the Transaction ID from bKash\n✅ Click "Submit Payment Proof" button\n✅ Enter only the Transaction ID (Example: 9BG4R2G5N8)\n\n🔹 bKash payment auto approve হবে!`;
+            
+            keyboard = {
+                reply_markup: {
+                    inline_keyboard: [
+                        [{ text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }],
+                        [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
+                    ]
+                }
+            };
+        }
+        
+        try {
+            bot.editMessageText(paymentText, {
+                chat_id: msg.chat.id,
+                message_id: msg.message_id,
+                ...keyboard
+            });
+        } catch (error) {
+            console.error('Error editing message:', error);
+            bot.sendMessage(msg.chat.id, paymentText, keyboard);
+        }
     }
     else if (data.startsWith('pay_nagad_')) {
         const courseId = data.replace('pay_nagad_', '');
-        const course = courses.get(courseId);
+        const courseData = findCourse(courseId);
+        
+        if (!courseData) {
+            return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+        }
+        
+        const { course } = courseData;
         userData.pendingPaymentMethod = 'Nagad';
+        await saveUsers();
         
         const paymentText = `💳 Nagad Payment for ${course.name}\n\n💰 Amount: ${course.price} TK\n📱 Nagad Number: ${NAGAD_NUMBER}\n\n💡 Payment Instructions:\n✅ Send ${course.price} TK to above Nagad number- নগদ থেকে Send Money করুন\n✅ Take screenshot of payment\n✅ Click "Submit Payment Proof" button\n\n⚠️ Nagad payment manually approve হবে!\nPayment এর screenshot & course name সহ এডমিন কে মেসেজ দাও: https://t.me/${ADMIN_USERNAME}`;
         
-        bot.editMessageText(paymentText, {
-            chat_id: msg.chat.id,
-            message_id: msg.message_id,
-            reply_markup: {
-                inline_keyboard: [
-                    [{ text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }],
-                    [{ text: '💬 Message Admin', url: `https://t.me/${ADMIN_USERNAME}` }],
-                    [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
-                ]
-            }
-        });
+        try {
+            bot.editMessageText(paymentText, {
+                chat_id: msg.chat.id,
+                message_id: msg.message_id,
+                reply_markup: {
+                    inline_keyboard: [
+                        [{ text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }],
+                        [{ text: '💬 Message Admin', url: `https://t.me/${ADMIN_USERNAME}` }],
+                        [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
+                    ]
+                }
+            });
+        } catch (error) {
+            console.error('Error editing message:', error);
+            bot.sendMessage(msg.chat.id, paymentText, {
+                reply_markup: {
+                    inline_keyboard: [
+                        [{ text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }],
+                        [{ text: '💬 Message Admin', url: `https://t.me/${ADMIN_USERNAME}` }],
+                        [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
+                    ]
+                }
+            });
+        }
     }
     else if (data.startsWith('submit_proof_')) {
         const courseId = data.replace('submit_proof_', '');
-        const course = courses.get(courseId);
+        const courseData = findCourse(courseId);
+        
+        if (!courseData) {
+            return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+        }
+        
+        const { course } = courseData;
         const paymentMethod = userData.pendingPaymentMethod || 'bKash';
         
-        const trxText = `📝 Submit Your Payment Proof\n\n💡 Instructions:\n✅ ${paymentMethod} Bkash থেকে payment করলে Transaction ID copy করুন, Nagad থেকে payment করলে payment এর screenshot নেন\n\n📱 ${course.name} এর জন্য payment verification\n💰 Amount: ${course.price} TK\n💳 Method: ${paymentMethod}`;
+        const trxText = `📝 Submit Your Payment Proof\n\n💡 Instructions:\n${paymentMethod === 'bKash' ? '✅ Enter your bKash Transaction ID (Example: 9BG4R2G5N8)' : '✅ Send screenshot of your Nagad payment'}\n\n📱 ${course.name} এর জন্য payment verification\n💰 Amount: ${course.price} TK\n💳 Method: ${paymentMethod}`;
         
         bot.sendMessage(msg.chat.id, trxText, {
             reply_markup: {
                 inline_keyboard: [[
-                    { text: '❌ Cancel', callback_data: courseId }
+                    { text: '❌ Cancel', callback_data: `course_${courseId}` }
                 ]]
             }
         });
@@ -830,6 +1300,79 @@ bot.on('callback_query', async (callbackQuery) => {
             courseId,
             paymentMethod
         };
+        await saveUsers();
+    }
+    else if (data.startsWith('approve_') || data.startsWith('reject_')) {
+        if (!isAdmin(callbackQuery.from.id)) {
+            return bot.answerCallbackQuery(callbackQuery.id, { text: '❌ You are not authorized!', show_alert: true });
+        }
+        
+        const parts = data.split('_');
+        const action = parts[0];
+        const userId = parts[1];
+        const courseId = parts[2];
+        
+        const userData = getUserData(userId);
+        const courseData = findCourse(courseId);
+        
+        if (!courseData) {
+            return bot.answerCallbackQuery(callbackQuery.id, { text: '❌ Course not found!', show_alert: true });
+        }
+        
+        const { course } = courseData;
+        
+        if (action === 'approve') {
+            userData.purchases.add(courseId);
+            userData.pendingCourse = null;
+            userData.pendingPaymentMethod = null;
+            await saveUsers();
+            
+            // Notify user
+            bot.sendMessage(userId, `✅ **Your payment for ${course.name} has been approved!**\n\n🎯 Join your course group:\n👉 ${course.groupLink}`, {
+                parse_mode: 'Markdown'
+            });
+            
+            // Update admin
+            bot.answerCallbackQuery(callbackQuery.id, { text: '✅ Payment approved!', show_alert: true });
+            try {
+                bot.editMessageReplyMarkup({
+                    inline_keyboard: [[
+                        { text: '✅ Approved', callback_data: 'already_approved' }
+                    ]]
+                }, {
+                    chat_id: callbackQuery.message.chat.id,
+                    message_id: callbackQuery.message.message_id
+                });
+            } catch (error) {
+                console.log('Could not update admin message markup');
+            }
+            
+        } else if (action === 'reject') {
+            // Notify user
+            bot.sendMessage(userId, `❌ **Your payment proof for ${course.name} was rejected.**\n\n💡 Please submit valid payment proof or contact support.`, {
+                parse_mode: 'Markdown',
+                reply_markup: {
+                    inline_keyboard: [
+                        [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }]
+                    ]
+                }
+            });
+            
+            // Update admin
+            bot.answerCallbackQuery(callbackQuery.id, { text: '❌ Payment rejected!', show_alert: true });
+            try {
+                bot.editMessageReplyMarkup({
+                    inline_keyboard: [[
+                        { text: '❌ Rejected', callback_data: 'already_rejected' }
+                    ]]
+                }, {
+                    chat_id: callbackQuery.message.chat.id,
+                    message_id: callbackQuery.message.message_id
+                });
+            } catch (error) {
+                console.log('Could not update admin message markup');
+            }
+        }
     }
 });
 
@@ -842,12 +1385,20 @@ bot.on('message', async (msg) => {
     
     if (userData.waitingForProof) {
         const { courseId, paymentMethod } = userData.waitingForProof;
-        const course = courses.get(courseId);
+        const courseData = findCourse(courseId);
         
+        if (!courseData) {
+            userData.waitingForProof = null;
+            await saveUsers();
+            return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+        }
+        
+        const { course } = courseData;
         userData.waitingForProof = null;
+        await saveUsers();
         
         if (msg.photo) {
-            // Handle photo proof
+            // Handle photo proof (mainly for Nagad)
             const photo = msg.photo[msg.photo.length - 1];
             const fileId = photo.file_id;
             
@@ -857,7 +1408,7 @@ bot.on('message', async (msg) => {
                                `📚 Course: ${course.name}\n` +
                                `💰 Amount: ${course.price} TK\n` +
                                `💳 Method: ${paymentMethod}\n\n` +
-                               `⚠️ ${paymentMethod === 'Nagad' ? 'Manual approval required' : 'Auto approval if TRX ID provided'}`;
+                               `⚠️ Manual approval required`;
             
             try {
                 await bot.sendPhoto(ADMIN_ID, fileId, {
@@ -894,8 +1445,8 @@ bot.on('message', async (msg) => {
             if (isTransactionUsed(trxId)) {
                 return bot.sendMessage(
                     msg.chat.id, 
-                    "❌ **এই Transaction ID আগেই ব্যবহার করা হয়েছে!**\n\n" +
-                    "দয়া করে নতুন একটি Transaction ID দিন অথবা সাপোর্টে যোগাযোগ করুন।",
+                    "❌ **এই Transaction ID আগেই ব্যবহার করা হয়েছে!**\n\n" +
+                    "দয়া করে নতুন একটি Transaction ID দিন অথবা সাপোর্টে যোগাযোগ করুন।",
                     { parse_mode: 'Markdown' }
                 );
             }
@@ -914,8 +1465,9 @@ bot.on('message', async (msg) => {
                     userData.purchases.add(courseId);
                     userData.pendingCourse = null;
                     userData.pendingPaymentMethod = null;
+                    await saveUsers();
                     
-                    const successText = `✅ **পেমেন্ট সফলভাবে ভেরিফাই হয়েছে!**\n\n` +
+                    const successText = `✅ **পেমেন্ট সফলভাবে ভেরিফাই হয়েছে!**\n\n` +
                                        `📱 ${course.name} Unlocked!\n` +
                                        `💰 Amount: ${course.price} TK\n` +
                                        `🎫 Transaction ID: ${trxId}\n\n` +
@@ -959,69 +1511,6 @@ bot.on('message', async (msg) => {
     }
 });
 
-// Handle admin approval/rejection
-bot.on('callback_query', async (callbackQuery) => {
-    const data = callbackQuery.data;
-    
-    if (data.startsWith('approve_') || data.startsWith('reject_')) {
-        if (!isAdmin(callbackQuery.from.id)) {
-            return bot.answerCallbackQuery(callbackQuery.id, { text: '❌ You are not authorized!', show_alert: true });
-        }
-        
-        const parts = data.split('_');
-        const action = parts[0];
-        const userId = parts[1];
-        const courseId = parts[2];
-        
-        const userData = getUserData(userId);
-        const course = courses.get(courseId);
-        
-        if (action === 'approve') {
-            userData.purchases.add(courseId);
-            userData.pendingCourse = null;
-            userData.pendingPaymentMethod = null;
-            
-            // Notify user
-            bot.sendMessage(userId, `✅ **Your payment for ${course.name} has been approved!**\n\n🎯 Join your course group:\n👉 ${course.groupLink}`, {
-                parse_mode: 'Markdown'
-            });
-            
-            // Update admin
-            bot.answerCallbackQuery(callbackQuery.id, { text: '✅ Payment approved!', show_alert: true });
-            bot.editMessageReplyMarkup({
-                inline_keyboard: [[
-                    { text: '✅ Approved', callback_data: 'already_approved' }
-                ]]
-            }, {
-                chat_id: callbackQuery.message.chat.id,
-                message_id: callbackQuery.message.message_id
-            });
-            
-        } else if (action === 'reject') {
-            // Notify user
-            bot.sendMessage(userId, `❌ **Your payment proof for ${course.name} was rejected.**\n\n💡 Please submit valid payment proof or contact support.`, {
-                parse_mode: 'Markdown',
-                reply_markup: {
-                    inline_keyboard: [
-                        [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }]
-                    ]
-                }
-            });
-            
-            // Update admin
-            bot.answerCallbackQuery(callbackQuery.id, { text: '❌ Payment rejected!', show_alert: true });
-            bot.editMessageReplyMarkup({
-                inline_keyboard: [[
-                    { text: '❌ Rejected', callback_data: 'already_rejected' }
-                ]]
-            }, {
-                chat_id: callbackQuery.message.chat.id,
-                message_id: callbackQuery.message.message_id
-            });
-        }
-    }
-});
-
 // Express server
 app.get('/', (req, res) => {
     res.send('HSC Courses Bot is running!');
@@ -1031,4 +1520,9 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
-console.log('HSC Courses Bot started successfully!');
+// Initialize and start bot
+initializeBot().then(() => {
+    console.log('HSC Courses Bot started successfully!');
+}).catch(error => {
+    console.error('Error starting bot:', error);
+});
