@@ -4,6 +4,29 @@ const axios = require('axios');
 const fs = require('fs').promises;
 const path = require('path');
 
+
+// Add near the top with other requires
+const chokidar = require('chokidar');
+
+// Add after initializeBot() call
+if (process.env.NODE_ENV !== 'production') {
+    const watcher = chokidar.watch(COURSES_FILE, {
+        persistent: true,
+        ignoreInitial: true
+    });
+
+    watcher.on('change', async (path) => {
+        console.log(`Detected change in ${path}, reloading...`);
+        try {
+            await loadCourses();
+            updateMainMenuKeyboard();
+            console.log('Courses reloaded successfully from file change');
+        } catch (error) {
+            console.error('Error reloading courses from file change:', error);
+        }
+    });
+}
+
 // Bot Configuration 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const BKASH_USERNAME = process.env.BKASH_USERNAME;
