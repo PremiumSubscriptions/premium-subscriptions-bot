@@ -453,6 +453,43 @@ bot.onText(/\/start/, (msg) => {
     bot.sendMessage(msg.chat.id, welcomeText, mainMenuKeyboard);
 });
 
+// Helper function to format course descriptions
+function formatDescription(rawText) {
+    // Split into paragraphs while preserving existing newlines
+    let paragraphs = rawText.split(/(?:\r?\n)+/).filter(p => p.trim());
+    
+    // Process each paragraph
+    let formatted = paragraphs.map(para => {
+        // Add bullet point formatting
+        if (para.startsWith('-') || para.startsWith('•') || para.match(/^\d+\./)) {
+            return '✅ ' + para.replace(/^[-•\d.]+/, '').trim();
+        }
+        
+        // Add section headers
+        if (para.includes(':')) {
+            return '🌟 ' + para;
+        }
+        
+        return para;
+    }).join('\n\n');
+    
+    // Ensure proper spacing after punctuation
+    formatted = formatted.replace(/([.!?])([^\s])/g, '$1 $2');
+    
+    // Add key feature markers
+    const featureKeywords = ['পাবেন', 'পাওয়া যাবে', 'অন্তর্ভুক্ত', 'সুবিধা', 'যা যা পাবেন'];
+    featureKeywords.forEach(keyword => {
+        const regex = new RegExp(`(${keyword}[ :]+)`, 'gi');
+        formatted = formatted.replace(regex, '\n\n🌟 $1\n');
+    });
+    
+    // Add price highlighting
+    formatted = formatted.replace(/(\d+)\s*টাকা/g, '\n\n💰 মূল্য: $1 টাকা');
+    
+    return formatted;
+}
+
+
 // Admin Commands
 bot.onText(/\/admin/, (msg) => {
     if (!isAdmin(msg.from.id)) {
@@ -473,6 +510,7 @@ bot.onText(/\/admin/, (msg) => {
 /deletemenu - Delete main menu
 /listall - Show all structure
 /setimage - Set course image (reply to image)
+/setdesc - Set course description (reply to text)
 
 💰 **Payment Management:**
 /updatebkash - Update bKash number
@@ -635,6 +673,35 @@ bot.onText(/\/addcourse (.+)/, async (msg, match) => {
     console.log('Course added:', courseId, courses[menuId].submenus[submenuId].courses[courseId]);
     
     bot.sendMessage(msg.chat.id, `✅ Course "${courseName}" added successfully!\n\n📚 Menu: ${courses[menuId].name}\n📂 Submenu: ${courses[menuId].submenus[submenuId].name}\n📖 Course ID: ${courseId}\n💰 Price: ${priceNum} TK`);
+});
+
+// Set Description Command
+bot.onText(/\/setdesc (.+)/, async (msg, match) => {
+    if (!isAdmin(msg.from.id)) return;
+    
+    const courseId = match[1].trim();
+    
+    if (!msg.reply_to_message || !msg.reply_to_message.text) {
+        return bot.sendMessage(msg.chat.id, '❌ Please reply to a text message with the new description!');
+    }
+    
+    const rawDescription = msg.reply_to_message.text;
+    const formattedDescription = formatDescription(rawDescription);
+    
+    const courseData = findCourse(courseId);
+    if (!courseData) {
+        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+    }
+    
+    const { course, menuId, submenuId } = courseData;
+    course.description = formattedDescription;
+    courses[menuId].submenus[submenuId].courses[courseId] = course;
+    await saveCourses(courses);
+    
+    const response = `✅ Description updated for "${course.name}"!\n\n` + 
+                    `📝 Formatted Description:\n${formattedDescription}`;
+    
+    bot.sendMessage(msg.chat.id, response);
 });
 
 // Edit Course
