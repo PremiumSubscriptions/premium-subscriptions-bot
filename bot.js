@@ -211,11 +211,17 @@ async function saveTransactions() {
 let courses = {};
 
 async function initializeBot() {
-    courses = await loadCourses();
-    const loadedUsers = await loadUsers();
-    loadedUsers.forEach((userData, userId) => users.set(userId, userData));
-    const loadedTransactions = await loadTransactions();
-    loadedTransactions.forEach(trx => usedTransactions.add(trx));
+    try {
+        courses = await loadCourses();
+        const loadedUsers = await loadUsers();
+        loadedUsers.forEach((userData, userId) => users.set(userId, userData));
+        const loadedTransactions = await loadTransactions();
+        loadedTransactions.forEach(trx => usedTransactions.add(trx));
+        console.log('Bot initialized successfully');
+        console.log('Loaded courses:', Object.keys(courses));
+    } catch (error) {
+        console.error('Error initializing bot:', error);
+    }
 }
 
 // Helper functions
@@ -330,17 +336,26 @@ async function verifyPayment(trxId) {
 // Keyboard functions
 const mainMenuKeyboard = {
     reply_markup: {
-        inline_keyboard: [
-            [{ text: '🔥HSC 2027 All Courses🔥', callback_data: 'menu_hsc27' }],
-            [{ text: 'HSC 2025 সকল Admission কোর্স 🟢', callback_data: 'menu_admission25' }],
-            [{ text: '🔥HSC 2026 All Courses🔥', callback_data: 'menu_hsc26' }],
-            [
-                { text: '🔥 Support 🔥', url: 'https://t.me/yoursupport' },
-                { text: '🔥 Our Channel ❤️', url: 'https://t.me/yourchannel' }
-            ]
-        ]
+        inline_keyboard: []
     }
 };
+
+function updateMainMenuKeyboard() {
+    const keyboard = [];
+    
+    // Add course menus dynamically
+    Object.entries(courses).forEach(([menuId, menu]) => {
+        keyboard.push([{ text: menu.name, callback_data: `menu_${menuId}` }]);
+    });
+    
+    // Add support and channel buttons
+    keyboard.push([
+        { text: '🔥 Support 🔥', url: 'https://t.me/yoursupport' },
+        { text: '🔥 Our Channel ❤️', url: 'https://t.me/yourchannel' }
+    ]);
+    
+    mainMenuKeyboard.reply_markup.inline_keyboard = keyboard;
+}
 
 function getMenuKeyboard(menuId) {
     const menu = courses[menuId];
@@ -424,6 +439,8 @@ function getPaymentMethodKeyboard(courseId) {
 
 // Bot Commands
 bot.onText(/\/start/, (msg) => {
+    updateMainMenuKeyboard(); // Update keyboard with current courses
+    
     const welcomeText = `🎓 Welcome to HSC Courses Bot! 🎓
 
 আমাদের premium courses গুলো দেখুন এবং আপনার পছন্দের course কিনুন।
@@ -490,15 +507,22 @@ bot.onText(/\/admin/, (msg) => {
 
 // Admin Commands Implementation
 
-// Add Menu
-bot.onText(/\/addmenu (.+) (.+)/, async (msg, match) => {
+// Add Menu - Fixed
+bot.onText(/\/addmenu (.+)/, async (msg, match) => {
     if (!isAdmin(msg.from.id)) return;
     
-    const menuId = match[1].trim();
-    const menuName = match[2];
+    const params = match[1].trim();
+    const parts = params.split(' ');
+    
+    if (parts.length < 2) {
+        return bot.sendMessage(msg.chat.id, '❌ Format: /addmenu menuId menuName\n\nExample:\n/addmenu hsc28 🔥HSC 2028 All Courses🔥');
+    }
+    
+    const menuId = parts[0];
+    const menuName = parts.slice(1).join(' ');
     
     if (courses[menuId]) {
-        return bot.sendMessage(msg.chat.id, '❌ Menu already exists!');
+        return bot.sendMessage(msg.chat.id, `❌ Menu "${menuId}" already exists!`);
     }
     
     courses[menuId] = {
@@ -508,23 +532,36 @@ bot.onText(/\/addmenu (.+) (.+)/, async (msg, match) => {
     };
     
     await saveCourses(courses);
-    bot.sendMessage(msg.chat.id, `✅ Menu "${menuName}" created successfully!\nID: ${menuId}`);
+    console.log('Menu added:', menuId, courses[menuId]);
+    
+    bot.sendMessage(msg.chat.id, `✅ Menu "${menuName}" created successfully!\n\n📚 Menu ID: ${menuId}\n📂 Submenus: 0`);
 });
 
-// Add Submenu
-bot.onText(/\/addsubmenu (.+) (.+) (.+)/, async (msg, match) => {
+// Add Submenu - Fixed
+bot.onText(/\/addsubmenu (.+)/, async (msg, match) => {
     if (!isAdmin(msg.from.id)) return;
     
-    const menuId = match[1].trim();
-    const submenuId = match[2].trim();
-    const submenuName = match[3];
+    const params = match[1].trim();
+    const parts = params.split(' ');
+    
+    if (parts.length < 3) {
+        return bot.sendMessage(msg.chat.id, '❌ Format: /addsubmenu menuId submenuId submenuName\n\nExample:\n/addsubmenu hsc27 acs_chemistry ACS Chemistry All Course');
+    }
+    
+    const menuId = parts[0];
+    const submenuId = parts[1];
+    const submenuName = parts.slice(2).join(' ');
     
     if (!courses[menuId]) {
-        return bot.sendMessage(msg.chat.id, '❌ Menu not found!');
+        return bot.sendMessage(msg.chat.id, `❌ Menu "${menuId}" not found!\n\nAvailable menus: ${Object.keys(courses).join(', ')}`);
     }
     
     if (!courses[menuId].submenus) {
         courses[menuId].submenus = {};
+    }
+    
+    if (courses[menuId].submenus[submenuId]) {
+        return bot.sendMessage(msg.chat.id, `❌ Submenu "${submenuId}" already exists!`);
     }
     
     courses[menuId].submenus[submenuId] = {
@@ -534,32 +571,60 @@ bot.onText(/\/addsubmenu (.+) (.+) (.+)/, async (msg, match) => {
     };
     
     await saveCourses(courses);
-    bot.sendMessage(msg.chat.id, `✅ Submenu "${submenuName}" added to "${courses[menuId].name}" successfully!\nID: ${submenuId}`);
+    console.log('Submenu added:', submenuId, courses[menuId].submenus[submenuId]);
+    
+    bot.sendMessage(msg.chat.id, `✅ Submenu "${submenuName}" added to "${courses[menuId].name}" successfully!\n\n📚 Menu: ${courses[menuId].name}\n📂 Submenu ID: ${submenuId}`);
 });
 
-// Add Course
-bot.onText(/\/addcourse (.+) (.+) (.+) (.+)/, async (msg, match) => {
+// Add Course - Fixed format
+bot.onText(/\/addcourse (.+)/, async (msg, match) => {
     if (!isAdmin(msg.from.id)) return;
     
-    const menuId = match[1].trim();
-    const submenuId = match[2].trim();
-    const courseId = match[3].trim();
-    const courseData = match[4].split('|');
+    const params = match[1].trim();
+    const parts = params.split(' ');
+    
+    if (parts.length < 4) {
+        return bot.sendMessage(msg.chat.id, '❌ Format: /addcourse menuId submenuId courseId courseName|price|groupLink|description\n\nExample:\n/addcourse hsc27 acs_hm new_course Chemistry Basics|200|https://t.me/+chem|Basic chemistry course');
+    }
+    
+    const menuId = parts[0];
+    const submenuId = parts[1];
+    const courseId = parts[2];
+    const courseInfo = parts.slice(3).join(' ');
+    
+    const courseData = courseInfo.split('|');
     
     if (courseData.length < 4) {
-        return bot.sendMessage(msg.chat.id, '❌ Format: /addcourse menuId submenuId courseId courseName|price|groupLink|description');
+        return bot.sendMessage(msg.chat.id, '❌ Course data format: courseName|price|groupLink|description\n\nExample:\nChemistry Basics|200|https://t.me/+chem|Basic chemistry course');
     }
     
     const [courseName, price, groupLink, description] = courseData;
     
-    if (!courses[menuId]?.submenus?.[submenuId]) {
-        return bot.sendMessage(msg.chat.id, '❌ Menu or submenu not found!');
+    if (!courses[menuId]) {
+        return bot.sendMessage(msg.chat.id, `❌ Menu "${menuId}" not found!\n\nAvailable menus: ${Object.keys(courses).join(', ')}`);
+    }
+    
+    if (!courses[menuId].submenus) {
+        courses[menuId].submenus = {};
+    }
+    
+    if (!courses[menuId].submenus[submenuId]) {
+        return bot.sendMessage(msg.chat.id, `❌ Submenu "${submenuId}" not found in menu "${menuId}"!\n\nAvailable submenus: ${Object.keys(courses[menuId].submenus || {}).join(', ')}`);
+    }
+    
+    if (!courses[menuId].submenus[submenuId].courses) {
+        courses[menuId].submenus[submenuId].courses = {};
+    }
+    
+    const priceNum = parseInt(price.trim());
+    if (isNaN(priceNum) || priceNum <= 0) {
+        return bot.sendMessage(msg.chat.id, '❌ Invalid price! Must be a positive number.');
     }
     
     courses[menuId].submenus[submenuId].courses[courseId] = {
         name: courseName.trim(),
         type: "course",
-        price: parseInt(price.trim()),
+        price: priceNum,
         groupLink: groupLink.trim(),
         paymentLink: "",
         imageLink: "",
@@ -567,7 +632,9 @@ bot.onText(/\/addcourse (.+) (.+) (.+) (.+)/, async (msg, match) => {
     };
     
     await saveCourses(courses);
-    bot.sendMessage(msg.chat.id, `✅ Course "${courseName}" added successfully!\nID: ${courseId}`);
+    console.log('Course added:', courseId, courses[menuId].submenus[submenuId].courses[courseId]);
+    
+    bot.sendMessage(msg.chat.id, `✅ Course "${courseName}" added successfully!\n\n📚 Menu: ${courses[menuId].name}\n📂 Submenu: ${courses[menuId].submenus[submenuId].name}\n📖 Course ID: ${courseId}\n💰 Price: ${priceNum} TK`);
 });
 
 // Edit Course
@@ -1005,6 +1072,8 @@ bot.on('callback_query', async (callbackQuery) => {
     bot.answerCallbackQuery(callbackQuery.id);
     
     if (data === 'main_menu') {
+        updateMainMenuKeyboard(); // Update keyboard with current courses
+        
         const welcomeText = `🎓 HSC Courses Bot - Main Menu 🎓
 
 আপনার পছন্দের course category সিলেক্ট করুন:`;
@@ -1046,7 +1115,7 @@ bot.on('callback_query', async (callbackQuery) => {
     else if (data.startsWith('submenu_')) {
         const parts = data.replace('submenu_', '').split('_');
         const menuId = parts[0];
-        const submenuId = parts[1];
+        const submenuId = parts.slice(1).join('_'); // Handle submenu IDs with underscores
         
         const submenu = courses[menuId]?.submenus?.[submenuId];
         if (!submenu) {
