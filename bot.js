@@ -552,18 +552,25 @@ bot.onText(/\/admin/, (msg) => {
 });
 
 // Admin Commands Implementation
-
-// Add this with other admin commands (~line 530)
+//Reload Courses
 bot.onText(/\/reloadcourses/, async (msg) => {
     if (!isAdmin(msg.from.id)) return;
     
     try {
-        courses = await loadCourses();
+        const prevCount = Object.keys(courses).length;
+        await loadCourses(); // This now properly updates the courses object
         updateMainMenuKeyboard();
-        bot.sendMessage(msg.chat.id, '✅ Courses reloaded from JSON file!');
+        
+        const newCount = Object.keys(courses).length;
+        bot.sendMessage(msg.chat.id, 
+            `✅ Courses reloaded successfully!\n` +
+            `📊 Before: ${prevCount} menus\n` +
+            `📊 After: ${newCount} menus`);
     } catch (error) {
         console.error('Error reloading courses:', error);
-        bot.sendMessage(msg.chat.id, '❌ Error reloading courses!');
+        bot.sendMessage(msg.chat.id, 
+            '❌ Error reloading courses!\n' +
+            'Check server logs for details.');
     }
 });
 
