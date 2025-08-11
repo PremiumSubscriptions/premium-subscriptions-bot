@@ -545,6 +545,20 @@ bot.onText(/\/admin/, (msg) => {
 
 // Admin Commands Implementation
 
+// Add this with other admin commands (~line 530)
+bot.onText(/\/reloadcourses/, async (msg) => {
+    if (!isAdmin(msg.from.id)) return;
+    
+    try {
+        courses = await loadCourses();
+        updateMainMenuKeyboard();
+        bot.sendMessage(msg.chat.id, '✅ Courses reloaded from JSON file!');
+    } catch (error) {
+        console.error('Error reloading courses:', error);
+        bot.sendMessage(msg.chat.id, '❌ Error reloading courses!');
+    }
+});
+
 // Add Menu - Fixed
 bot.onText(/\/addmenu (.+)/, async (msg, match) => {
     if (!isAdmin(msg.from.id)) return;
