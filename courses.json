@@ -3,11 +3,11 @@
     "name": "🔥HSC 2027 All Courses🔥",
     "type": "menu",
     "submenus": {
-      "acs_hm": {
-        "name": "🎯 ACS HM All Course",
+      "acs27_hm": {
+        "name": "🎯 ACS 27 HM All Course",
         "type": "submenu",
         "courses": {
-          "acs_hm_cycle1": {
+          "acs27_hm_cycle1": {
             "name": "🧮 ACS HM Cycle 1",
             "type": "course",
             "price": 100,
@@ -16,7 +16,7 @@
             "imageLink": "",
             "description": "📖 Complete ACS Higher Math Cycle 1 Course\n\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support\n✅ Lifetime Access\n\n🎯 Perfect for HSC 2027 students!"
           },
-          "acs_hm_cycle2": {
+          "acs27_hm_cycle2": {
             "name": "🧮 ACS HM Cycle 2",
             "type": "course",
             "price": 100,
@@ -24,30 +24,522 @@
             "paymentLink": "",
             "imageLink": "",
             "description": "📖 Complete ACS Higher Math Cycle 2 Course\n\n✅ Advanced Topics Coverage\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support\n✅ Lifetime Access"
+          },
+          "acs27_hm_cycle3": {
+            "name": "🧮 ACS HM Cycle 3",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027ACSMATH2",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete ACS Higher Math Cycle 3 Course\n\n✅ Advanced Topics Coverage\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support\n✅ Lifetime Access"
+          },
+          "acs27_hm_cycle4": {
+            "name": "🧮 ACS HM Cycle 4",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027ACSMATH2",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete ACS Higher Math Cycle 4 Course\n\n✅ Advanced Topics Coverage\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support\n✅ Lifetime Access"
+          },
+          "acs27_hm_cycle5": {
+            "name": "🧮 ACS HM Cycle 5",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027ACSMATH2",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete ACS Higher Math Cycle 5 Course\n\n✅ Advanced Topics Coverage\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support\n✅ Lifetime Access"
+          },
+          "acs27_hm_cycle6": {
+            "name": "🧮 ACS HM Cycle 6",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027ACSMATH2",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete ACS Higher Math Cycle 6 Course\n\n✅ Advanced Topics Coverage\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support\n✅ Lifetime Access"
+          },
+          "acs27_hm_all": {
+            "name": "🧮 ACS HM ALL Cycle Combo",
+            "type": "course",
+            "price": 450,
+            "groupLink": "https://t.me/+HSC2027ACSMATH2",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete ACS Higher Math ALL Cycle Course\n\n✅ Advanced Topics Coverage\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support\n✅ Lifetime Access"
           }
         }
       },
-      "acs_physics": {
-        "name": "⚛️ ACS Physics All Course",
+      "acs27_physics": {
+        "name": "⚛️ ACS 27 Physics All Course",
         "type": "submenu",
         "courses": {
-          "physics_1st": {
-            "name": "⚛️ Physics 1st Paper",
+          "acs27_phy_cycle1": {
+            "name": "⚛️ ACS Physics Cycle 1",
             "type": "course",
-            "price": 150,
+            "price": 100,
             "groupLink": "https://t.me/+HSC2027Physics1st",
             "paymentLink": "",
             "imageLink": "",
             "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
           },
-          "physics_2nd": {
-            "name": "⚛️ Physics 2nd Paper",
+          "acs27_phy_cycle2": {
+            "name": "⚛️ ACS Physics Cycle 2",
             "type": "course",
-            "price": 150,
-            "groupLink": "https://t.me/+HSC2027Physics2nd",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
             "paymentLink": "",
             "imageLink": "",
-            "description": "📖 Complete Physics 2nd Paper Course\n\n✅ Electricity & Magnetism\n✅ Modern Physics\n✅ Electronics & Communication\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_phy_cycle3": {
+            "name": "⚛️ ACS Physics Cycle 3",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_phy_cycle4": {
+            "name": "⚛️ ACS Physics Cycle 4",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_phy_cycle5": {
+            "name": "⚛️ ACS Physics Cycle 5",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_phy_cycle6": {
+            "name": "⚛️ ACS Physics Cycle 6",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_phy_all": {
+            "name": "⚛️ ACS Physics ALL Cycle",
+            "type": "course",
+            "price": 450,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          }
+        }
+      },
+      "acs27_aloron_chemistry": {
+        "name": "⚛️ ACS 27 Aloron Chemistry All Course",
+        "type": "submenu",
+        "courses": {
+          "acs27_alo_chem_cycle1": {
+            "name": "⚛️ ACS Aloron Chemistry Cycle 1",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_alo_chem_cycle2": {
+            "name": "⚛️ ACS Aloron Chemistry Cycle 2",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_alo_chem_cycle3": {
+            "name": "⚛️ ACS Aloron Chemistry Cycle 3",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_alo_chem_cycle4": {
+            "name": "⚛️ ACS Aloron Chemistry Cycle 4",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_alo_chem_cycle5": {
+            "name": "⚛️ ACS Aloron Chemistry Cycle 5",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_alo_chem_all": {
+            "name": "⚛️ ACS Aloron Chemistry ALL Cycle",
+            "type": "course",
+            "price": 350,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          }
+        }
+      },
+      "acs27_chemshifu_chemistry": {
+        "name": "⚛️ ACS 27 CHEMSHIFU CHEMISTY ALL Course",
+        "type": "submenu",
+        "courses": {
+          "acs27_chemshifu_chem_cycle1": {
+            "name": "⚛️ ACS Chemshifu Chemistry Cycle 1",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_chemshifu_chem_cycle2": {
+            "name": "⚛️ ACS Chemshifu Chemistry Cycle 2",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_chemshifu_chem_cycle3": {
+            "name": "⚛️ ACS Chemshifu Chemistry Cycle 3",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_chemshifu_chem_cycle4": {
+            "name": "⚛️ ACS Chemshifu Chemistry Cycle 4",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_chemshifu_chem_cycle5": {
+            "name": "⚛️ ACS Chemshifu Chemistry Cycle 5",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_chemshifu_chem_all": {
+            "name": "⚛️ ACS Chemshifu Chemistry ALL Cycle Combo",
+            "type": "course",
+            "price": 350,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          }
+        }
+      },
+      "acs27_hemel_chemistry": {
+        "name": "⚛️ ACS 27 Hemel Bhai Chemistry All Course",
+        "type": "submenu",
+        "courses": {
+          "acs27_hemel_chem_cycle1": {
+            "name": "⚛️ ACS Hemel Bhai Chemistry Cycle 1",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_hemel_chem_cycle2": {
+            "name": "⚛️ ACS Hemel Bhai Chemistry Cycle 2",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_hemel_chem_cycle3": {
+            "name": "⚛️ ACS Hemel Bhai Chemistry Cycle 3",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_hemel_chem_cycle4": {
+            "name": "⚛️ ACS Hemel Bhai Chemistry Cycle 4",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_hemel_chem_cycle5": {
+            "name": "⚛️ ACS Hemel Bhai Chemistry Cycle 5",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_hemel_chem_all": {
+            "name": "⚛️ ACS Hemel Bhai Chemistry ALL Cycle Combo",
+            "type": "course",
+            "price": 350,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          }
+        }
+      },
+      "acs27_dmc_biology": {
+        "name": "⚛️ ACS 27 DMC Dreamers Biology All Course",
+        "type": "submenu",
+        "courses": {
+          "acs27_dmc_bio_cycle1": {
+            "name": "⚛️ ACS 27 DMC Dreamers Biology Cycle 1",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_dmc_bio_cycle2": {
+            "name": "⚛️ ACS 27 DMC Dreamers Biology Cycle 2",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_dmc_bio_cycle3": {
+            "name": "⚛️ ACS 27 DMC Dreamers Biology Cycle 3",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_dmc_bio_cycle4": {
+            "name": "⚛️ ACS 27 DMC Dreamers Biology Cycle 4",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_dmc_bio_cycle5": {
+            "name": "⚛️ ACS 27 DMC Dreamers Biology Cycle 5",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_dmc_bio_cycle6": {
+            "name": "⚛️ ACS 27 DMC Dreamers Biology Cycle 6",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_dmc_bio_all": {
+            "name": "⚛️ ACS 27 DMC Dreamers Biology ALL Cycle Combo",
+            "type": "course",
+            "price": 400,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          }
+        }
+      },
+      "acs27_biomission_biology": {
+        "name": "⚛️ ACS 27 BIOMISSION BIOLOGY ALL Course",
+        "type": "submenu",
+        "courses": {
+          "acs27_biomission_bio_cycle1": {
+            "name": "⚛️ ACS 27 Biomission Biology Cycle 1",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_biomission_bio_cycle2": {
+            "name": "⚛️ ACS 27 Biomission Biology Cycle 2",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_biomission_bio_cycle3": {
+            "name": "⚛️ ACS 27 Biomission Biology Cycle 3",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_biomission_bio_cycle4": {
+            "name": "⚛️ ACS 27 Biomission Biology Cycle 4",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_biomission_bio_cycle5": {
+            "name": "⚛️ ACS 27 Biomission Biology Cycle 5",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_biomission_bio_cycle6": {
+            "name": "⚛️ ACS 27 Biomission Biology Cycle 6",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_biomission_bio_all": {
+            "name": "⚛️ ACS 27 Biomission Biology ALL Cycle Combo",
+            "type": "course",
+            "price": 400,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          }
+        }
+      },
+      "acs27_bh_biology": {
+        "name": "🔥 ACS 27 Biology Haters Biology ALL Course🔥",
+        "type": "submenu",
+        "courses": {
+          "acs27_bh_bio_cycle1": {
+            "name": "🔥 ACS 27 Biology Haters Biology Cycle 1",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_bh_bio_cycle2": {
+            "name": "🔥 ACS 27 Biology Haters Biology Cycle 2",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_bh_bio_cycle3": {
+            "name": "🔥 ACS 27 Biology Haters Biology Cycle 3",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          }
+          "acs27_bh_bio_cycle4": {
+            "name": "🔥 ACS 27 Biology Haters Biology Cycle 4",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_bh_bio_cycle5": {
+            "name": "🔥 ACS 27 Biology Haters Biology Cycle 5",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_bh_bio_cycle6": {
+            "name": "🔥 ACS 27 Biology Haters Biology Cycle 6",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          },
+          "acs27_bh_bio_all": {
+            "name": "🔥 ACS 27 Biology Haters Biology ALL Cycle Combo",
+            "type": "course",
+            "price": 400,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+          }
+        }
+      },
+      "acs27_ict": {
+        "name": "🔥 ACS 27 CHEMSHIFU CHEMISTY ALL Course🔥",
+        "type": "submenu",
+        "courses": {
+          "acs27_ict_all": {
+            "name": "🔥 ACS 27 ICT DECODER",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2027Physics1st",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
           }
         }
       }
