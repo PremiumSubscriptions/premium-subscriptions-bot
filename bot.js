@@ -584,21 +584,52 @@ const COURSES_DATA = {
     "name": "🔥HSC 2026 All Courses🔥",
     "type": "menu",
     "submenus": {
-      "bondi_pathshala": {
-        "name": "📚 Bondi Pathshala",
+      "acs26_bangla": {
+        "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
         "type": "submenu",
         "courses": {
-          "biology_cycle1": {
-            "name": "🧬 Biology Cycle 1",
+          "acs26_bangla_all": {
+            "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
             "type": "course",
-            "price": 200,
+            "price": 0,
             "groupLink": "https://t.me/+HSC2026Biology1",
             "paymentLink": "",
             "imageLink": "",
             "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
           }
         }
-      }
+      },
+         "acs26_bangla": {
+        "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
+        "type": "submenu",
+        "courses": {}
+         },
+         "acs26_bangla": {
+        "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
+        "type": "submenu",
+        "courses": {}
+         },
+         "acs26_bangla": {
+        "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
+        "type": "submenu",
+        "courses": {}
+         },
+         "acs26_bangla": {
+        "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
+        "type": "submenu",
+        "courses": {}
+         },
+         "acs26_bangla": {
+        "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
+        "type": "submenu",
+        "courses": {}
+         },
+         "acs26_bangla": {
+        "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
+        "type": "submenu",
+        "courses": {}
+         },
+        
     }
   },
   "admission25": {
