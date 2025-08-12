@@ -838,8 +838,14 @@ async function addTransaction(transactionId, userId, courseId, amount, paymentMe
             'INSERT INTO transactions (transaction_id, user_id, course_id, amount, payment_method, payment_date) VALUES ($1, $2, $3, $4, $5, $6)',
             [transactionId, userId, courseId, amount, paymentMethod, paymentDate]
         );
+        return true;
     } catch (error) {
+        if (error.code === '23505') { // Unique constraint violation
+            console.error('Duplicate transaction ID:', transactionId);
+            return false;
+        }
         console.error('Error adding transaction:', error);
+        return false;
     }
 }
 
@@ -1759,7 +1765,34 @@ bot.on('message', async (msg) => {
                     }
                 );
             }
-            
+            // In the bKash payment verification section:
+const added = await addTransaction(trxId, userId, courseId, course.price, paymentMethod, verificationResult.paymentDate);
+if (!added) {
+    return bot.sendMessage(
+        msg.chat.id, 
+        "❌ **এই Transaction ID আগেই ব্যবহার করা হয়েছে!**\n\n" +
+        "দয়া করে নতুন একটি Transaction ID দিন অথবা সাপোর্টে যোগাযোগ করুন।",
+        { 
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }],
+                    [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }]
+                ]
+            }
+        }
+    );
+}
+
+// Only proceed if transaction was added successfully
+await logTransaction(trxId, userId, course.price, course.name, paymentMethod, verificationResult.paymentDate);
+await addUserPurchase(userId, courseId, course.menu_id, course.submenu_id, trxId, paymentMethod, course.price, verificationResult.paymentDate);
+await updateUserData(userId, { 
+    pending_course: null, 
+    pending_payment_method: null 
+});
+
+// Send success message...
             bot.sendMessage(msg.chat.id, '⏳ Verifying payment and checking date... Please wait...');
             
             try {
