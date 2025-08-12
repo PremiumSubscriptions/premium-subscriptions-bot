@@ -674,28 +674,23 @@ async function initializeDatabase() {
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `);
-
-        // Add missing column if it doesn't exist (for existing databases)
         await pool.query(`
-    DO $$ 
-    BEGIN 
-        IF NOT EXISTS (
-            SELECT 1 FROM information_schema.columns 
-            WHERE table_name = 'transactions' 
-            AND column_name = 'payment_date'
-        ) THEN
-            ALTER TABLE transactions ADD COLUMN payment_date DATE NOT NULL DEFAULT CURRENT_DATE;
-        END IF;
-    END $$;
-`);
-            
-
+            DO $$ 
+            BEGIN 
+                BEGIN
+                    ALTER TABLE transactions ADD COLUMN payment_date DATE NOT NULL DEFAULT CURRENT_DATE;
+                EXCEPTION
+                    WHEN duplicate_column THEN
+                        -- Column already exists, do nothing
+                        NULL;
+                END;
+            END $$;
+        `);
+        
         console.log('Database initialized successfully');
     } catch (error) {
         console.error('Database initialization error:', error);
     }
-}
-
         await pool.query(`
             CREATE TABLE IF NOT EXISTS user_purchases (
                 id SERIAL PRIMARY KEY,
