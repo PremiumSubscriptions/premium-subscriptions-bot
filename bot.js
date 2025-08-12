@@ -931,54 +931,33 @@ async function verifyPaymentWithDateCheck(trxId) {
             return { success: false, error: 'Payment not found or incomplete' };
         }
         
-        // Parse the completedTime from bKash API
-        // bKash completedTime is typically in format: "2024-01-15 14:30:45" (BD time) or ISO format
-        let paymentDate;
+        // Extract payment date from completedTime (format: "YYYY-MM-DD HH:MM:SS")
+        const paymentDateBD = paymentData.completedTime.split(' ')[0];
         
-        if (paymentData.completedTime.includes('T')) {
-            // ISO format: "2024-01-15T14:30:45.000Z" or "2024-01-15T14:30:45+06:00"
-            paymentDate = new Date(paymentData.completedTime);
-        } else {
-            // Simple format: "2024-01-15 14:30:45" (assumed to be BD time)
-            paymentDate = new Date(paymentData.completedTime + '+06:00');
-        }
-        
-        // Get current date in Bangladesh timezone (UTC+6)
+        // Get current Bangladesh date (UTC+6)
         const now = new Date();
-        const bangladeshNow = new Date(now.getTime() + (6 * 60 * 60 * 1000));
-        
-        // Convert payment date to Bangladesh timezone if it's in UTC
-        let paymentDateBD;
-        if (paymentData.completedTime.endsWith('Z')) {
-            // UTC time, convert to BD time
-            paymentDateBD = new Date(paymentDate.getTime() + (6 * 60 * 60 * 1000));
-        } else {
-            // Already in BD time or has timezone info
-            paymentDateBD = paymentDate;
-        }
-        
-        // Extract date part only (YYYY-MM-DD) for comparison
-        const paymentDateOnly = paymentDateBD.toISOString().split('T')[0];
-        const todayOnly = bangladeshNow.toISOString().split('T')[0];
+        const bangladeshOffset = 6 * 60; // minutes
+        const bangladeshTime = new Date(now.getTime() + (bangladeshOffset * 60 * 1000));
+        const todayOnly = bangladeshTime.toISOString().split('T')[0];
         
         // Calculate yesterday and tomorrow
-        const yesterday = new Date(bangladeshNow);
-        yesterday.setDate(bangladeshNow.getDate() - 1);
+        const yesterday = new Date(bangladeshTime);
+        yesterday.setDate(bangladeshTime.getDate() - 1);
         const yesterdayOnly = yesterday.toISOString().split('T')[0];
         
-        const tomorrow = new Date(bangladeshNow);
-        tomorrow.setDate(bangladeshNow.getDate() + 1);
+        const tomorrow = new Date(bangladeshTime);
+        tomorrow.setDate(bangladeshTime.getDate() + 1);
         const tomorrowOnly = tomorrow.toISOString().split('T')[0];
         
         // Check if payment date is within allowed range
         const validDates = [yesterdayOnly, todayOnly, tomorrowOnly];
-        const isDateValid = validDates.includes(paymentDateOnly);
+        const isDateValid = validDates.includes(paymentDateBD);
         
         if (!isDateValid) {
             return { 
                 success: false, 
-                error: `Transaction Verification Error. You can use the Transaction ID only today ± 1 day. Payment Date: ${paymentDateOnly}, Today: ${todayOnly}`,
-                paymentDate: paymentDateOnly,
+                error: `Transaction Verification Error. You can use the Transaction ID only today ± 1 day. Payment Date: ${paymentDateBD}, Today: ${todayOnly}`,
+                paymentDate: paymentDateBD,
                 currentDate: todayOnly
             };
         }
@@ -987,7 +966,7 @@ async function verifyPaymentWithDateCheck(trxId) {
         return {
             success: true,
             data: paymentData,
-            paymentDate: paymentDateOnly // Return in YYYY-MM-DD format
+            paymentDate: paymentDateBD // Return in YYYY-MM-DD format
         };
         
     } catch (error) {
