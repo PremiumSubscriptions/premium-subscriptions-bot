@@ -564,7 +564,7 @@ const COURSES_DATA = {
         }
       },
       "acs27_ict": {
-        "name": "🔥 ACS 27 CHEMSHIFU CHEMISTY ALL Course🔥",
+        "name": "🔥 ACS 27 ICT Decoders 🔥",
         "type": "submenu",
         "courses": {
           "acs27_ict_all": {
