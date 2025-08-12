@@ -32,58 +32,109 @@ const BKASH_BASE_URL = 'https://tokenized.pay.bka.sh/v1.2.0-beta';
 const bot = new TelegramBot(BOT_TOKEN, { polling: true });
 const app = express();
 
-// Storage
-const users = new Map();
-const pendingPayments = new Map();
+// Hardcoded Courses Data (Auto-updates when bot.js is deployed)
+const COURSES_DATA = {
+    "hsc27": {
+        "name": "🔥HSC 2027 All Courses🔥",
+        "type": "menu",
+        "submenus": {
+            "acs_hm": {
+                "name": "🎯 ACS HM All Course",
+                "type": "submenu",
+                "courses": {
+                    "acs_hm_cycle1": {
+                        "name": "🧮 ACS HM Cycle 1",
+                        "type": "course",
+                        "price": 100,
+                        "groupLink": "https://t.me/+HSC2027ACSMATH1",
+                        "paymentLink": "https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt100/ceGy7t",
+                        "imageLink": "",
+                        "description": "📖 Complete ACS Higher Math Cycle 1 Course\n\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support\n✅ Lifetime Access\n\n🎯 Perfect for HSC 2027 students!"
+                    },
+                    "acs_hm_cycle2": {
+                        "name": "🧮 ACS HM Cycle 2",
+                        "type": "course",
+                        "price": 100,
+                        "groupLink": "https://t.me/+HSC2027ACSMATH2",
+                        "paymentLink": "",
+                        "imageLink": "",
+                        "description": "📖 Complete ACS Higher Math Cycle 2 Course\n\n✅ Advanced Topics Coverage\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support\n✅ Lifetime Access"
+                    }
+                }
+            },
+            "acs_physics": {
+                "name": "⚛️ ACS Physics All Course",
+                "type": "submenu",
+                "courses": {
+                    "physics_1st": {
+                        "name": "⚛️ Physics 1st Paper",
+                        "type": "course",
+                        "price": 150,
+                        "groupLink": "https://t.me/+HSC2027Physics1st",
+                        "paymentLink": "",
+                        "imageLink": "",
+                        "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+                    },
+                    "physics_2nd": {
+                        "name": "⚛️ Physics 2nd Paper",
+                        "type": "course",
+                        "price": 150,
+                        "groupLink": "https://t.me/+HSC2027Physics2nd",
+                        "paymentLink": "",
+                        "imageLink": "",
+                        "description": "📖 Complete Physics 2nd Paper Course\n\n✅ Electricity & Magnetism\n✅ Modern Physics\n✅ Electronics & Communication\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
+                    }
+                }
+            }
+        }
+    },
+    "hsc26": {
+        "name": "🔥HSC 2026 All Courses🔥",
+        "type": "menu",
+        "submenus": {
+            "bondi_pathshala": {
+                "name": "📚 Bondi Pathshala",
+                "type": "submenu",
+                "courses": {
+                    "biology_cycle1": {
+                        "name": "🧬 Biology Cycle 1",
+                        "type": "course",
+                        "price": 200,
+                        "groupLink": "https://t.me/+HSC2026Biology1",
+                        "paymentLink": "",
+                        "imageLink": "",
+                        "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+                    }
+                }
+            }
+        }
+    },
+    "admission25": {
+        "name": "HSC 2025 সকল Admission কোর্স 🟢",
+        "type": "menu",
+        "submenus": {
+            "university_prep": {
+                "name": "🎓 University Preparation",
+                "type": "submenu",
+                "courses": {
+                    "medical_prep": {
+                        "name": "🏥 Medical Admission Prep",
+                        "type": "course",
+                        "price": 300,
+                        "groupLink": "https://t.me/+Medical2025",
+                        "paymentLink": "",
+                        "imageLink": "",
+                        "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+                    }
+                }
+            }
+        }
+    }
+};
 
 // Database initialization
 async function initializeDatabase() {
     try {
-        // Create tables if they don't exist
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS menus (
-                id SERIAL PRIMARY KEY,
-                menu_id VARCHAR(100) UNIQUE NOT NULL,
-                name TEXT NOT NULL,
-                type VARCHAR(20) DEFAULT 'menu',
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS submenus (
-                id SERIAL PRIMARY KEY,
-                submenu_id VARCHAR(100) NOT NULL,
-                menu_id VARCHAR(100) NOT NULL,
-                name TEXT NOT NULL,
-                type VARCHAR(20) DEFAULT 'submenu',
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (menu_id) REFERENCES menus(menu_id) ON DELETE CASCADE,
-                UNIQUE(submenu_id, menu_id)
-            )
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS courses (
-                id SERIAL PRIMARY KEY,
-                course_id VARCHAR(100) NOT NULL,
-                menu_id VARCHAR(100) NOT NULL,
-                submenu_id VARCHAR(100) NOT NULL,
-                name TEXT NOT NULL,
-                type VARCHAR(20) DEFAULT 'course',
-                price INTEGER NOT NULL,
-                group_link TEXT,
-                payment_link TEXT,
-                image_link TEXT,
-                description TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                UNIQUE(course_id, menu_id, submenu_id)
-            )
-        `);
-
         await pool.query(`
             CREATE TABLE IF NOT EXISTS users (
                 id SERIAL PRIMARY KEY,
@@ -94,6 +145,7 @@ async function initializeDatabase() {
                 pending_course VARCHAR(100),
                 pending_payment_method VARCHAR(20),
                 current_menu VARCHAR(100),
+                waiting_for_proof TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
@@ -110,6 +162,7 @@ async function initializeDatabase() {
                 transaction_id VARCHAR(100),
                 payment_method VARCHAR(20),
                 amount INTEGER,
+                payment_date DATE,
                 UNIQUE(user_id, course_id)
             )
         `);
@@ -122,6 +175,7 @@ async function initializeDatabase() {
                 course_id VARCHAR(100) NOT NULL,
                 amount INTEGER NOT NULL,
                 payment_method VARCHAR(20) NOT NULL,
+                payment_date DATE NOT NULL,
                 status VARCHAR(20) DEFAULT 'completed',
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
@@ -151,50 +205,74 @@ async function initializeDatabase() {
     }
 }
 
+// Helper functions for hardcoded courses
+function getMenus() {
+    return Object.entries(COURSES_DATA).map(([menuId, menu]) => ({
+        menu_id: menuId,
+        name: menu.name,
+        type: menu.type
+    }));
+}
+
+function getSubmenus(menuId) {
+    const menu = COURSES_DATA[menuId];
+    if (!menu || !menu.submenus) return [];
+    
+    return Object.entries(menu.submenus).map(([submenuId, submenu]) => ({
+        submenu_id: submenuId,
+        menu_id: menuId,
+        name: submenu.name,
+        type: submenu.type
+    }));
+}
+
+function getCourses(menuId, submenuId) {
+    const menu = COURSES_DATA[menuId];
+    if (!menu || !menu.submenus || !menu.submenus[submenuId]) return [];
+    
+    const submenu = menu.submenus[submenuId];
+    if (!submenu.courses) return [];
+    
+    return Object.entries(submenu.courses).map(([courseId, course]) => ({
+        course_id: courseId,
+        menu_id: menuId,
+        submenu_id: submenuId,
+        name: course.name,
+        type: course.type,
+        price: course.price,
+        group_link: course.groupLink,
+        payment_link: course.paymentLink,
+        image_link: course.imageLink,
+        description: course.description
+    }));
+}
+
+function findCourseById(courseId) {
+    for (const [menuId, menu] of Object.entries(COURSES_DATA)) {
+        if (menu.submenus) {
+            for (const [submenuId, submenu] of Object.entries(menu.submenus)) {
+                if (submenu.courses && submenu.courses[courseId]) {
+                    const course = submenu.courses[courseId];
+                    return {
+                        course_id: courseId,
+                        menu_id: menuId,
+                        submenu_id: submenuId,
+                        name: course.name,
+                        type: course.type,
+                        price: course.price,
+                        group_link: course.groupLink,
+                        payment_link: course.paymentLink,
+                        image_link: course.imageLink,
+                        description: course.description
+                    };
+                }
+            }
+        }
+    }
+    return null;
+}
+
 // Database helper functions
-async function getMenus() {
-    try {
-        const result = await pool.query('SELECT * FROM menus ORDER BY created_at');
-        return result.rows;
-    } catch (error) {
-        console.error('Error getting menus:', error);
-        return [];
-    }
-}
-
-async function getSubmenus(menuId) {
-    try {
-        const result = await pool.query('SELECT * FROM submenus WHERE menu_id = $1 ORDER BY created_at', [menuId]);
-        return result.rows;
-    } catch (error) {
-        console.error('Error getting submenus:', error);
-        return [];
-    }
-}
-
-async function getCourses(menuId, submenuId) {
-    try {
-        const result = await pool.query(
-            'SELECT * FROM courses WHERE menu_id = $1 AND submenu_id = $2 ORDER BY created_at',
-            [menuId, submenuId]
-        );
-        return result.rows;
-    } catch (error) {
-        console.error('Error getting courses:', error);
-        return [];
-    }
-}
-
-async function findCourseById(courseId) {
-    try {
-        const result = await pool.query('SELECT * FROM courses WHERE course_id = $1', [courseId]);
-        return result.rows[0] || null;
-    } catch (error) {
-        console.error('Error finding course:', error);
-        return null;
-    }
-}
-
 async function getUserPurchases(userId) {
     try {
         const result = await pool.query('SELECT course_id FROM user_purchases WHERE user_id = $1', [userId]);
@@ -215,34 +293,24 @@ async function isTransactionUsed(transactionId) {
     }
 }
 
-async function addTransaction(transactionId, userId, courseId, amount, paymentMethod) {
+async function addTransaction(transactionId, userId, courseId, amount, paymentMethod, paymentDate) {
     try {
         await pool.query(
-            'INSERT INTO transactions (transaction_id, user_id, course_id, amount, payment_method) VALUES ($1, $2, $3, $4, $5)',
-            [transactionId, userId, courseId, amount, paymentMethod]
+            'INSERT INTO transactions (transaction_id, user_id, course_id, amount, payment_method, payment_date) VALUES ($1, $2, $3, $4, $5, $6)',
+            [transactionId, userId, courseId, amount, paymentMethod, paymentDate]
         );
     } catch (error) {
         console.error('Error adding transaction:', error);
     }
 }
 
-async function removeTransaction(transactionId) {
-    try {
-        await pool.query('DELETE FROM transactions WHERE transaction_id = $1', [transactionId]);
-        return true;
-    } catch (error) {
-        console.error('Error removing transaction:', error);
-        return false;
-    }
-}
-
-async function addUserPurchase(userId, courseId, menuId, submenuId, transactionId, paymentMethod, amount) {
+async function addUserPurchase(userId, courseId, menuId, submenuId, transactionId, paymentMethod, amount, paymentDate) {
     try {
         await pool.query(
-            `INSERT INTO user_purchases (user_id, course_id, menu_id, submenu_id, transaction_id, payment_method, amount) 
-             VALUES ($1, $2, $3, $4, $5, $6, $7) 
+            `INSERT INTO user_purchases (user_id, course_id, menu_id, submenu_id, transaction_id, payment_method, amount, payment_date) 
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
              ON CONFLICT (user_id, course_id) DO NOTHING`,
-            [userId, courseId, menuId, submenuId, transactionId, paymentMethod, amount]
+            [userId, courseId, menuId, submenuId, transactionId, paymentMethod, amount, paymentDate]
         );
     } catch (error) {
         console.error('Error adding user purchase:', error);
@@ -271,7 +339,8 @@ async function getUserData(userId) {
             purchases: new Set(),
             pending_course: null,
             pending_payment_method: null,
-            current_menu: null
+            current_menu: null,
+            waiting_for_proof: null
         };
     }
 }
@@ -334,7 +403,8 @@ async function getBkashToken() {
     }
 }
 
-async function verifyPayment(trxId) {
+// Enhanced bKash payment verification with date checking
+async function verifyPaymentWithDateCheck(trxId) {
     try {
         const token = await getBkashToken();
         const response = await axios.post(`${BKASH_BASE_URL}/tokenized/checkout/general/searchTransaction`, {
@@ -346,28 +416,80 @@ async function verifyPayment(trxId) {
                 'X-APP-Key': BKASH_APP_KEY
             }
         });
-        return response.data;
+        
+        const paymentData = response.data;
+        
+        if (!paymentData || !paymentData.completedTime) {
+            return { success: false, error: 'Payment not found or incomplete' };
+        }
+        
+        // Extract payment date from completedTime
+        const paymentDate = new Date(paymentData.completedTime);
+        const today = new Date();
+        const yesterday = new Date(today);
+        const tomorrow = new Date(today);
+        
+        yesterday.setDate(today.getDate() - 1);
+        tomorrow.setDate(today.getDate() + 1);
+        
+        // Reset time to compare only dates
+        const resetTime = (date) => {
+            const newDate = new Date(date);
+            newDate.setHours(0, 0, 0, 0);
+            return newDate;
+        };
+        
+        const paymentDateOnly = resetTime(paymentDate);
+        const todayOnly = resetTime(today);
+        const yesterdayOnly = resetTime(yesterday);
+        const tomorrowOnly = resetTime(tomorrow);
+        
+        // Check if payment date is within allowed range (yesterday, today, or tomorrow)
+        const isDateValid = paymentDateOnly.getTime() === yesterdayOnly.getTime() || 
+                           paymentDateOnly.getTime() === todayOnly.getTime() || 
+                           paymentDateOnly.getTime() === tomorrowOnly.getTime();
+        
+        if (!isDateValid) {
+            return { 
+                success: false, 
+                error: 'Invalid payment date. Payment must be from today, yesterday, or tomorrow.',
+                paymentDate: paymentDate.toDateString()
+            };
+        }
+        
+        // Return success with payment data and date
+        return {
+            success: true,
+            data: paymentData,
+            paymentDate: paymentDate.toISOString().split('T')[0] // YYYY-MM-DD format
+        };
+        
     } catch (error) {
         console.error('Payment verification error:', error.message);
-        return null;
+        return { success: false, error: 'Verification failed' };
     }
 }
 
-async function logTransaction(trxId, userId, amount, courseName, paymentMethod) {
+async function logTransaction(trxId, userId, amount, courseName, paymentMethod, paymentDate) {
     const message = `💰 **New Payment**\n\n` +
                    `👤 User: \`${userId}\`\n` +
                    `📚 Course: ${courseName}\n` +
                    `💵 Amount: ${amount} TK\n` +
                    `💳 Method: ${paymentMethod}\n` +
                    `🆔 TRX ID: \`${trxId}\`\n` +
+                   `📅 Payment Date: ${paymentDate}\n` +
                    `⏰ Time: ${new Date().toLocaleString()}`;
 
-    await bot.sendMessage(CHANNEL_ID, message, { parse_mode: 'Markdown' });
+    try {
+        await bot.sendMessage(CHANNEL_ID, message, { parse_mode: 'Markdown' });
+    } catch (error) {
+        console.error('Error sending log message:', error);
+    }
 }
 
 // Keyboard functions
-async function getMainMenuKeyboard() {
-    const menus = await getMenus();
+function getMainMenuKeyboard() {
+    const menus = getMenus();
     const keyboard = [];
     
     menus.forEach(menu => {
@@ -382,8 +504,8 @@ async function getMainMenuKeyboard() {
     return { reply_markup: { inline_keyboard: keyboard } };
 }
 
-async function getMenuKeyboard(menuId) {
-    const submenus = await getSubmenus(menuId);
+function getMenuKeyboard(menuId) {
+    const submenus = getSubmenus(menuId);
     const keyboard = [];
     
     submenus.forEach(submenu => {
@@ -399,7 +521,7 @@ async function getMenuKeyboard(menuId) {
 }
 
 async function getSubmenuKeyboard(menuId, submenuId, userId) {
-    const courses = await getCourses(menuId, submenuId);
+    const courses = getCourses(menuId, submenuId);
     const userData = await getUserData(userId);
     const keyboard = [];
     
@@ -421,8 +543,8 @@ async function getSubmenuKeyboard(menuId, submenuId, userId) {
 
 async function getCourseKeyboard(courseId, userId, isPending = false) {
     const userData = await getUserData(userId);
-    const course = await findCourseById(courseId);
-    if (!course) return await getMainMenuKeyboard();
+    const course = findCourseById(courseId);
+    if (!course) return getMainMenuKeyboard();
     
     const keyboard = [];
     
@@ -447,9 +569,9 @@ async function getCourseKeyboard(courseId, userId, isPending = false) {
 
 // Bot Commands
 bot.onText(/\/start/, async (msg) => {
-    const mainKeyboard = await getMainMenuKeyboard();
+    const mainKeyboard = getMainMenuKeyboard();
     
-    const welcomeText = `🎓 Welcome to HSC Courses Bot! 🎓
+    const welcomeText = `🎓 Welcome to Premium Subscription Bot! 🎓
 
 আমাদের premium courses গুলো দেখুন এবং আপনার পছন্দের course কিনুন।
 
@@ -461,7 +583,7 @@ bot.onText(/\/start/, async (msg) => {
     bot.sendMessage(msg.chat.id, welcomeText, mainKeyboard);
 });
 
-// Admin Commands
+// Simplified Admin Commands
 bot.onText(/\/admin/, async (msg) => {
     if (!(await isAdmin(msg.from.id))) {
         return bot.sendMessage(msg.chat.id, '❌ You are not authorized!');
@@ -471,32 +593,10 @@ bot.onText(/\/admin/, async (msg) => {
     
     const adminText = `🔧 Admin Panel ${isPrimary ? '(Primary Admin)' : '(Sub Admin)'}
 
-📚 **Course Management:**
-/addmenu - Add new main menu
-/addsubmenu - Add submenu to main menu
-/addcourse - Add course to submenu
-/editcourse - Edit course details
-/deletecourse - Delete course
-/deletesubmenu - Delete submenu
-/deletemenu - Delete main menu
-/listall - Show all structure
-/setimage - Set course image (reply to image)
-/setdesc - Set course description (reply to text)
-
-💰 **Payment Management:**
-/updatebkash - Update bKash number
-/updatenagad - Update Nagad number
-/setpaymentlink - Set payment link for course
-
-🔧 **Transaction Management:**
+🔧 **Available Commands:**
 /checktrx - Check transaction status
 /addtrx - Add transaction to used list
-/removetrx - Remove transaction from used list
-
-📊 **Analytics:**
-/stats - View statistics
-/users - View user count
-/revenue - View revenue details` + 
+/removetrx - Remove transaction from used list` + 
 (isPrimary ? `
 
 👨‍💼 **Admin Management:**
@@ -504,139 +604,9 @@ bot.onText(/\/admin/, async (msg) => {
 /removeadmin - Remove admin
 /listadmins - List all admins
 
-🔧 **Examples:**
-\`/addmenu hsc28 🔥HSC 2028 All Courses🔥\`
-\`/addsubmenu hsc27 acs_chemistry ⚗️ ACS Chemistry All Course\`
-\`/addcourse hsc27 acs_chemistry chemistry_basics ⚗️ Chemistry Basics|200|https://t.me/+chem|Basic chemistry course\`
-\`/editcourse chemistry_basics price 250\`` : ``);
+📝 **Note:** To update courses, edit the COURSES_DATA in bot.js file and redeploy.` : ``);
 
     bot.sendMessage(msg.chat.id, adminText, {parse_mode: 'Markdown'});
-});
-
-// Add Menu
-bot.onText(/\/addmenu (.+)/, async (msg, match) => {
-    if (!(await isAdmin(msg.from.id))) return;
-    
-    const params = match[1].trim();
-    const parts = params.split(' ');
-    
-    if (parts.length < 2) {
-        return bot.sendMessage(msg.chat.id, '❌ Format: /addmenu menuId menuName\n\nExample:\n/addmenu hsc28 🔥HSC 2028 All Courses🔥');
-    }
-    
-    const menuId = parts[0];
-    const menuName = parts.slice(1).join(' ');
-    
-    try {
-        await pool.query(
-            'INSERT INTO menus (menu_id, name) VALUES ($1, $2)',
-            [menuId, menuName]
-        );
-        
-        bot.sendMessage(msg.chat.id, `✅ Menu "${menuName}" created successfully!\n\n📚 Menu ID: ${menuId}`);
-    } catch (error) {
-        if (error.code === '23505') { // Unique violation
-            bot.sendMessage(msg.chat.id, `❌ Menu "${menuId}" already exists!`);
-        } else {
-            console.error('Error adding menu:', error);
-            bot.sendMessage(msg.chat.id, '❌ Error creating menu!');
-        }
-    }
-});
-
-// Add Submenu
-bot.onText(/\/addsubmenu (.+)/, async (msg, match) => {
-    if (!(await isAdmin(msg.from.id))) return;
-    
-    const params = match[1].trim();
-    const parts = params.split(' ');
-    
-    if (parts.length < 3) {
-        return bot.sendMessage(msg.chat.id, '❌ Format: /addsubmenu menuId submenuId submenuName\n\nExample:\n/addsubmenu hsc27 acs_chemistry ACS Chemistry All Course');
-    }
-    
-    const menuId = parts[0];
-    const submenuId = parts[1];
-    const submenuName = parts.slice(2).join(' ');
-    
-    try {
-        // Check if menu exists
-        const menuResult = await pool.query('SELECT name FROM menus WHERE menu_id = $1', [menuId]);
-        if (menuResult.rows.length === 0) {
-            const menus = await getMenus();
-            return bot.sendMessage(msg.chat.id, `❌ Menu "${menuId}" not found!\n\nAvailable menus: ${menus.map(m => m.menu_id).join(', ')}`);
-        }
-        
-        await pool.query(
-            'INSERT INTO submenus (submenu_id, menu_id, name) VALUES ($1, $2, $3)',
-            [submenuId, menuId, submenuName]
-        );
-        
-        bot.sendMessage(msg.chat.id, `✅ Submenu "${submenuName}" added to "${menuResult.rows[0].name}" successfully!\n\n📂 Submenu ID: ${submenuId}`);
-    } catch (error) {
-        if (error.code === '23505') { // Unique violation
-            bot.sendMessage(msg.chat.id, `❌ Submenu "${submenuId}" already exists in menu "${menuId}"!`);
-        } else {
-            console.error('Error adding submenu:', error);
-            bot.sendMessage(msg.chat.id, '❌ Error creating submenu!');
-        }
-    }
-});
-
-// Add Course
-bot.onText(/\/addcourse (.+)/, async (msg, match) => {
-    if (!(await isAdmin(msg.from.id))) return;
-    
-    const params = match[1].trim();
-    const parts = params.split(' ');
-    
-    if (parts.length < 4) {
-        return bot.sendMessage(msg.chat.id, '❌ Format: /addcourse menuId submenuId courseId courseName|price|groupLink|description\n\nExample:\n/addcourse hsc27 acs_chemistry new_course Chemistry Basics|200|https://t.me/+chem|Basic chemistry course');
-    }
-    
-    const menuId = parts[0];
-    const submenuId = parts[1];
-    const courseId = parts[2];
-    const courseInfo = parts.slice(3).join(' ');
-    
-    const courseData = courseInfo.split('|');
-    
-    if (courseData.length < 4) {
-        return bot.sendMessage(msg.chat.id, '❌ Course data format: courseName|price|groupLink|description\n\nExample:\nChemistry Basics|200|https://t.me/+chem|Basic chemistry course');
-    }
-    
-    const [courseName, price, groupLink, description] = courseData;
-    const priceNum = parseInt(price.trim());
-    
-    if (isNaN(priceNum) || priceNum <= 0) {
-        return bot.sendMessage(msg.chat.id, '❌ Invalid price! Must be a positive number.');
-    }
-    
-    try {
-        // Check if menu and submenu exist
-        const submenuResult = await pool.query(
-            'SELECT s.name as submenu_name, m.name as menu_name FROM submenus s JOIN menus m ON s.menu_id = m.menu_id WHERE s.submenu_id = $1 AND s.menu_id = $2',
-            [submenuId, menuId]
-        );
-        
-        if (submenuResult.rows.length === 0) {
-            return bot.sendMessage(msg.chat.id, `❌ Menu "${menuId}" or submenu "${submenuId}" not found!`);
-        }
-        
-        await pool.query(
-            'INSERT INTO courses (course_id, menu_id, submenu_id, name, price, group_link, description) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-            [courseId, menuId, submenuId, courseName.trim(), priceNum, groupLink.trim(), description.trim()]
-        );
-        
-        bot.sendMessage(msg.chat.id, `✅ Course "${courseName}" added successfully!\n\n📚 Menu: ${submenuResult.rows[0].menu_name}\n📂 Submenu: ${submenuResult.rows[0].submenu_name}\n📖 Course ID: ${courseId}\n💰 Price: ${priceNum} TK`);
-    } catch (error) {
-        if (error.code === '23505') { // Unique violation
-            bot.sendMessage(msg.chat.id, `❌ Course "${courseId}" already exists!`);
-        } else {
-            console.error('Error adding course:', error);
-            bot.sendMessage(msg.chat.id, '❌ Error creating course!');
-        }
-    }
 });
 
 // Transaction management commands
@@ -660,8 +630,8 @@ bot.onText(/\/addtrx (.+)/, async (msg, match) => {
     const trxId = match[1];
     try {
         await pool.query(
-            'INSERT INTO transactions (transaction_id, user_id, course_id, amount, payment_method) VALUES ($1, $2, $3, $4, $5)',
-            [trxId, 'admin_added', 'manual', 0, 'manual']
+            'INSERT INTO transactions (transaction_id, user_id, course_id, amount, payment_method, payment_date) VALUES ($1, $2, $3, $4, $5, $6)',
+            [trxId, 'admin_added', 'manual', 0, 'manual', new Date().toISOString().split('T')[0]]
         );
         
         bot.sendMessage(
@@ -684,17 +654,90 @@ bot.onText(/\/removetrx (.+)/, async (msg, match) => {
     if (!(await isAdmin(msg.from.id))) return;
     
     const trxId = match[1];
-    const success = await removeTransaction(trxId);
+    try {
+        const result = await pool.query('DELETE FROM transactions WHERE transaction_id = $1', [trxId]);
+        
+        if (result.rowCount > 0) {
+            bot.sendMessage(
+                msg.chat.id,
+                `♻️ **TRX ID Removed from Used List**\n\n` +
+                `\`${trxId}\` আবার ব্যবহার করা যাবে।`,
+                { parse_mode: 'Markdown' }
+            );
+        } else {
+            bot.sendMessage(msg.chat.id, '❌ Transaction not found!');
+        }
+    } catch (error) {
+        console.error('Error removing transaction:', error);
+        bot.sendMessage(msg.chat.id, '❌ Error removing transaction!');
+    }
+});
+
+// Admin management commands (Primary Admin Only)
+bot.onText(/\/addadmin (.+)/, async (msg, match) => {
+    if (!isPrimaryAdmin(msg.from.id)) {
+        return bot.sendMessage(msg.chat.id, '❌ Only primary admin can add new admins!');
+    }
     
-    if (success) {
-        bot.sendMessage(
-            msg.chat.id,
-            `♻️ **TRX ID Removed from Used List**\n\n` +
-            `\`${trxId}\` আবার ব্যবহার করা যাবে।`,
-            { parse_mode: 'Markdown' }
+    const adminId = match[1];
+    try {
+        await pool.query(
+            'INSERT INTO admins (admin_id, added_by) VALUES ($1, $2)',
+            [adminId, msg.from.id]
         );
-    } else {
-        bot.sendMessage(msg.chat.id, '❌ Error removing transaction or transaction not found!');
+        
+        bot.sendMessage(msg.chat.id, `✅ Admin ${adminId} added successfully!`);
+    } catch (error) {
+        if (error.code === '23505') {
+            bot.sendMessage(msg.chat.id, `❌ Admin ${adminId} already exists!`);
+        } else {
+            console.error('Error adding admin:', error);
+            bot.sendMessage(msg.chat.id, '❌ Error adding admin!');
+        }
+    }
+});
+
+bot.onText(/\/removeadmin (.+)/, async (msg, match) => {
+    if (!isPrimaryAdmin(msg.from.id)) {
+        return bot.sendMessage(msg.chat.id, '❌ Only primary admin can remove admins!');
+    }
+    
+    const adminId = match[1];
+    if (adminId === ADMIN_ID) {
+        return bot.sendMessage(msg.chat.id, '❌ Cannot remove primary admin!');
+    }
+    
+    try {
+        const result = await pool.query('DELETE FROM admins WHERE admin_id = $1 AND is_primary = FALSE', [adminId]);
+        
+        if (result.rowCount > 0) {
+            bot.sendMessage(msg.chat.id, `✅ Admin ${adminId} removed successfully!`);
+        } else {
+            bot.sendMessage(msg.chat.id, '❌ Admin not found or is primary admin!');
+        }
+    } catch (error) {
+        console.error('Error removing admin:', error);
+        bot.sendMessage(msg.chat.id, '❌ Error removing admin!');
+    }
+});
+
+bot.onText(/\/listadmins/, async (msg) => {
+    if (!isPrimaryAdmin(msg.from.id)) {
+        return bot.sendMessage(msg.chat.id, '❌ Only primary admin can view admin list!');
+    }
+    
+    try {
+        const result = await pool.query('SELECT admin_id, is_primary FROM admins ORDER BY is_primary DESC, created_at');
+        
+        let adminList = '👥 **Admin List:**\n\n';
+        result.rows.forEach((admin, index) => {
+            adminList += `${index + 1}. \`${admin.admin_id}\` ${admin.is_primary ? '(Primary)' : '(Sub Admin)'}\n`;
+        });
+        
+        bot.sendMessage(msg.chat.id, adminList, { parse_mode: 'Markdown' });
+    } catch (error) {
+        console.error('Error listing admins:', error);
+        bot.sendMessage(msg.chat.id, '❌ Error fetching admin list!');
     }
 });
 
@@ -707,9 +750,9 @@ bot.on('callback_query', async (callbackQuery) => {
     bot.answerCallbackQuery(callbackQuery.id);
     
     if (data === 'main_menu') {
-        const mainKeyboard = await getMainMenuKeyboard();
+        const mainKeyboard = getMainMenuKeyboard();
         
-        const welcomeText = `🎓 HSC Courses Bot - Main Menu 🎓
+        const welcomeText = `🎓 Premium Subscription Bot - Main Menu 🎓
 
 আপনার পছন্দের course category সিলেক্ট করুন:`;
         
@@ -726,7 +769,7 @@ bot.on('callback_query', async (callbackQuery) => {
     }
     else if (data.startsWith('menu_')) {
         const menuId = data.replace('menu_', '');
-        const menus = await getMenus();
+        const menus = getMenus();
         const menu = menus.find(m => m.menu_id === menuId);
         
         if (!menu) {
@@ -738,7 +781,7 @@ bot.on('callback_query', async (callbackQuery) => {
 📚 Available Categories:`;
         
         try {
-            const menuKeyboard = await getMenuKeyboard(menuId);
+            const menuKeyboard = getMenuKeyboard(menuId);
             bot.editMessageText(menuText, {
                 chat_id: msg.chat.id,
                 message_id: msg.message_id,
@@ -746,7 +789,7 @@ bot.on('callback_query', async (callbackQuery) => {
             });
         } catch (error) {
             console.error('Error editing message:', error);
-            const menuKeyboard = await getMenuKeyboard(menuId);
+            const menuKeyboard = getMenuKeyboard(menuId);
             bot.sendMessage(msg.chat.id, menuText, menuKeyboard);
         }
     }
@@ -755,7 +798,7 @@ bot.on('callback_query', async (callbackQuery) => {
         const menuId = parts[0];
         const submenuId = parts.slice(1).join('_');
         
-        const submenus = await getSubmenus(menuId);
+        const submenus = getSubmenus(menuId);
         const submenu = submenus.find(s => s.submenu_id === submenuId);
         
         if (!submenu) {
@@ -781,7 +824,7 @@ bot.on('callback_query', async (callbackQuery) => {
     }
     else if (data.startsWith('course_')) {
         const courseId = data.replace('course_', '');
-        const course = await findCourseById(courseId);
+        const course = findCourseById(courseId);
         
         if (!course) {
             return bot.sendMessage(msg.chat.id, '❌ Course not found!');
@@ -847,7 +890,7 @@ bot.on('callback_query', async (callbackQuery) => {
     }
     else if (data.startsWith('buy_')) {
         const courseId = data.replace('buy_', '');
-        const course = await findCourseById(courseId);
+        const course = findCourseById(courseId);
         
         if (!course) {
             return bot.sendMessage(msg.chat.id, '❌ Course not found!');
@@ -879,7 +922,7 @@ bot.on('callback_query', async (callbackQuery) => {
     }
     else if (data.startsWith('payment_method_')) {
         const courseId = data.replace('payment_method_', '');
-        const course = await findCourseById(courseId);
+        const course = findCourseById(courseId);
         
         if (!course) {
             return bot.sendMessage(msg.chat.id, '❌ Course not found!');
@@ -910,7 +953,7 @@ bot.on('callback_query', async (callbackQuery) => {
     }
     else if (data.startsWith('pay_bkash_')) {
         const courseId = data.replace('pay_bkash_', '');
-        const course = await findCourseById(courseId);
+        const course = findCourseById(courseId);
         
         if (!course) {
             return bot.sendMessage(msg.chat.id, '❌ Course not found!');
@@ -959,7 +1002,7 @@ bot.on('callback_query', async (callbackQuery) => {
     }
     else if (data.startsWith('pay_nagad_')) {
         const courseId = data.replace('pay_nagad_', '');
-        const course = await findCourseById(courseId);
+        const course = findCourseById(courseId);
         
         if (!course) {
             return bot.sendMessage(msg.chat.id, '❌ Course not found!');
@@ -996,7 +1039,7 @@ bot.on('callback_query', async (callbackQuery) => {
     }
     else if (data.startsWith('submit_proof_')) {
         const courseId = data.replace('submit_proof_', '');
-        const course = await findCourseById(courseId);
+        const course = findCourseById(courseId);
         const userData = await getUserData(userId);
         
         if (!course) {
@@ -1029,18 +1072,20 @@ bot.on('callback_query', async (callbackQuery) => {
         const targetUserId = parts[1];
         const courseId = parts[2];
         
-        const userData = await getUserData(targetUserId);
-        const course = await findCourseById(courseId);
+        const course = findCourseById(courseId);
         
         if (!course) {
             return bot.answerCallbackQuery(callbackQuery.id, { text: '❌ Course not found!', show_alert: true });
         }
         
         if (action === 'approve') {
-            await addUserPurchase(targetUserId, courseId, course.menu_id, course.submenu_id, 'manual_approve', 'manual', course.price);
+            const currentDate = new Date().toISOString().split('T')[0];
+            
+            await addUserPurchase(targetUserId, courseId, course.menu_id, course.submenu_id, 'manual_approve', 'manual', course.price, currentDate);
             await updateUserData(targetUserId, { 
                 pending_course: null, 
-                pending_payment_method: null 
+                pending_payment_method: null,
+                waiting_for_proof: null
             });
             
             // Notify user
@@ -1064,6 +1109,10 @@ bot.on('callback_query', async (callbackQuery) => {
             }
             
         } else if (action === 'reject') {
+            await updateUserData(targetUserId, {
+                waiting_for_proof: null
+            });
+            
             // Notify user
             bot.sendMessage(targetUserId, `❌ **Your payment proof for ${course.name} was rejected.**\n\n💡 Please submit valid payment proof or contact support.`, {
                 parse_mode: 'Markdown',
@@ -1092,7 +1141,7 @@ bot.on('callback_query', async (callbackQuery) => {
     }
 });
 
-// Handle Payment Proof Input
+// Enhanced Payment Proof Handler with Date Verification
 bot.on('message', async (msg) => {
     if (msg.text && msg.text.startsWith('/')) return;
     
@@ -1102,7 +1151,7 @@ bot.on('message', async (msg) => {
     if (userData.waiting_for_proof) {
         const proofData = JSON.parse(userData.waiting_for_proof);
         const { courseId, paymentMethod } = proofData;
-        const course = await findCourseById(courseId);
+        const course = findCourseById(courseId);
         
         if (!course) {
             await updateUserData(userId, { waiting_for_proof: null });
@@ -1111,13 +1160,13 @@ bot.on('message', async (msg) => {
         
         await updateUserData(userId, { waiting_for_proof: null });
         
-        if (msg.photo) {
+        if (msg.photo && paymentMethod === 'Nagad') {
             // Handle photo proof (mainly for Nagad)
             const photo = msg.photo[msg.photo.length - 1];
             const fileId = photo.file_id;
             
             // Notify admin
-            const adminMessage = `🆕 New Payment Proof\n\n` +
+            const adminMessage = `🆕 New Payment Proof (Nagad)\n\n` +
                                `👤 User: \`${userId}\`\n` +
                                `📚 Course: ${course.name}\n` +
                                `💰 Amount: ${course.price} TK\n` +
@@ -1152,7 +1201,7 @@ bot.on('message', async (msg) => {
             }
             
         } else if (msg.text && paymentMethod === 'bKash') {
-            // Handle bKash TRX ID
+            // Handle bKash TRX ID with enhanced verification
             const trxId = msg.text.trim();
             
             // Check if TRX ID already used
@@ -1161,23 +1210,32 @@ bot.on('message', async (msg) => {
                     msg.chat.id, 
                     "❌ **এই Transaction ID আগেই ব্যবহার করা হয়েছে!**\n\n" +
                     "দয়া করে নতুন একটি Transaction ID দিন অথবা সাপোর্টে যোগাযোগ করুন।",
-                    { parse_mode: 'Markdown' }
+                    { 
+                        parse_mode: 'Markdown',
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }],
+                                [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }]
+                            ]
+                        }
+                    }
                 );
             }
             
-            bot.sendMessage(msg.chat.id, '⏳ Verifying payment... Please wait...');
+            bot.sendMessage(msg.chat.id, '⏳ Verifying payment and checking date... Please wait...');
             
             try {
-                const paymentData = await verifyPayment(trxId);
+                // Enhanced verification with date checking
+                const verificationResult = await verifyPaymentWithDateCheck(trxId);
                 
-                if (paymentData && paymentData.transactionStatus === 'Completed' && 
-                    parseInt(paymentData.amount) >= course.price) {
+                if (verificationResult.success && verificationResult.data.transactionStatus === 'Completed' && 
+                    parseInt(verificationResult.data.amount) >= course.price) {
                     
-                    // Save to database and mark as used
-                    await addTransaction(trxId, userId, courseId, course.price, paymentMethod);
-                    await logTransaction(trxId, userId, course.price, course.name, paymentMethod);
+                    // Save to database with payment date
+                    await addTransaction(trxId, userId, courseId, course.price, paymentMethod, verificationResult.paymentDate);
+                    await logTransaction(trxId, userId, course.price, course.name, paymentMethod, verificationResult.paymentDate);
                     
-                    await addUserPurchase(userId, courseId, course.menu_id, course.submenu_id, trxId, paymentMethod, course.price);
+                    await addUserPurchase(userId, courseId, course.menu_id, course.submenu_id, trxId, paymentMethod, course.price, verificationResult.paymentDate);
                     await updateUserData(userId, { 
                         pending_course: null, 
                         pending_payment_method: null 
@@ -1186,7 +1244,8 @@ bot.on('message', async (msg) => {
                     const successText = `✅ **পেমেন্ট সফলভাবে ভেরিফাই হয়েছে!**\n\n` +
                                        `📱 ${course.name} Unlocked!\n` +
                                        `💰 Amount: ${course.price} TK\n` +
-                                       `🎫 Transaction ID: ${trxId}\n\n` +
+                                       `🎫 Transaction ID: ${trxId}\n` +
+                                       `📅 Payment Date: ${verificationResult.paymentDate}\n\n` +
                                        `🎯 Join your course group:\n👉 Click the button below`;
                     
                     bot.sendMessage(msg.chat.id, successText, {
@@ -1199,11 +1258,25 @@ bot.on('message', async (msg) => {
                         }
                     });
                     
+                } else if (!verificationResult.success && verificationResult.error.includes('Invalid payment date')) {
+                    bot.sendMessage(msg.chat.id, `❌ **Payment Date Verification Failed!**\n\n🔍 Reason: ${verificationResult.error}\n📅 Payment Date: ${verificationResult.paymentDate || 'Unknown'}\n\n💡 Only payments from yesterday, today, or tomorrow are accepted.\n\nTransaction ID: ${trxId}`, {
+                        parse_mode: 'Markdown',
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{ text: '🔄 Try Another TRX ID', callback_data: `submit_proof_${courseId}` }],
+                                [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }],
+                                [{ text: '🏠 Main Menu', callback_data: 'main_menu' }]
+                            ]
+                        }
+                    });
+                    
                 } else {
-                    bot.sendMessage(msg.chat.id, `❌ Payment Verification Failed!\n\n🔍 Possible reasons:\n• Transaction ID not found\n• Payment amount insufficient\n• Payment not completed\n\n💡 Please check your Transaction ID and try again.\n\nTransaction ID entered: ${trxId}`, {
+                    bot.sendMessage(msg.chat.id, `❌ **Payment Verification Failed!**\n\n🔍 Possible reasons:\n• Transaction ID not found\n• Payment amount insufficient (Required: ${course.price} TK)\n• Payment not completed\n• Payment date is invalid\n\n💡 Please check your Transaction ID and try again.\n\nTransaction ID entered: ${trxId}`, {
+                        parse_mode: 'Markdown',
                         reply_markup: {
                             inline_keyboard: [
                                 [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }],
+                                [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }],
                                 [{ text: '🏠 Main Menu', callback_data: 'main_menu' }]
                             ]
                         }
@@ -1212,24 +1285,47 @@ bot.on('message', async (msg) => {
                 
             } catch (error) {
                 console.error('Payment verification error:', error);
-                bot.sendMessage(msg.chat.id, `⚠️ Verification Error!\n\nSomething went wrong while verifying your payment. Please contact support.\n\nTransaction ID: ${trxId}`, {
+                bot.sendMessage(msg.chat.id, `⚠️ **Verification Error!**\n\nSomething went wrong while verifying your payment. Please contact support.\n\nTransaction ID: ${trxId}`, {
+                    parse_mode: 'Markdown',
                     reply_markup: {
                         inline_keyboard: [
                             [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }],
+                            [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }],
                             [{ text: '🏠 Main Menu', callback_data: 'main_menu' }]
                         ]
                     }
                 });
             }
         } else {
-            bot.sendMessage(msg.chat.id, '⚠️ Please send a screenshot of your payment or the transaction ID (for bKash only).');
+            bot.sendMessage(msg.chat.id, '⚠️ Please send the correct format:\n• For bKash: Send Transaction ID only\n• For Nagad: Send payment screenshot', {
+                reply_markup: {
+                    inline_keyboard: [
+                        [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }]
+                    ]
+                }
+            });
         }
     }
 });
 
 // Express server
 app.get('/', (req, res) => {
-    res.send('HSC Courses Bot is running with PostgreSQL Database!');
+    res.send(`
+        <h1>Premium Subscription Bot</h1>
+        <p>Bot is running successfully with PostgreSQL Database!</p>
+        <p>Database: premium-subscription-bot-db on Render</p>
+        <p>Last Updated: ${new Date().toISOString()}</p>
+        <hr>
+        <h3>Features:</h3>
+        <ul>
+            <li>✅ Hardcoded courses (auto-updates on deployment)</li>
+            <li>✅ Enhanced bKash verification with date checking</li>
+            <li>✅ Payment date validation (yesterday, today, tomorrow only)</li>
+            <li>✅ Duplicate transaction prevention</li>
+            <li>✅ PostgreSQL integration</li>
+            <li>✅ Admin panel for transaction management</li>
+        </ul>
+    `);
 });
 
 app.listen(PORT, () => {
@@ -1238,7 +1334,13 @@ app.listen(PORT, () => {
 
 // Initialize and start bot
 initializeDatabase().then(() => {
-    console.log('HSC Courses Bot started successfully with PostgreSQL!');
+    console.log('Premium Subscription Bot started successfully with PostgreSQL!');
+    console.log('Features enabled:');
+    console.log('- Hardcoded courses with auto-update on deployment');
+    console.log('- Enhanced bKash verification with date checking');
+    console.log('- Payment date validation (±1 day from current date)');
+    console.log('- Duplicate transaction prevention');
+    console.log('- PostgreSQL database: premium-subscription-bot-db');
 }).catch(error => {
     console.error('Error starting bot:', error);
 });
