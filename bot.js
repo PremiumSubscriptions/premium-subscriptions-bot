@@ -1893,7 +1893,7 @@ app.get('/', (req, res) => {
         <h3>Features:</h3>
         <ul>
             <li>✅ Hardcoded courses (auto-updates on deployment)</li>
-            <li>✅ Enhanced bKash verification with date checking</li>
+            <li>✅ Enhanced bKash verification with time checking</li>
             <li>✅ Payment date validation (yesterday, today, tomorrow only)</li>
             <li>✅ Duplicate transaction prevention</li>
             <li>✅ PostgreSQL integration</li>
@@ -1911,8 +1911,8 @@ initializeDatabase().then(() => {
     console.log('Premium Subscription Bot started successfully with PostgreSQL!');
     console.log('Features enabled:');
     console.log('- Hardcoded courses with auto-update on deployment');
-    console.log('- Enhanced bKash verification with date checking');
-    console.log('- Payment date validation (±1 day from current date)');
+    console.log('- Enhanced bKash verification with time checking');
+    console.log('- Payment date validation (next 24 hours from payment time )');
     console.log('- Duplicate transaction prevention');
     console.log('- PostgreSQL database: premium-subscription-bot-db');
 }).catch(error => {
