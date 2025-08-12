@@ -1729,141 +1729,129 @@ bot.on('message', async (msg) => {
                 console.error('Error sending proof to admin:', error);
                 bot.sendMessage(msg.chat.id, '⚠️ Error submitting payment proof. Please try again or contact support.');
             }
-            
-        } else if (msg.text && paymentMethod === 'bKash') {
-            // Handle bKash TRX ID with enhanced verification
-            const trxId = msg.text.trim();
-            
-            // Check if TRX ID already used
-            if (await isTransactionUsed(trxId)) {
-                return bot.sendMessage(
-                    msg.chat.id, 
-                    "❌ **এই Transaction ID আগেই ব্যবহার করা হয়েছে!**\n\n" +
-                    "দয়া করে নতুন একটি Transaction ID দিন অথবা সাপোর্টে যোগাযোগ করুন।",
-                    { 
-                        parse_mode: 'Markdown',
-                        reply_markup: {
-                            inline_keyboard: [
-                                [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }],
-                                [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }]
-                            ]
-                        }
-                    }
-                );
-            }
-            // In the bKash payment verification section:
-const added = await addTransaction(trxId, userId, courseId, course.price, paymentMethod, verificationResult.paymentDate);
-if (!added) {
-    return bot.sendMessage(
-        msg.chat.id, 
-        "❌ **এই Transaction ID আগেই ব্যবহার করা হয়েছে!**\n\n" +
-        "দয়া করে নতুন একটি Transaction ID দিন অথবা সাপোর্টে যোগাযোগ করুন।",
-        { 
-            parse_mode: 'Markdown',
-            reply_markup: {
-                inline_keyboard: [
-                    [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }],
-                    [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }]
-                ]
-            }
-        }
-    );
-}
-
-// Only proceed if transaction was added successfully
-await logTransaction(trxId, userId, course.price, course.name, paymentMethod, verificationResult.paymentDate);
-await addUserPurchase(userId, courseId, course.menu_id, course.submenu_id, trxId, paymentMethod, course.price, verificationResult.paymentDate);
-await updateUserData(userId, { 
-    pending_course: null, 
-    pending_payment_method: null 
-});
-
-// Send success message...
-            bot.sendMessage(msg.chat.id, '⏳ Verifying payment and checking date... Please wait...');
-            
-            try {
-                // Enhanced verification with date checking
-                const verificationResult = await verifyPaymentWithDateCheck(trxId);
-                
-                if (verificationResult.success && verificationResult.data.transactionStatus === 'Completed' && 
-                    parseInt(verificationResult.data.amount) >= course.price) {
-                    
-                    // Save to database with payment date
-                    await addTransaction(trxId, userId, courseId, course.price, paymentMethod, verificationResult.paymentDate);
-                    await logTransaction(trxId, userId, course.price, course.name, paymentMethod, verificationResult.paymentDate);
-                    
-                    await addUserPurchase(userId, courseId, course.menu_id, course.submenu_id, trxId, paymentMethod, course.price, verificationResult.paymentDate);
-                    await updateUserData(userId, { 
-                        pending_course: null, 
-                        pending_payment_method: null 
-                    });
-                    
-                    const successText = `✅ **পেমেন্ট সফলভাবে ভেরিফাই হয়েছে!**\n\n` +
-                                       `📱 ${course.name} Unlocked!\n` +
-                                       `💰 Amount: ${course.price} TK\n` +
-                                       `🎫 Transaction ID: ${trxId}\n` +
-                                       `📅 Payment Date: ${verificationResult.paymentDate}\n\n` +
-                                       `🎯 Join your course group:\n👉 Click the button below`;
-                    
-                    bot.sendMessage(msg.chat.id, successText, {
-                        parse_mode: 'Markdown',
-                        reply_markup: {
-                            inline_keyboard: [
-                                [{ text: `🎯 Join ${course.name} Group`, url: course.group_link }],
-                                [{ text: '🏠 Main Menu', callback_data: 'main_menu' }]
-                            ]
-                        }
-                    });
-                    
-                } else if (!verificationResult.success && verificationResult.error.includes('Transaction Verification Error')) {
-                    bot.sendMessage(msg.chat.id, `❌ **${verificationResult.error}**\n\n💡 **Valid Transaction Dates:**\n📅 Yesterday, Today, or Tomorrow only\n\n🔍 **Your Transaction Details:**\n• Transaction ID: \`${trxId}\`\n• Payment Date: ${verificationResult.paymentDate || 'Unknown'}\n• Current Date: ${verificationResult.currentDate || 'Unknown'}\n\n⚠️ Please use a recent transaction ID or make a new payment.`, {
-                        parse_mode: 'Markdown',
-                        reply_markup: {
-                            inline_keyboard: [
-                                [{ text: '🔄 Try Another TRX ID', callback_data: `submit_proof_${courseId}` }],
-                                [{ text: '💳 Make New Payment', callback_data: `payment_method_${courseId}` }],
-                                [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }],
-                                [{ text: '🏠 Main Menu', callback_data: 'main_menu' }]
-                            ]
-                        }
-                    });
-                    
-                } else {
-                    bot.sendMessage(msg.chat.id, `❌ **Payment Verification Failed!**\n\n🔍 Possible reasons:\n• Transaction ID not found\n• Payment amount insufficient (Required: ${course.price} TK)\n• Payment not completed\n• Payment date is invalid\n\n💡 Please check your Transaction ID and try again.\n\nTransaction ID entered: ${trxId}`, {
-                        parse_mode: 'Markdown',
-                        reply_markup: {
-                            inline_keyboard: [
-                                [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }],
-                                [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }],
-                                [{ text: '🏠 Main Menu', callback_data: 'main_menu' }]
-                            ]
-                        }
-                    });
-                }
-                
-            } catch (error) {
-                console.error('Payment verification error:', error);
-                bot.sendMessage(msg.chat.id, `⚠️ **Verification Error!**\n\nSomething went wrong while verifying your payment. Please contact support.\n\nTransaction ID: ${trxId}`, {
-                    parse_mode: 'Markdown',
-                    reply_markup: {
-                        inline_keyboard: [
-                            [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }],
-                            [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }],
-                            [{ text: '🏠 Main Menu', callback_data: 'main_menu' }]
-                        ]
-                    }
-                });
-            }
-        } else {
-            bot.sendMessage(msg.chat.id, '⚠️ Please send the correct format:\n• For bKash: Send Transaction ID only\n• For Nagad: Send payment screenshot', {
+          } else if (msg.text && paymentMethod === 'bKash') {
+    // Handle bKash TRX ID with enhanced verification
+    const trxId = msg.text.trim();
+    
+    bot.sendMessage(msg.chat.id, '⏳ Verifying payment time validity...');
+    
+    try {
+        // STEP 1: TIME VALIDATION
+        const verificationResult = await verifyPaymentWithDateCheck(trxId);
+        
+        if (!verificationResult.success) {
+            return bot.sendMessage(msg.chat.id, `❌ **${verificationResult.error}**`, {
+                parse_mode: 'Markdown',
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }]
+                        [{ text: '🔄 Try Another TRX ID', callback_data: `submit_proof_${courseId}` }],
+                        [{ text: '💳 Make New Payment', callback_data: `payment_method_${courseId}` }],
+                        [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }]
                     ]
                 }
             });
         }
+        
+        // STEP 2: DUPLICATE CHECK (only after time validation)
+        if (await isTransactionUsed(trxId)) {
+            return bot.sendMessage(
+                msg.chat.id, 
+                "❌ **এই Transaction ID আগেই ব্যবহার করা হয়েছে!**\n\n" +
+                "দয়া করে নতুন একটি Transaction ID দিন অথবা সাপোর্টে যোগাযোগ করুন।",
+                { 
+                    parse_mode: 'Markdown',
+                    reply_markup: {
+                        inline_keyboard: [
+                            [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }],
+                            [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }]
+                        ]
+                    }
+                }
+            );
+        }
+        
+        // STEP 3: TRANSACTION DETAILS VERIFICATION
+        if (verificationResult.data.transactionStatus !== 'Completed' || 
+            parseInt(verificationResult.data.amount) < course.price) {
+            
+            return bot.sendMessage(msg.chat.id, 
+                `❌ **Payment Verification Failed!**\n\n` +
+                `🔍 Possible reasons:\n` +
+                `• Payment status not completed\n` +
+                `• Insufficient amount (Paid: ${verificationResult.data.amount} TK, Required: ${course.price} TK)\n\n` +
+                `Transaction ID: ${trxId}`,
+                {
+                    parse_mode: 'Markdown',
+                    reply_markup: {
+                        inline_keyboard: [
+                            [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }],
+                            [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }]
+                        ]
+                    }
+                }
+            );
+        }
+        
+        // STEP 4: SAVE TRANSACTION
+        const added = await addTransaction(trxId, userId, courseId, course.price, paymentMethod, verificationResult.paymentDate);
+        if (!added) {
+            return bot.sendMessage(msg.chat.id, 
+                "❌ **Transaction processing error!**\n\n" +
+                "Please contact support immediately.",
+                { parse_mode: 'Markdown' }
+            );
+        }
+        
+        // STEP 5: GRANT ACCESS
+        await logTransaction(trxId, userId, course.price, course.name, paymentMethod, verificationResult.paymentDate);
+        await addUserPurchase(userId, courseId, course.menu_id, course.submenu_id, trxId, paymentMethod, course.price, verificationResult.paymentDate);
+        await updateUserData(userId, { 
+            pending_course: null, 
+            pending_payment_method: null 
+        });
+        
+        // Format validity end time
+        const validityEndTime = new Date(verificationResult.paymentTime.getTime() + 24 * 60 * 60 * 1000);
+        const options = { 
+            timeZone: 'Asia/Dhaka', 
+            hour12: true,
+            year: 'numeric', month: 'numeric', day: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+        };
+        const validityEndStr = validityEndTime.toLocaleString('en-BD', options);
+        
+        const successText = `✅ **পেমেন্ট সফলভাবে ভেরিফাই হয়েছে!**\n\n` +
+                           `📱 ${course.name} Unlocked!\n` +
+                           `💰 Amount: ${course.price} TK\n` +
+                           `🎫 Transaction ID: ${trxId}\n` +
+                           `⏰ Valid Until: ${validityEndStr}\n\n` +
+                           `🎯 Join your course group:\n👉 Click the button below`;
+        
+        bot.sendMessage(msg.chat.id, successText, {
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [{ text: `🎯 Join ${course.name} Group`, url: course.group_link }],
+                    [{ text: '🏠 Main Menu', callback_data: 'main_menu' }]
+                ]
+            }
+        });
+        
+    } catch (error) {
+        console.error('Payment verification error:', error);
+        bot.sendMessage(msg.chat.id, `⚠️ **Verification Error!**\n\nSomething went wrong. Please contact support.\n\nTransaction ID: ${trxId}`, {
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }],
+                    [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }],
+                    [{ text: '🏠 Main Menu', callback_data: 'main_menu' }]
+                ]
+            }
+        });
     }
+}  
+        
 });
 
 // Express server
