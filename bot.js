@@ -612,7 +612,7 @@ const COURSES_DATA = {
           "medical_prep": {
             "name": "🏥 Medical Admission Prep",
             "type": "course",
-            "price": 300,
+            "price": 10,
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
