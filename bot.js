@@ -1850,7 +1850,12 @@ bot.on('message', async (msg) => {
             }
         });
     }
-}
+} else {
+            // Handle invalid format
+            bot.sendMessage(msg.chat.id, '❌ Invalid payment proof format!');
+        }
+    } // ✅ CLOSING BRACE for if (userData.waiting_for_proof)
+});
 
 // Express server
 app.get('/', (req, res) => {
