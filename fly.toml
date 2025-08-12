@@ -1,32 +1,60 @@
-app = "hsc-courses-bot"
-primary_region = "sin"
+# Fly.io configuration for Premium Subscriptions Bot
+
+app = "premium-subscriptions-bot"
+primary_region = "sin" # Singapore region (good for Bangladesh users)
+kill_signal = "SIGINT"
+kill_timeout = "5s"
+
+[experimental]
+  auto_rollback = true
 
 [build]
-  # Let Fly auto-detect Node.js
 
 [env]
   NODE_ENV = "production"
+  PORT = "8080"
 
-[[services]]
-  internal_port = 10000  # or whatever port your app uses
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
   processes = ["app"]
-  protocol = "tcp"
-  
-  [[services.ports]]
-    handlers = ["http"]
-    port = 80
 
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 443
-    force_https = true
+  [http_service.concurrency]
+    type = "connections"
+    hard_limit = 25
+    soft_limit = 20
 
-  [[services.http_checks]]
-    path = "/health"
+  [[http_service.checks]]
     interval = "10s"
+    method = "GET"
+    path = "/"
+    protocol = "http"
+    restart_limit = 0
     timeout = "2s"
 
-[vm]
-  memory = "512mb"
+[[vm]]
   cpu_kind = "shared"
   cpus = 1
+  memory_mb = 512
+
+[deploy]
+  release_command = "npm run migrate"
+
+[processes]
+  app = "npm start"
+
+# Environment variables (set these via fly secrets)
+# fly secrets set BOT_TOKEN=your_bot_token
+# fly secrets set BKASH_USERNAME=your_bkash_username
+# fly secrets set BKASH_PASSWORD=your_bkash_password
+# fly secrets set BKASH_APP_KEY=your_bkash_app_key
+# fly secrets set BKASH_APP_SECRET=your_bkash_app_secret
+# fly secrets set ADMIN_ID=your_admin_id
+# fly secrets set ADMIN_USERNAME=your_admin_username
+# fly secrets set CHANNEL_ID=your_channel_id
+# fly secrets set BKASH_NUMBER=your_bkash_number
+# fly secrets set NAGAD_NUMBER=your_nagad_number
+# fly secrets set DATABASE_URL=your_postgresql_url
