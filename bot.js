@@ -680,7 +680,7 @@ async function initializeDatabase() {
             DO $$ 
             BEGIN 
                 BEGIN
-                    ALTER TABLE users ADD COLUMN waiting_for_proof TEXT;
+                    ALTER TABLE transactions ADD COLUMN payment_date DATE NOT NULL DEFAULT CURRENT_DATE;
                 EXCEPTION
                     WHEN duplicate_column THEN
                         -- Column already exists, do nothing
@@ -688,6 +688,12 @@ async function initializeDatabase() {
                 END;
             END $$;
         `);
+
+        console.log('Database initialized successfully');
+    } catch (error) {
+        console.error('Database initialization error:', error);
+    }
+}
 
         await pool.query(`
             CREATE TABLE IF NOT EXISTS user_purchases (
