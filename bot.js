@@ -962,8 +962,9 @@ async function verifyPaymentWithDateCheck(trxId) {
             return { success: false, error: 'Payment not found or incomplete' };
         }
         
-        // Extract payment date from completedTime (format: "YYYY-MM-DD HH:MM:SS")
-        const paymentDateBD = paymentData.completedTime.split(' ')[0];
+        // NEW: Properly parse bKash date format (2025-08-12T19:57:13:000)
+        const [datePart, timePart] = paymentData.completedTime.split('T');
+        const paymentDateBD = datePart;
         
         // Get current Bangladesh date (UTC+6)
         const now = new Date();
@@ -997,7 +998,7 @@ async function verifyPaymentWithDateCheck(trxId) {
         return {
             success: true,
             data: paymentData,
-            paymentDate: paymentDateBD // Return in YYYY-MM-DD format
+            paymentDate: paymentDateBD
         };
         
     } catch (error) {
@@ -1005,6 +1006,7 @@ async function verifyPaymentWithDateCheck(trxId) {
         return { success: false, error: 'Verification failed' };
     }
 }
+
 
 async function logTransaction(trxId, userId, amount, courseName, paymentMethod, paymentDate) {
     const message = `💰 **New Payment**\n\n` +
