@@ -948,7 +948,7 @@ async function getBkashToken() {
     }
 }
 
-// Enhanced bKash payment verification with CORRECTED date checking
+// Updated verifyPaymentWithDateCheck function with 24-hour validity
 async function verifyPaymentWithDateCheck(trxId) {
     try {
         const token = await getBkashToken();
@@ -968,43 +968,29 @@ async function verifyPaymentWithDateCheck(trxId) {
             return { success: false, error: 'Payment not found or incomplete' };
         }
         
-        // NEW: Properly parse bKash date format (2025-08-12T19:57:13:000)
+        // Parse payment time (UTC+6 Bangladesh Time)
         const [datePart, timePart] = paymentData.completedTime.split('T');
-        const paymentDateBD = datePart;
+        const [hours, minutes, seconds] = timePart.split(':');
+        const paymentDateTime = new Date(`${datePart}T${hours}:${minutes}:${seconds}+06:00`);
         
-        // Get current Bangladesh date (UTC+6)
-        const now = new Date();
-        const bangladeshOffset = 6 * 60; // minutes
-        const bangladeshTime = new Date(now.getTime() + (bangladeshOffset * 60 * 1000));
-        const todayOnly = bangladeshTime.toISOString().split('T')[0];
+        // Calculate 24-hour validity window
+        const validityEndTime = new Date(paymentDateTime.getTime() + 24 * 60 * 60 * 1000);
+        const currentTime = new Date();
         
-        // Calculate yesterday and tomorrow
-        const yesterday = new Date(bangladeshTime);
-        yesterday.setDate(bangladeshTime.getDate() - 1);
-        const yesterdayOnly = yesterday.toISOString().split('T')[0];
-        
-        const tomorrow = new Date(bangladeshTime);
-        tomorrow.setDate(bangladeshTime.getDate() + 1);
-        const tomorrowOnly = tomorrow.toISOString().split('T')[0];
-        
-        // Check if payment date is within allowed range
-        const validDates = [yesterdayOnly, todayOnly, tomorrowOnly];
-        const isDateValid = validDates.includes(paymentDateBD);
-        
-        if (!isDateValid) {
+        if (currentTime > validityEndTime) {
             return { 
                 success: false, 
-                error: `Transaction Verification Error. You can use the Transaction ID only today ± 1 day. Payment Date: ${paymentDateBD}, Today: ${todayOnly}`,
-                paymentDate: paymentDateBD,
-                currentDate: todayOnly
+                error: `Transaction expired! Valid only for 24 hours after payment.\n\nPayment Time: ${paymentDateTime.toLocaleString('en-BD', { timeZone: 'Asia/Dhaka' })}`,
+                paymentDate: datePart,
+                paymentTime: paymentDateTime
             };
         }
         
-        // Return success with payment data
         return {
             success: true,
             data: paymentData,
-            paymentDate: paymentDateBD
+            paymentDate: datePart,
+            paymentTime: paymentDateTime
         };
         
     } catch (error) {
