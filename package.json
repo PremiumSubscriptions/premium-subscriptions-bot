@@ -1,12 +1,31 @@
 {
-  "name": "hsc-courses-bot",
+  "name": "premium-subscriptions-bot",
   "version": "1.0.0",
-  "description": "HSC Courses Telegram Bot with PostgreSQL Database",
+  "description": "A premium subscription Telegram bot with bKash/Nagad payment integration and PostgreSQL database",
   "main": "bot.js",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "scripts": {
     "start": "node bot.js",
-    "dev": "nodemon bot.js"
+    "dev": "nodemon bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "node -e \"console.log('Database will be initialized on startup')\""
   },
+  "keywords": [
+    "telegram",
+    "bot",
+    "subscription",
+    "bkash",
+    "nagad",
+    "payment",
+    "postgresql",
+    "course",
+    "education"
+  ],
+  "author": "Premium's Team",
+  "license": "ISC",
   "dependencies": {
     "node-telegram-bot-api": "^0.64.0",
     "express": "^4.18.2",
@@ -16,16 +35,12 @@
   "devDependencies": {
     "nodemon": "^3.0.1"
   },
-  "engines": {
-    "node": ">=18.0.0"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PremiumSubscriptions/premium-subscriptions-bot"
   },
-  "keywords": [
-    "telegram",
-    "bot",
-    "hsc",
-    "courses",
-    "postgresql"
-  ],
-  "author": "Your Name",
-  "license": "MIT"
+  "bugs": {
+    "url": "https://github.com/PremiumSubscriptions/premium-subscriptions-bot/issues"
+  },
+  "homepage": "your-repository-url#readme"
 }
