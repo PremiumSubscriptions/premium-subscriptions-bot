@@ -403,7 +403,7 @@ async function getBkashToken() {
     }
 }
 
-// Enhanced bKash payment verification with date checking
+// Enhanced bKash payment verification with improved date checking
 async function verifyPaymentWithDateCheck(trxId) {
     try {
         const token = await getBkashToken();
@@ -425,24 +425,32 @@ async function verifyPaymentWithDateCheck(trxId) {
         
         // Extract payment date from completedTime
         const paymentDate = new Date(paymentData.completedTime);
-        const today = new Date();
-        const yesterday = new Date(today);
-        const tomorrow = new Date(today);
+        
+        // Get current date in Bangladesh timezone (UTC+6)
+        const now = new Date();
+        const bangladeshTime = new Date(now.getTime() + (6 * 60 * 60 * 1000)); // Add 6 hours for Bangladesh timezone
+        
+        // Calculate yesterday, today, and tomorrow in Bangladesh timezone
+        const today = new Date(bangladeshTime);
+        const yesterday = new Date(bangladeshTime);
+        const tomorrow = new Date(bangladeshTime);
         
         yesterday.setDate(today.getDate() - 1);
         tomorrow.setDate(today.getDate() + 1);
         
-        // Reset time to compare only dates
-        const resetTime = (date) => {
+        // Reset time to compare only dates (set to midnight)
+        const resetTimeToMidnight = (date) => {
             const newDate = new Date(date);
             newDate.setHours(0, 0, 0, 0);
             return newDate;
         };
         
-        const paymentDateOnly = resetTime(paymentDate);
-        const todayOnly = resetTime(today);
-        const yesterdayOnly = resetTime(yesterday);
-        const tomorrowOnly = resetTime(tomorrow);
+        // Convert payment date to Bangladesh timezone and reset time
+        const paymentDateBD = new Date(paymentDate.getTime() + (6 * 60 * 60 * 1000));
+        const paymentDateOnly = resetTimeToMidnight(paymentDateBD);
+        const todayOnly = resetTimeToMidnight(today);
+        const yesterdayOnly = resetTimeToMidnight(yesterday);
+        const tomorrowOnly = resetTimeToMidnight(tomorrow);
         
         // Check if payment date is within allowed range (yesterday, today, or tomorrow)
         const isDateValid = paymentDateOnly.getTime() === yesterdayOnly.getTime() || 
@@ -450,18 +458,30 @@ async function verifyPaymentWithDateCheck(trxId) {
                            paymentDateOnly.getTime() === tomorrowOnly.getTime();
         
         if (!isDateValid) {
+            const paymentDateString = paymentDateBD.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit', 
+                year: 'numeric'
+            });
+            const todayString = today.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+            
             return { 
                 success: false, 
-                error: 'Invalid payment date. Payment must be from today, yesterday, or tomorrow.',
-                paymentDate: paymentDate.toDateString()
+                error: `Transaction Verification Error. You can use the Transaction ID only today ± 1 day. Payment Date: ${paymentDateString}, Today: ${todayString}`,
+                paymentDate: paymentDateString,
+                currentDate: todayString
             };
         }
         
-        // Return success with payment data and date
+        // Return success with payment data and date in YYYY-MM-DD format
         return {
             success: true,
             data: paymentData,
-            paymentDate: paymentDate.toISOString().split('T')[0] // YYYY-MM-DD format
+            paymentDate: paymentDateBD.toISOString().split('T')[0] // YYYY-MM-DD format
         };
         
     } catch (error) {
@@ -1258,12 +1278,13 @@ bot.on('message', async (msg) => {
                         }
                     });
                     
-                } else if (!verificationResult.success && verificationResult.error.includes('Invalid payment date')) {
-                    bot.sendMessage(msg.chat.id, `❌ **Payment Date Verification Failed!**\n\n🔍 Reason: ${verificationResult.error}\n📅 Payment Date: ${verificationResult.paymentDate || 'Unknown'}\n\n💡 Only payments from yesterday, today, or tomorrow are accepted.\n\nTransaction ID: ${trxId}`, {
+                } else if (!verificationResult.success && verificationResult.error.includes('Transaction Verification Error')) {
+                    bot.sendMessage(msg.chat.id, `❌ **${verificationResult.error}**\n\n💡 **Valid Transaction Dates:**\n📅 Yesterday, Today, or Tomorrow only\n\n🔍 **Your Transaction Details:**\n• Transaction ID: \`${trxId}\`\n• Payment Date: ${verificationResult.paymentDate || 'Unknown'}\n• Current Date: ${verificationResult.currentDate || 'Unknown'}\n\n⚠️ Please use a recent transaction ID or make a new payment.`, {
                         parse_mode: 'Markdown',
                         reply_markup: {
                             inline_keyboard: [
                                 [{ text: '🔄 Try Another TRX ID', callback_data: `submit_proof_${courseId}` }],
+                                [{ text: '💳 Make New Payment', callback_data: `payment_method_${courseId}` }],
                                 [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }],
                                 [{ text: '🏠 Main Menu', callback_data: 'main_menu' }]
                             ]
