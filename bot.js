@@ -850,8 +850,6 @@ async function addTransaction(transactionId, userId, courseId, amount, paymentMe
             console.error('Duplicate transaction ID:', transactionId);
             return false;
         }
-        console.error('Error adding transaction:', error);
-        return false;
     }
 }
 
