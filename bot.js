@@ -837,27 +837,46 @@ async function isTransactionUsed(transactionId) {
         return false;
     }
 }
-
 async function addTransaction(transactionId, userId, courseId, amount, paymentMethod, paymentDate) {
     try {
-        await pool.query(
-            'INSERT INTO transactions (transaction_id, user_id, course_id, amount, payment_method, payment_date) VALUES ($1, $2, $3, $4, $5, $6)',
-            [transactionId, userId, courseId, amount, paymentMethod, paymentDate]
-        );
-        return true;
-    } catch (error) {
-        if (error.code === '23505') { // Unique constraint violation
-            console.error('Duplicate transaction ID:', transactionId);
+        // Input validation
+        if (!transactionId || !userId || !courseId || amount === undefined || !paymentMethod || !paymentDate) {
+            console.error('❌ Missing parameters for addTransaction');
             return false;
         }
-        console.error('Error adding transaction:', {
-            error,
-            query: 'INSERT INTO transactions (transaction_id, user_id, course_id, amount, payment_method, payment_date) ...',
-            params: [transactionId, userId, courseId, amount, paymentMethod, paymentDate]
-        });
+
+        // Ensure proper data types
+        const userIdStr = userId.toString();
+        const amountInt = parseInt(amount);
+        
+        // Validate date format (YYYY-MM-DD)
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        const formattedDate = paymentDate instanceof Date 
+            ? paymentDate.toISOString().split('T')[0] 
+            : paymentDate;
+            
+        if (!dateRegex.test(formattedDate)) {
+            console.error('❌ Invalid date format:', paymentDate);
+            return false;
+        }
+
+        await pool.query(
+            'INSERT INTO transactions (transaction_id, user_id, course_id, amount, payment_method, payment_date) VALUES ($1, $2, $3, $4, $5, $6)',
+            [transactionId, userIdStr, courseId, amountInt, paymentMethod, formattedDate]
+        );
+        
+        console.log('✅ Transaction added:', transactionId);
+        return true;
+        
+    } catch (error) {
+        if (error.code === '23505') {
+            console.error('❌ Duplicate transaction ID:', transactionId);
+        } else {
+            console.error('❌ Database error:', error.code, error.message);
+        }
         return false;
     }
-}
+                }
 
 async function addUserPurchase(userId, courseId, menuId, submenuId, transactionId, paymentMethod, amount, paymentDate) {
     try {
