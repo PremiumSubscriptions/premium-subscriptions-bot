@@ -132,9 +132,10 @@ const COURSES_DATA = {
     }
 };
 
-// Database initialization
+// Updated Database initialization function
 async function initializeDatabase() {
     try {
+        // Create users table with all required columns
         await pool.query(`
             CREATE TABLE IF NOT EXISTS users (
                 id SERIAL PRIMARY KEY,
@@ -149,6 +150,20 @@ async function initializeDatabase() {
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
+        `);
+
+        // Add missing column if it doesn't exist (for existing databases)
+        await pool.query(`
+            DO $$ 
+            BEGIN 
+                BEGIN
+                    ALTER TABLE users ADD COLUMN waiting_for_proof TEXT;
+                EXCEPTION
+                    WHEN duplicate_column THEN
+                        -- Column already exists, do nothing
+                        NULL;
+                END;
+            END $$;
         `);
 
         await pool.query(`
@@ -200,6 +215,7 @@ async function initializeDatabase() {
         `, [ADMIN_ID]);
 
         console.log('Database initialized successfully');
+        console.log('All required columns are now present');
     } catch (error) {
         console.error('Database initialization error:', error);
     }
