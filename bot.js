@@ -658,7 +658,7 @@ const COURSES_DATA = {
 // Updated Database initialization function
 async function initializeDatabase() {
     try {
-        // Create users table with all required columns
+        // Create users table
         await pool.query(`
             CREATE TABLE IF NOT EXISTS users (
                 id SERIAL PRIMARY KEY,
@@ -674,6 +674,23 @@ async function initializeDatabase() {
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `);
+
+        // Create transactions table
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS transactions (
+                id SERIAL PRIMARY KEY,
+                transaction_id VARCHAR(100) UNIQUE NOT NULL,
+                user_id VARCHAR(50) NOT NULL,
+                course_id VARCHAR(100) NOT NULL,
+                amount INTEGER NOT NULL,
+                payment_method VARCHAR(20) NOT NULL,
+                payment_date DATE NOT NULL,
+                status VARCHAR(20) DEFAULT 'completed',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        `);
+
+        // Add payment_date column if missing (for existing tables)
         await pool.query(`
             DO $$ 
             BEGIN 
@@ -681,16 +698,12 @@ async function initializeDatabase() {
                     ALTER TABLE transactions ADD COLUMN payment_date DATE NOT NULL DEFAULT CURRENT_DATE;
                 EXCEPTION
                     WHEN duplicate_column THEN
-                        -- Column already exists, do nothing
-                        NULL;
+                        NULL;  -- Column exists, ignore
                 END;
             END $$;
         `);
-        
-        console.log('Database initialized successfully');
-    } catch (error) {
-        console.error('Database initialization error:', error);
-    }
+
+        // Create user_purchases table
         await pool.query(`
             CREATE TABLE IF NOT EXISTS user_purchases (
                 id SERIAL PRIMARY KEY,
@@ -707,20 +720,7 @@ async function initializeDatabase() {
             )
         `);
 
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS transactions (
-                id SERIAL PRIMARY KEY,
-                transaction_id VARCHAR(100) UNIQUE NOT NULL,
-                user_id VARCHAR(50) NOT NULL,
-                course_id VARCHAR(100) NOT NULL,
-                amount INTEGER NOT NULL,
-                payment_method VARCHAR(20) NOT NULL,
-                payment_date DATE NOT NULL,
-                status VARCHAR(20) DEFAULT 'completed',
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
-
+        // Create admins table
         await pool.query(`
             CREATE TABLE IF NOT EXISTS admins (
                 id SERIAL PRIMARY KEY,
@@ -732,7 +732,7 @@ async function initializeDatabase() {
             )
         `);
 
-        // Insert primary admin if not exists
+        // Insert primary admin
         await pool.query(`
             INSERT INTO admins (admin_id, is_primary) 
             VALUES ($1, TRUE) 
@@ -740,11 +740,11 @@ async function initializeDatabase() {
         `, [ADMIN_ID]);
 
         console.log('Database initialized successfully');
-        console.log('All required columns are now present');
     } catch (error) {
         console.error('Database initialization error:', error);
     }
 }
+
 
 // Helper functions for hardcoded courses
 function getMenus() {
