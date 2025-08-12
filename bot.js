@@ -850,6 +850,12 @@ async function addTransaction(transactionId, userId, courseId, amount, paymentMe
             console.error('Duplicate transaction ID:', transactionId);
             return false;
         }
+        console.error('Error adding transaction:', {
+            error,
+            query: 'INSERT INTO transactions (transaction_id, user_id, course_id, amount, payment_method, payment_date) ...',
+            params: [transactionId, userId, courseId, amount, paymentMethod, paymentDate]
+        });
+        return false;
     }
 }
 
