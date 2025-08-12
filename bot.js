@@ -1850,9 +1850,7 @@ bot.on('message', async (msg) => {
             }
         });
     }
-}  
-        
-});
+}
 
 // Express server
 app.get('/', (req, res) => {
