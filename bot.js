@@ -996,10 +996,11 @@ const COURSES_DATA = {
             "imageLink": "",
             "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
           }
-       }
+        }
+      }
     }
   }
-},
+}
 
 // Updated Database initialization function
 async function initializeDatabase() {
