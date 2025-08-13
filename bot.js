@@ -1225,10 +1225,27 @@ async function addTransaction(transactionId, userId, courseId, amount, paymentMe
 async function addUserPurchase(userId, courseId, menuId, submenuId, transactionId, paymentMethod, amount, paymentDate) {
     try {
         await pool.query(
-    `INSERT INTO user_purchases (...) 
-     VALUES (...)`, // Just simple insert
-    [userId, courseId, ...]
-);
+            `INSERT INTO user_purchases (
+                user_id, 
+                course_id, 
+                menu_id, 
+                submenu_id, 
+                transaction_id, 
+                payment_method, 
+                amount, 
+                payment_date
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+            [
+                userId, 
+                courseId, 
+                menuId, 
+                submenuId, 
+                transactionId, 
+                paymentMethod, 
+                amount, 
+                paymentDate
+            ]
+        );
     } catch (error) {
         console.error('Error adding user purchase:', error);
     }
