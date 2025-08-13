@@ -1786,6 +1786,8 @@ bot.on('callback_query', async (callbackQuery) => {
             const courseKeyboard = await getCourseKeyboard(courseId, userId, isPending);
             bot.sendMessage(msg.chat.id, courseText, courseKeyboard);
         }
+
+   }
     else if (data.startsWith('buy_')) {
         const courseId = data.replace('buy_', '');
         const course = findCourseById(courseId);
