@@ -2024,7 +2024,7 @@ bot.on('callback_query', async (callbackQuery) => {
                 parse_mode: 'Markdown',
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: '💬 Contact Support', url: 'https://t.me/yoursupport' }]
+                        [{ text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }]
                     ]
                 }
             });
