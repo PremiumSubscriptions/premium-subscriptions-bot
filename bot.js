@@ -881,6 +881,21 @@ const COURSES_DATA = {
           }
         }
       },
+        "rtds25": {
+        "name": "🌡️RTDS 🧿",
+        "type": "submenu",
+        "courses": {
+          "dp_5.0s": {
+            "name": "✈️ দুরন্ত প্রয়াস 5.0s Restart ( 2nd Timer Medical Batch )",
+            "type": "course",
+            "price": 150,
+            "groupLink": "https://t.me/+Medical2025",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+          }
+        }
+      },
         "battles_bio": {
         "name": "🎓 Battles of Biology ",
         "type": "submenu",
