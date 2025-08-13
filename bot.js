@@ -603,6 +603,7 @@ const COURSES_DATA = {
         "name": "⚛️ ACS 26 Biomission Biology",
         "type": "submenu",
         "courses": {
+            "acs26_biology_all": {
             "name": "⚛️ ACS 27 Biomission Biology ALL Cycle Combo",
             "type": "course",
             "price": 300,
@@ -610,48 +611,317 @@ const COURSES_DATA = {
             "paymentLink": "",
             "imageLink": "",
             "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
-          }
+            }
+        }
     },
-         "acs26_bangla": {
-        "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
+         "acs26_chemistry": {
+        "name": "🔥ACS Chemistry All Cycle🔥",
         "type": "submenu",
-        "courses": {}
-         },
-         "acs26_bangla": {
-        "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
+        "courses": {
+            "acs26_chem_cycle1": {
+            "name": "📖HSC 2026 ACS CHEMISTRY CYCLE 1📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_chem_cycle2": {
+            "name": "📖HSC 2026 ACS CHEMISTRY CYCLE 2📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_chem_cycle3": {
+            "name": "📖HSC 2026 ACS CHEMISTRY CYCLE 3📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_chem_cycle4": {
+            "name": "📖HSC 2026 ACS CHEMISTRY CYCLE 4📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_chem_cycle5": {
+            "name": "📖HSC 2026 ACS CHEMISTRY CYCLE 5📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_chem_all": {
+            "name": "📖HSC 2026 ACS CHEMISTRY ALL CYCLE COMBO📖",
+            "type": "course",
+            "price": 300,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            }
+        }
+     },
+         "acs26_physics": {
+        "name": "🔥ACS Physics All Cycle🔥",
         "type": "submenu",
-        "courses": {}
-         },
-         "acs26_bangla": {
-        "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
+        "courses": {
+            "acs26_phy_cycle1": {
+            "name": "📖HSC 2026 ACS PHYSICS CYCLE 1📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_phy_cycle2": {
+            "name": "📖HSC 2026 ACS PHYSICS CYCLE 2📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_phy_cycle3": {
+            "name": "📖HSC 2026 ACS PHYSICS CYCLE 3📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_phy_cycle4": {
+            "name": "📖HSC 2026 ACS PHYSICS CYCLE 4📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_phy_cycle5": {
+            "name": "📖HSC 2026 ACS PHYSICS CYCLE 5📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_phy_cycle6": {
+            "name": "📖HSC 2026 ACS PHYSICS CYCLE 6📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_phy_all": {
+            "name": "📖HSC 2026 ACS PHYSICS ALL CYCLE COMBO📖",
+            "type": "course",
+            "price": 350,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            }
+        }
+     },
+         "acs26_hm": {
+        "name": "🔥ACS Math All Cycle🔥",
         "type": "submenu",
-        "courses": {}
-         },
-         "acs26_bangla": {
-        "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
+        "courses": {
+            "acs26_hm_cycle1": {
+            "name": "📖HSC 2026 ACS HM CYCLE 1📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_hm_cycle2": {
+            "name": "📖HSC 2026 ACS HM CYCLE 2📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_hm_cycle3": {
+            "name": "📖HSC 2026 ACS HM CYCLE 3📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_hm_cycle4": {
+            "name": "📖HSC 2026 ACS HM CYCLE 4📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_hm_cycle5": {
+            "name": "📖HSC 2026 ACS HM CYCLE 5📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_hm_cycle6": {
+            "name": "📖HSC 2026 ACS HM CYCLE 6📖",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "acs26_hm_all": {
+            "name": "📖HSC 2026 ACS HM ALL CYCLE COMBO📖",
+            "type": "course",
+            "price": 350,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            }
+        }
+    },
+         "26_bh_biology": {
+        "name": "❤️HSC 26 BH TROOPS ALL COURSES❤️",
         "type": "submenu",
-        "courses": {}
-         },
-         "acs26_bangla": {
-        "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
+        "courses": {
+            "26_bh_bio_1": {
+            "name": "🔥HSC 2026 BH TROOPS 1ST Paper 🔥",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "26_bh_bio_2": {
+            "name": "🔥HSC 2026 BH TROOPS 2ND Paper 🔥",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            }
+        }
+    },
+         "26_sr": {
+        "name": "❤️HSC 26  Shoawn Reza ❤️",
         "type": "submenu",
-        "courses": {}
-         }
-        
-    }
-  },
+        "courses": {
+            "26_sr_1": {
+            "name": "🔥 HSC 2026 Shoawn Reza 1st  Paper 🔥",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            },
+            "26_sr_2": {
+            "name": "🔥 HSC 2026 Shoawn Reza 2nd  Paper 🔥",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+            }
+        }
+     }  
+  } 
+},
   "admission25": {
     "name": "HSC 2025 সকল Admission কোর্স 🟢",
     "type": "menu",
     "submenus": {
-      "university_prep": {
-        "name": "🎓 University Preparation",
+      "physics_hunters": {
+        "name": "📖 PHYSICS HUNTERS 📖",
         "type": "submenu",
         "courses": {
-          "medical_prep": {
-            "name": "🏥 Medical Admission Prep",
+          "pro_4.0": {
+            "name": "🏥 প্রত্যাবর্তন ৪.০  সম্পূর্ণ - HSC 2024/25",
             "type": "course",
-            "price": 10,
+            "price": 150,
+            "groupLink": "https://t.me/+Medical2025",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+          }
+        }
+      },
+        "battles_bio": {
+        "name": "🎓 Battles of Biology ",
+        "type": "submenu",
+        "courses": {
+          "alpha_6.0": {
+            "name": "🏥 ALPHA 6 Medical Admission Full Course",
+            "type": "course",
+            "price": 150,
+            "groupLink": "https://t.me/+Medical2025",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+          }
+        }
+      },
+        "acs25_admission": {
+        "name": "🎓 ACS 📗",
+        "type": "submenu",
+        "courses": {
+            "acs25_medical": {
+            "name": "🔥ACS MEDICAL 2025🔥",
+            "type": "course",
+            "price": 150,
+            "groupLink": "https://t.me/+Medical2025",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+          },
+            "acs25_varsity": {
+            "name": "📗 ACS VERSITY 25 ❤️",
+            "type": "course",
+            "price": 150,
+            "groupLink": "https://t.me/+Medical2025",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+          },
+            "acs25_eng": {
+            "name": "🔥 ACS Engneering 2025 🔥",
+            "type": "course",
+            "price": 250,
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
@@ -660,8 +930,7 @@ const COURSES_DATA = {
         }
       }
     }
-  }
-};
+}
 
 // Updated Database initialization function
 async function initializeDatabase() {
