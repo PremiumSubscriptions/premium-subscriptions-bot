@@ -599,6 +599,19 @@ const COURSES_DATA = {
           }
         }
       },
+         "acs26_biomission_biology": {
+        "name": "⚛️ ACS 26 Biomission Biology",
+        "type": "submenu",
+        "courses": {
+            "name": "⚛️ ACS 27 Biomission Biology ALL Cycle Combo",
+            "type": "course",
+            "price": 300,
+            "groupLink": "https://t.me/+HSC2026Biology1",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Biology Cycle 1 Course\n\n✅ Cell Biology & Biochemistry\n✅ Plant Biology\n✅ Animal Biology\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions\n✅ Live Support"
+          }
+    },
          "acs26_bangla": {
         "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
         "type": "submenu",
@@ -623,12 +636,7 @@ const COURSES_DATA = {
         "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
         "type": "submenu",
         "courses": {}
-         },
-         "acs26_bangla": {
-        "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
-        "type": "submenu",
-        "courses": {}
-         },
+         }
         
     }
   },
