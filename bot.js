@@ -1104,20 +1104,24 @@ async function getCourseKeyboard(courseId, userId, isPending = false) {
     const keyboard = [];
     
     if (userData.purchases.has(courseId)) {
+        // Only show "Join Course Group" button for purchased courses
         keyboard.push([{ text: '🎯 Join Course Group', url: course.group_link }]);
     } else if (isPending) {
         keyboard.push([
             { text: '💳 Pay Now', callback_data: `payment_method_${courseId}` },
             { text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }
         ]);
+        keyboard.push([
+            { text: '⬅️ Back', callback_data: `submenu_${course.menu_id}_${course.submenu_id}` },
+            { text: '🏠 Main Menu', callback_data: 'main_menu' }
+        ]);
     } else {
         keyboard.push([{ text: '💳 Buy Now', callback_data: `buy_${courseId}` }]);
+        keyboard.push([
+            { text: '⬅️ Back', callback_data: `submenu_${course.menu_id}_${course.submenu_id}` },
+            { text: '🏠 Main Menu', callback_data: 'main_menu' }
+        ]);
     }
-    
-    keyboard.push([
-        { text: '⬅️ Back', callback_data: `submenu_${course.menu_id}_${course.submenu_id}` },
-        { text: '🏠 Main Menu', callback_data: 'main_menu' }
-    ]);
     
     return { reply_markup: { inline_keyboard: keyboard } };
 }
