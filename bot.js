@@ -928,9 +928,78 @@ const COURSES_DATA = {
             "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
           }
         }
-      }
+      },
+        "bp25_admission": {
+        "name": "🎓 বন্ধী পাঠশালা 📘 ",
+        "type": "submenu",
+        "courses": {
+            "bp25_du": {
+            "name": "🔥 TARGET DU 5.0 ❤️",
+            "type": "course",
+            "price": 150,
+            "groupLink": "https://t.me/+Medical2025",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+          },
+            "bp25_e&v": {
+            "name": "🔥 BP ENGINEERING + Varsity Biology - HSC 2025 🔥",
+            "type": "course",
+            "price": 250,
+            "groupLink": "https://t.me/+Medical2025",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+          },
+            "bp25_eng_phy": {
+            "name": "🔥 Engneering Physics - HSC 2025 🔥",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+Medical2025",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+          },
+            "bp25_eng_chem": {
+            "name": "🔥 Engneering Chemistry - HSC 2025 🔥",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+Medical2025",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+          },
+            "bp25_eng_math": {
+            "name": "🔥 Engneering Math - HSC 2025 🔥",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+Medical2025",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+          },
+            "bp25_var_bio": {
+            "name": "🔥 Varsity Biology - HSC 2025 🔥",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+Medical2025",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+          },
+            "bp25_mt_1st": {
+            "name": "🔥 MediTroops - 1st Timer Medical Course (Avengers) 🔥",
+            "type": "course",
+            "price": 150,
+            "groupLink": "https://t.me/+Medical2025",
+            "paymentLink": "",
+            "imageLink": "",
+            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+          }
+       }
     }
-}
+  }
+},
 
 // Updated Database initialization function
 async function initializeDatabase() {
