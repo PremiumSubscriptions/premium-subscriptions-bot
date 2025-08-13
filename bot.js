@@ -1052,20 +1052,21 @@ async function initializeDatabase() {
 
         // Create user_purchases table
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS user_purchases (
-                id SERIAL PRIMARY KEY,
-                user_id VARCHAR(50) NOT NULL,
-                course_id VARCHAR(100) NOT NULL,
-                menu_id VARCHAR(100) NOT NULL,
-                submenu_id VARCHAR(100) NOT NULL,
-                purchase_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                transaction_id VARCHAR(100),
-                payment_method VARCHAR(20),
-                amount INTEGER,
-                payment_date DATE,
-                UNIQUE(user_id, course_id)
-            )
-        `);
+    CREATE TABLE IF NOT EXISTS user_purchases (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(50) NOT NULL,
+        course_id VARCHAR(100) NOT NULL,
+        menu_id VARCHAR(100) NOT NULL,
+        submenu_id VARCHAR(100) NOT NULL,
+        purchase_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        transaction_id VARCHAR(100),
+        payment_method VARCHAR(20),
+        amount INTEGER,
+        payment_date DATE
+        // REMOVED the unique constraint: 
+        // UNIQUE(user_id, course_id)
+    )
+`);
 
         // Create admins table
         await pool.query(`
@@ -1224,11 +1225,10 @@ async function addTransaction(transactionId, userId, courseId, amount, paymentMe
 async function addUserPurchase(userId, courseId, menuId, submenuId, transactionId, paymentMethod, amount, paymentDate) {
     try {
         await pool.query(
-            `INSERT INTO user_purchases (user_id, course_id, menu_id, submenu_id, transaction_id, payment_method, amount, payment_date) 
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
-             ON CONFLICT (user_id, course_id) DO NOTHING`,
-            [userId, courseId, menuId, submenuId, transactionId, paymentMethod, amount, paymentDate]
-        );
+    `INSERT INTO user_purchases (...) 
+     VALUES (...)`, // Just simple insert
+    [userId, courseId, ...]
+);
     } catch (error) {
         console.error('Error adding user purchase:', error);
     }
@@ -1424,13 +1424,12 @@ function getMenuKeyboard(menuId) {
 
 async function getSubmenuKeyboard(menuId, submenuId, userId) {
     const courses = getCourses(menuId, submenuId);
-    const userData = await getUserData(userId);
     const keyboard = [];
     
     for (const course of courses) {
-        const status = userData.purchases.has(course.course_id) ? '✅ Purchased' : '❌ Not Purchased';
+        // REMOVED purchase status check
         keyboard.push([{
-            text: `${course.name}\n${status}\nPrice: ${course.price} TK`,
+            text: `${course.name} - ${course.price} TK`, // Only show name and price
             callback_data: `course_${course.course_id}`
         }]);
     }
@@ -1443,32 +1442,25 @@ async function getSubmenuKeyboard(menuId, submenuId, userId) {
     return { reply_markup: { inline_keyboard: keyboard } };
 }
 
-async function getCourseKeyboard(courseId, userId, isPending = false) {
-    const userData = await getUserData(userId);
+async function getCourseKeyboard(courseId, userId) {
     const course = findCourseById(courseId);
     if (!course) return getMainMenuKeyboard();
     
     const keyboard = [];
     
+    // ALWAYS show buy button
+    keyboard.push([{ text: '💳 Buy Now', callback_data: `buy_${courseId}` }]);
+    
+    // Show join group button if purchased
+    const userData = await getUserData(userId);
     if (userData.purchases.has(courseId)) {
-        // Only show "Join Course Group" button for purchased courses
         keyboard.push([{ text: '🎯 Join Course Group', url: course.group_link }]);
-    } else if (isPending) {
-        keyboard.push([
-            { text: '💳 Pay Now', callback_data: `payment_method_${courseId}` },
-            { text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }
-        ]);
-        keyboard.push([
-            { text: '⬅️ Back', callback_data: `submenu_${course.menu_id}_${course.submenu_id}` },
-            { text: '🏠 Main Menu', callback_data: 'main_menu' }
-        ]);
-    } else {
-        keyboard.push([{ text: '💳 Buy Now', callback_data: `buy_${courseId}` }]);
-        keyboard.push([
-            { text: '⬅️ Back', callback_data: `submenu_${course.menu_id}_${course.submenu_id}` },
-            { text: '🏠 Main Menu', callback_data: 'main_menu' }
-        ]);
     }
+    
+    keyboard.push([
+        { text: '⬅️ Back', callback_data: `submenu_${course.menu_id}_${course.submenu_id}` },
+        { text: '🏠 Main Menu', callback_data: 'main_menu' }
+    ]);
     
     return { reply_markup: { inline_keyboard: keyboard } };
 }
@@ -1742,23 +1734,7 @@ bot.on('callback_query', async (callbackQuery) => {
         
         let courseText = `${course.name}\n\n`;
         courseText += course.description + '\n\n';
-        
-        if (isPurchased) {
-            courseText += `Status: ✅ Purchased\n`;
-            courseText += `💰 Price: ${course.price} TK\n\n`;
-            courseText += `🎉 You have access to this course!\n`;
-            courseText += `Click "Join Course Group" to access materials.`;
-        } else if (isPending) {
-            courseText += `Status: ⏳ Payment Pending\n`;
-            courseText += `💰 Price: ${course.price} TK\n\n`;
-            courseText += `💰 Payment Instructions:\n`;
-            courseText += `1. Click on "Pay Now" button\n`;
-            courseText += `2. Complete payment\n`;
-            courseText += `3. Bkash থেকে payment করলে Transaction ID copy করুন, Nagad থেকে payment করলে payment এর screenshot নিন\n`;
-            courseText += `4. "Submit Payment Proof" button এ click করুন`;
-        } else {
-            courseText += `Status: ❌ Not Purchased\n`;
-            courseText += `💰 Price: ${course.price} TK`;
+        courseText += `💰 Price: ${course.price} TK`;
         }
         
         // Send with image if available
@@ -1924,7 +1900,6 @@ bot.on('callback_query', async (callbackQuery) => {
                 message_id: msg.message_id,
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }],
                         [{ text: '💬 Message Admin', url: `https://t.me/${ADMIN_USERNAME}` }],
                         [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
                     ]
