@@ -1738,67 +1738,65 @@ bot.on('callback_query', async (callbackQuery) => {
         }
     }
     else if (data.startsWith('course_')) {
-        const courseId = data.replace('course_', '');
-        const course = findCourseById(courseId);
-        
-        if (!course) {
-            return bot.sendMessage(msg.chat.id, '❌ Course not found!');
-        }
-        
-        const userData = await getUserData(userId);
-        const isPurchased = userData.purchases.has(courseId);
-        const isPending = userData.pending_course === courseId;
-        
-        let courseText = `${course.name}\n\n`;
-        courseText += course.description + '\n\n';
-        courseText += `💰 Price: ${course.price} TK`;
-        }
-        
-        // Send with image if available
-        if (course.image_link && !isPending && !isPurchased) {
-            try {
-                const courseKeyboard = await getCourseKeyboard(courseId, userId, isPending);
-                await bot.sendPhoto(msg.chat.id, course.image_link, {
-                    caption: courseText,
-                    reply_markup: courseKeyboard.reply_markup
-                });
-                // Delete the original message
-                try {
-                    await bot.deleteMessage(msg.chat.id, msg.message_id);
-                } catch (deleteError) {
-                    console.log('Could not delete original message:', deleteError.message);
-                }
-                return;
-            } catch (error) {
-                console.error('Error sending course image:', error);
-            }
-        }
-        
+    const courseId = data.replace('course_', '');
+    const course = findCourseById(courseId);
+    
+    if (!course) {
+        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+    }
+    
+    const userData = await getUserData(userId);
+    const isPurchased = userData.purchases.has(courseId);
+    const isPending = userData.pending_course === courseId;
+    
+    let courseText = `${course.name}\n\n`;
+    courseText += course.description + '\n\n';
+    courseText += `💰 Price: ${course.price} TK`;
+    
+    // Send with image if available
+    if (course.image_link && !isPending && !isPurchased) {
         try {
-            const courseKeyboard = await getCourseKeyboard(courseId, userId, isPending);
-            bot.editMessageText(courseText, {
-                chat_id: msg.chat.id,
-                message_id: msg.message_id,
-                ...courseKeyboard
+            const courseKeyboard = await getCourseKeyboard(courseId, userId);
+            await bot.sendPhoto(msg.chat.id, course.image_link, {
+                caption: courseText,
+                reply_markup: courseKeyboard.reply_markup
             });
+            // Delete the original message
+            try {
+                await bot.deleteMessage(msg.chat.id, msg.message_id);
+            } catch (deleteError) {
+                console.log('Could not delete original message:', deleteError.message);
+            }
+            return;
         } catch (error) {
-            console.error('Error editing message:', error);
-            const courseKeyboard = await getCourseKeyboard(courseId, userId, isPending);
-            bot.sendMessage(msg.chat.id, courseText, courseKeyboard);
+            console.error('Error sending course image:', error);
         }
-
-   }
-    else if (data.startsWith('buy_')) {
-        const courseId = data.replace('buy_', '');
-        const course = findCourseById(courseId);
-        
-        if (!course) {
-            return bot.sendMessage(msg.chat.id, '❌ Course not found!');
-        }
-        
-        await updateUserData(userId, { pending_course: courseId });
-        
-        const paymentText = `💳 Payment for ${course.name}
+    }
+    
+    try {
+        const courseKeyboard = await getCourseKeyboard(courseId, userId);
+        bot.editMessageText(courseText, {
+            chat_id: msg.chat.id,
+            message_id: msg.message_id,
+            ...courseKeyboard
+        });
+    } catch (error) {
+        console.error('Error editing message:', error);
+        const courseKeyboard = await getCourseKeyboard(courseId, userId);
+        bot.sendMessage(msg.chat.id, courseText, courseKeyboard);
+    }
+}
+else if (data.startsWith('buy_')) {
+    const courseId = data.replace('buy_', '');
+    const course = findCourseById(courseId);
+    
+    if (!course) {
+        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+    }
+    
+    await updateUserData(userId, { pending_course: courseId });
+    
+    const paymentText = `💳 Payment for ${course.name}
 
 💰 Amount: ${course.price} TK
 
@@ -1807,156 +1805,155 @@ bot.on('callback_query', async (callbackQuery) => {
 2. Bkash থেকে payment করলে Transaction ID copy করুন, Nagad থেকে payment করলে payment এর screenshot নিন
 3. "Submit Payment Proof" button এ click করুন`;
 
-        try {
-            const courseKeyboard = await getCourseKeyboard(courseId, userId, true);
-            bot.editMessageText(paymentText, {
-                chat_id: msg.chat.id,
-                message_id: msg.message_id,
-                ...courseKeyboard
-            });
-        } catch (error) {
-            console.error('Error editing message:', error);
-            const courseKeyboard = await getCourseKeyboard(courseId, userId, true);
-            bot.sendMessage(msg.chat.id, paymentText, courseKeyboard);
-        }
+    try {
+        const courseKeyboard = await getCourseKeyboard(courseId, userId);
+        bot.editMessageText(paymentText, {
+            chat_id: msg.chat.id,
+            message_id: msg.message_id,
+            ...courseKeyboard
+        });
+    } catch (error) {
+        console.error('Error editing message:', error);
+        const courseKeyboard = await getCourseKeyboard(courseId, userId);
+        bot.sendMessage(msg.chat.id, paymentText, courseKeyboard);
     }
-    else if (data.startsWith('payment_method_')) {
-        const courseId = data.replace('payment_method_', '');
-        const course = findCourseById(courseId);
-        
-        if (!course) {
-            return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+}
+else if (data.startsWith('payment_method_')) {
+    const courseId = data.replace('payment_method_', '');
+    const course = findCourseById(courseId);
+    
+    if (!course) {
+        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+    }
+    
+    const paymentText = `💳 Select Payment Method for ${course.name}\n\n💰 Amount: ${course.price} TK`;
+    
+    const paymentMethodKeyboard = {
+        reply_markup: {
+            inline_keyboard: [
+                [{ text: 'bKash', callback_data: `pay_bkash_${courseId}` }],
+                [{ text: 'Nagad', callback_data: `pay_nagad_${courseId}` }],
+                [{ text: '⬅️ Back', callback_data: `course_${courseId}` }]
+            ]
         }
+    };
+    
+    try {
+        bot.editMessageText(paymentText, {
+            chat_id: msg.chat.id,
+            message_id: msg.message_id,
+            ...paymentMethodKeyboard
+        });
+    } catch (error) {
+        console.error('Error editing message:', error);
+        bot.sendMessage(msg.chat.id, paymentText, paymentMethodKeyboard);
+    }
+}
+else if (data.startsWith('pay_bkash_')) {
+    const courseId = data.replace('pay_bkash_', '');
+    const course = findCourseById(courseId);
+    
+    if (!course) {
+        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+    }
+    
+    await updateUserData(userId, { pending_payment_method: 'bKash' });
+    
+    let paymentText = `💳 bKash Payment for ${course.name}\n\n💰 Amount: ${course.price} TK\n📱 bKash Number: ${BKASH_NUMBER}\n\n`;
+    let keyboard;
+    
+    if (course.payment_link) {
+        paymentText += `💡 Payment Instructions:\n✅ Click "Pay with bKash Link" button below\n✅ Complete payment using the link\n✅ Copy the Transaction ID from bKash\n✅ Click "Submit Payment Proof" button\n✅ Enter only the Transaction ID (Example: 9BG4R2G5N8)\n\n🔹 bKash payment auto approve হবে!`;
         
-        const paymentText = `💳 Select Payment Method for ${course.name}\n\n💰 Amount: ${course.price} TK`;
-        
-        const paymentMethodKeyboard = {
+        keyboard = {
             reply_markup: {
                 inline_keyboard: [
-                    [{ text: 'bKash', callback_data: `pay_bkash_${courseId}` }],
-                    [{ text: 'Nagad', callback_data: `pay_nagad_${courseId}` }],
-                    [{ text: '⬅️ Back', callback_data: `course_${courseId}` }]
+                    [{ text: '💳 Pay with bKash Link', url: course.payment_link }],
+                    [{ text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }],
+                    [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
                 ]
             }
         };
+    } else {
+        paymentText += `⚠️ Payment link is not added for this course. Please pay manually:\n\n💡 Manual Payment Instructions:\n✅ Make Payment ${course.price} TK to above bKash number\n✅ অবশ্যই Make Payment এ পেমেন্ট করবেন । ❌Send Money করলে হবে না!\n✅ Copy the Transaction ID from bKash\n✅ Click "Submit Payment Proof" button\n✅ Enter only the Transaction ID (Example: 9BG4R2G5N8)\n\n🔹 bKash payment auto approve হবে!`;
         
-        try {
-            bot.editMessageText(paymentText, {
-                chat_id: msg.chat.id,
-                message_id: msg.message_id,
-                ...paymentMethodKeyboard
-            });
-        } catch (error) {
-            console.error('Error editing message:', error);
-            bot.sendMessage(msg.chat.id, paymentText, paymentMethodKeyboard);
-        }
-    }
-    else if (data.startsWith('pay_bkash_')) {
-        const courseId = data.replace('pay_bkash_', '');
-        const course = findCourseById(courseId);
-        
-        if (!course) {
-            return bot.sendMessage(msg.chat.id, '❌ Course not found!');
-        }
-        
-        await updateUserData(userId, { pending_payment_method: 'bKash' });
-        
-        let paymentText = `💳 bKash Payment for ${course.name}\n\n💰 Amount: ${course.price} TK\n📱 bKash Number: ${BKASH_NUMBER}\n\n`;
-        let keyboard;
-        
-        if (course.payment_link) {
-            paymentText += `💡 Payment Instructions:\n✅ Click "Pay with bKash Link" button below\n✅ Complete payment using the link\n✅ Copy the Transaction ID from bKash\n✅ Click "Submit Payment Proof" button\n✅ Enter only the Transaction ID (Example: 9BG4R2G5N8)\n\n🔹 bKash payment auto approve হবে!`;
-            
-            keyboard = {
-                reply_markup: {
-                    inline_keyboard: [
-                        [{ text: '💳 Pay with bKash Link', url: course.payment_link }],
-                        [{ text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }],
-                        [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
-                    ]
-                }
-            };
-        } else {
-            paymentText += `⚠️ Payment link is not added for this course. Please pay manually:\n\n💡 Manual Payment Instructions:\n✅ Make Payment ${course.price} TK to above bKash number\n✅ অবশ্যই Make Payment এ পেমেন্ট করবেন । ❌Send Money করলে হবে না!\n✅ Copy the Transaction ID from bKash\n✅ Click "Submit Payment Proof" button\n✅ Enter only the Transaction ID (Example: 9BG4R2G5N8)\n\n🔹 bKash payment auto approve হবে!`;
-            
-            keyboard = {
-                reply_markup: {
-                    inline_keyboard: [
-                        [{ text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }],
-                        [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
-                    ]
-                }
-            };
-        }
-        
-        try {
-            bot.editMessageText(paymentText, {
-                chat_id: msg.chat.id,
-                message_id: msg.message_id,
-                ...keyboard
-            });
-        } catch (error) {
-            console.error('Error editing message:', error);
-            bot.sendMessage(msg.chat.id, paymentText, keyboard);
-        }
-    }
-    else if (data.startsWith('pay_nagad_')) {
-        const courseId = data.replace('pay_nagad_', '');
-        const course = findCourseById(courseId);
-        
-        if (!course) {
-            return bot.sendMessage(msg.chat.id, '❌ Course not found!');
-        }
-        
-        await updateUserData(userId, { pending_payment_method: 'Nagad' });
-        
-        const paymentText = `💳 Nagad Payment for ${course.name}\n\n💰 Amount: ${course.price} TK\n📱 Nagad Number: ${NAGAD_NUMBER}\n\n💡 Payment Instructions:\n✅ Send ${course.price} TK to above Nagad number- নগদ থেকে Send Money করুন\n✅ Take screenshot of payment\n✅ Click "Submit Payment Proof" button\n\n⚠️ Nagad payment manually approve হবে!\nPayment এর screenshot & course name সহ এডমিন কে মেসেজ দাও: https://t.me/${ADMIN_USERNAME}`;
-        
-        try {
-            bot.editMessageText(paymentText, {
-                chat_id: msg.chat.id,
-                message_id: msg.message_id,
-                reply_markup: {
-                    inline_keyboard: [
-                        [{ text: '💬 Message Admin', url: `https://t.me/${ADMIN_USERNAME}` }],
-                        [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
-                    ]
-                }
-            });
-        } catch (error) {
-            console.error('Error editing message:', error);
-            bot.sendMessage(msg.chat.id, paymentText, {
-                reply_markup: {
-                    inline_keyboard: [
-                        [{ text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }],
-                        [{ text: '💬 Message Admin', url: `https://t.me/${ADMIN_USERNAME}` }],
-                        [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
-                    ]
-                }
-            });
-        }
-    }
-    else if (data.startsWith('submit_proof_')) {
-        const courseId = data.replace('submit_proof_', '');
-        const course = findCourseById(courseId);
-        const userData = await getUserData(userId);
-        
-        if (!course) {
-            return bot.sendMessage(msg.chat.id, '❌ Course not found!');
-        }
-        
-        const paymentMethod = userData.pending_payment_method || 'bKash';
-        
-        const trxText = `📝 Submit Your Payment Proof\n\n💡 Instructions:\n${paymentMethod === 'bKash' ? '✅ Enter your bKash Transaction ID (Example: 9BG4R2G5N8)' : '✅ Send screenshot of your Nagad payment'}\n\n📱 ${course.name} এর জন্য payment verification\n💰 Amount: ${course.price} TK\n💳 Method: ${paymentMethod}`;
-        
-        bot.sendMessage(msg.chat.id, trxText, {
+        keyboard = {
             reply_markup: {
-                inline_keyboard: [[
-                    { text: '❌ Cancel', callback_data: `course_${courseId}` }
-                ]]
+                inline_keyboard: [
+                    [{ text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }],
+                    [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
+                ]
+            }
+        };
+    }
+    
+    try {
+        bot.editMessageText(paymentText, {
+            chat_id: msg.chat.id,
+            message_id: msg.message_id,
+            ...keyboard
+        });
+    } catch (error) {
+        console.error('Error editing message:', error);
+        bot.sendMessage(msg.chat.id, paymentText, keyboard);
+    }
+}
+else if (data.startsWith('pay_nagad_')) {
+    const courseId = data.replace('pay_nagad_', '');
+    const course = findCourseById(courseId);
+    
+    if (!course) {
+        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+    }
+    
+    await updateUserData(userId, { pending_payment_method: 'Nagad' });
+    
+    const paymentText = `💳 Nagad Payment for ${course.name}\n\n💰 Amount: ${course.price} TK\n📱 Nagad Number: ${NAGAD_NUMBER}\n\n💡 Payment Instructions:\n✅ Send ${course.price} TK to above Nagad number- নগদ থেকে Send Money করুন\n✅ Take screenshot of payment\n✅ Click "Submit Payment Proof" button\n\n⚠️ Nagad payment manually approve হবে!\nPayment এর screenshot & course name সহ এডমিন কে মেসেজ দাও: https://t.me/${ADMIN_USERNAME}`;
+    
+    try {
+        bot.editMessageText(paymentText, {
+            chat_id: msg.chat.id,
+            message_id: msg.message_id,
+            reply_markup: {
+                inline_keyboard: [
+                    [{ text: '💬 Message Admin', url: `https://t.me/${ADMIN_USERNAME}` }],
+                    [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
+                ]
             }
         });
-        
+    } catch (error) {
+        console.error('Error editing message:', error);
+        bot.sendMessage(msg.chat.id, paymentText, {
+            reply_markup: {
+                inline_keyboard: [
+                    [{ text: '📝 Submit Payment Proof', callback_data: `submit_proof_${courseId}` }],
+                    [{ text: '💬 Message Admin', url: `https://t.me/${ADMIN_USERNAME}` }],
+                    [{ text: '⬅️ Back', callback_data: `payment_method_${courseId}` }]
+                ]
+            }
+        });
+    }
+}
+else if (data.startsWith('submit_proof_')) {
+    const courseId = data.replace('submit_proof_', '');
+    const course = findCourseById(courseId);
+    const userData = await getUserData(userId);
+    
+    if (!course) {
+        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+    }
+    
+    const paymentMethod = userData.pending_payment_method || 'bKash';
+    
+    const trxText = `📝 Submit Your Payment Proof\n\n💡 Instructions:\n${paymentMethod === 'bKash' ? '✅ Enter your bKash Transaction ID (Example: 9BG4R2G5N8)' : '✅ Send screenshot of your Nagad payment'}\n\n📱 ${course.name} এর জন্য payment verification\n💰 Amount: ${course.price} TK\n💳 Method: ${paymentMethod}`;
+    
+    bot.sendMessage(msg.chat.id, trxText, {
+        reply_markup: {
+            inline_keyboard: [[
+                { text: '❌ Cancel', callback_data: `course_${courseId}` }
+            ]]
+        }
+    });      
         await updateUserData(userId, { 
             waiting_for_proof: JSON.stringify({ courseId, paymentMethod })
         });
