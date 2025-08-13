@@ -117,7 +117,7 @@ const COURSES_DATA = {
             "price": 100,
             "groupLink": "https://t.me/+HSC2027Physics1st",
             "paymentLink": "",
-            "imageLink": "",
+            "imageLink": "https://github.com/PremiumSubscriptions/premium-subscriptions-bot/blob/main/IMG_20250813_180818_395.jpg",
             "description": "📖 Complete Physics 1st Paper Course\n\n✅ Mechanics & Properties of Matter\n✅ Heat & Thermodynamics\n✅ Oscillations & Waves\n✅ HD Video Lectures\n✅ PDF Notes & Books\n✅ Practice Questions"
           },
           "acs27_phy_cycle2": {
