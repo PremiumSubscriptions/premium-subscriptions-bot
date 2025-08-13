@@ -863,7 +863,7 @@ const COURSES_DATA = {
   } 
 },
   "admission25": {
-    "name": "HSC 2025 সকল Admission কোর্স 🟢",
+    "name": "🔥 HSC 2025 সকল Admission কোর্স 🔥",
     "type": "menu",
     "submenus": {
       "physics_hunters": {
@@ -1399,8 +1399,8 @@ function getMainMenuKeyboard() {
     });
     
     keyboard.push([
-        { text: '🔥 Support 🔥', url: 'https://t.me/yoursupport' },
-        { text: '🔥 Our Channel ❤️', url: 'https://t.me/yourchannel' }
+        { text: '🔥 Support 🔥', url: 'https://t.me/Mehedi_X71' },
+        { text: '🔥 Our Channel ❤️', url: 'https://t.me/premium_subscriptionss' }
     ]);
     
     return { reply_markup: { inline_keyboard: keyboard } };
