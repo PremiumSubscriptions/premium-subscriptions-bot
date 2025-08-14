@@ -584,21 +584,6 @@ const COURSES_DATA = {
     "name": "🔥HSC 2026 All Courses🔥",
     "type": "menu",
     "submenus": {
-      "acs26_bangla": {
-        "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
-        "type": "submenu",
-        "courses": {
-          "acs26_bangla_all": {
-            "name": "📚 ACS  বাংলা ১ম পত্র সম্পূর্ণ",
-            "type": "course",
-            "price": 0,
-            "groupLink": "https://t.me/+HSC2026Biology1",
-            "paymentLink": "",
-            "imageLink": "",
-            "description": "বিস্তারিত জানতে আমদের টেলিগ্রাম চ্যানেল এ জয়েন করুন"
-          }
-        }
-      },
          "acs26_biomission_biology": {
         "name": "⚛️ ACS 26 Biomission Biology",
         "type": "submenu",
