@@ -2100,7 +2100,7 @@ bot.on('message', async (msg) => {
             
             const hasPaymentLink = course && course.payment_link;
             const bkashInstruction = `💳 bKash Payment Instructions:\n\n` +
-            `✅ এই নাম্বার 01902912653 এ Make Payment করবেন!\n` +
+            `✅ এই নাম্বার ${BKASH_NUMBER} এ Make Payment করবেন!\n` +
             `❌ Send Money করলে হবে না ।\n` +
             `✅ Payment করার পর Transaction ID টা copy করেন ।\n` +
             `✅ Submit Transaction ID এ ক্লিক করেন ।\n` +
@@ -2113,8 +2113,13 @@ bot.on('message', async (msg) => {
         else if (messageText === 'Nagad') {
             await updateUserData(userId, { pending_payment_method: 'Nagad' });
             userStates.set(userId, { ...userState, state: 'nagad_payment' });
-            
-            bot.sendMessage(msg.chat.id, `💳 Nagad Payment for ${course.name}\n\nAmount: ${course.price} TK\n\nSend money to: ${NAGAD_NUMBER}`, getNagadPaymentKeyboard());
+            const nagadInstruction = `💳 Nagad Payment Instructions:\n\n` +
+            `✅ এই নাম্বার ${NAGAD_NUMBER} এ Send Money করেন ।\n` +
+            `✅ Payment করার পর screenshot নিন ।\n` +
+            `✅ এডমিন কে course নাম সহ screenshot পাঠান ।\n\n` +
+            `⭐ Nagad Payment Manually Approve ⭐\n\n` +
+            `Amount: ${course.price} TK`;
+            bot.sendMessage(msg.chat.id, nagadInstruction, getNagadPaymentKeyboard());
         }
     }
     
