@@ -1737,88 +1737,96 @@ bot.on('callback_query', async (callbackQuery) => {
             bot.sendMessage(msg.chat.id, submenuText, submenuKeyboard);
         }
     }
-    else if (data.startsWith('course_')) {
-    const courseId = data.replace('course_', '');
-    const course = findCourseById(courseId);
-    
-    if (!course) {
-        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+
+    // Replace the course_ callback handler section with this fixed version:
+
+else if(data.startsWith('course_')){
+    const courseId=data.replace('course_','');
+    const course=findCourseById(courseId);
+    if(!course){
+        return bot.sendMessage(msg.chat.id,'❌ Course not found!');
     }
+
+    const userData=await getUserData(userId);
+    const isPurchased=userData.purchases.has(courseId);
+    const isPending=userData.pending_course===courseId;
     
-    const userData = await getUserData(userId);
-    const isPurchased = userData.purchases.has(courseId);
-    const isPending = userData.pending_course === courseId;
-    
-    let courseText = `${course.name}\n\n`;
-    courseText += course.description + '\n\n';
-    courseText += `💰 Price: ${course.price} TK`;
-    
-    // Send with image if available
-    // Inside the course_ callback handler
-if (course.image_link && !isPending && !isPurchased) {
-    try {
-        const courseKeyboard = await getCourseKeyboard(courseId, userId);
-        await bot.sendPhoto(msg.chat.id, course.image_link, {
-            caption: courseText,
-            reply_markup: courseKeyboard.reply_markup // Add this line
-        });
-        // Delete the original message
-        try {
-            await bot.deleteMessage(msg.chat.id, msg.message_id);
-        } catch (deleteError) {
-            console.log('Could not delete original message:', deleteError.message);
+    let courseText=`${course.name}\n\n`;
+    courseText+=course.description+'\n\n';
+    courseText+=`💰 Price: ${course.price} TK`;
+
+    const courseKeyboard=await getCourseKeyboard(courseId,userId);
+
+    if(course.image_link && !isPending && !isPurchased){
+        try{
+            // Send new message with image and buttons
+            await bot.sendPhoto(msg.chat.id, course.image_link, {
+                caption: courseText,
+                reply_markup: courseKeyboard.reply_markup
+            });
+
+            // Delete the original message AFTER sending the new one
+            try{
+                await bot.deleteMessage(msg.chat.id, msg.message_id);
+            }catch(deleteError){
+                console.log('Could not delete original message:', deleteError.message);
+            }
+            return;
+        }catch(error){
+            console.error('Error sending course image:', error);
+            // If image fails, fall back to text message
         }
-        return;
-    } catch (error) {
-        console.error('Error sending course image:', error);
     }
-}
-    
-    try {
-        const courseKeyboard = await getCourseKeyboard(courseId, userId);
-        bot.editMessageText(courseText, {
+
+    // For text-only messages or when image fails
+    try{
+        bot.editMessageText(courseText,{
             chat_id: msg.chat.id,
             message_id: msg.message_id,
             ...courseKeyboard
         });
-    } catch (error) {
+    }catch(error){
         console.error('Error editing message:', error);
-        const courseKeyboard = await getCourseKeyboard(courseId, userId);
         bot.sendMessage(msg.chat.id, courseText, courseKeyboard);
     }
 }
-else if (data.startsWith('buy_')) {
-    const courseId = data.replace('buy_', '');
-    const course = findCourseById(courseId);
-    
-    if (!course) {
-        return bot.sendMessage(msg.chat.id, '❌ Course not found!');
+
+// Also update the buy_ callback handler to handle the payment method selection properly:
+
+else if(data.startsWith('buy_')){
+    const courseId=data.replace('buy_','');
+    const course=findCourseById(courseId);
+    if(!course){
+        return bot.sendMessage(msg.chat.id,'❌ Course not found!');
     }
+
+    await updateUserData(userId,{pending_course:courseId});
+
+    const paymentText=`💳 Select Payment Method for ${course.name}\n\n💰 Amount: ${course.price} TK`;
     
-    await updateUserData(userId, { pending_course: courseId });
-    
-    const paymentText = `💳 Payment for ${course.name}
+    const paymentMethodKeyboard={
+        reply_markup:{
+            inline_keyboard:[
+                [{text:'bKash',callback_data:`pay_bkash_${courseId}`}],
+                [{text:'Nagad',callback_data:`pay_nagad_${courseId}`}],
+                [{text:'⬅️ Back',callback_data:`course_${courseId}`}],
+                [{text:'🏠 Main Menu',callback_data:'main_menu'}]
+            ]
+        }
+    };
 
-💰 Amount: ${course.price} TK
-
-💡 Payment Options:
-1. bKash or Nagad এ payment করুন
-2. Bkash থেকে payment করলে Transaction ID copy করুন, Nagad থেকে payment করলে payment এর screenshot নিন
-3. "Submit Payment Proof" button এ click করুন`;
-
-    try {
-        const courseKeyboard = await getCourseKeyboard(courseId, userId);
-        bot.editMessageText(paymentText, {
+    try{
+        bot.editMessageText(paymentText,{
             chat_id: msg.chat.id,
             message_id: msg.message_id,
-            ...courseKeyboard
+            ...paymentMethodKeyboard
         });
-    } catch (error) {
+    }catch(error){
         console.error('Error editing message:', error);
-        const courseKeyboard = await getCourseKeyboard(courseId, userId);
-        bot.sendMessage(msg.chat.id, paymentText, courseKeyboard);
+        bot.sendMessage(msg.chat.id, paymentText, paymentMethodKeyboard);
     }
 }
+    
 else if (data.startsWith('payment_method_')) {
     const courseId = data.replace('payment_method_', '');
     const course = findCourseById(courseId);
