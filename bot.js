@@ -1464,7 +1464,7 @@ function getBkashPaymentKeyboard(hasPaymentLink = false) {
         keyboard.push(['💳 Use bKash Link']);
     }
     
-    keyboard.push(['📝 Submit Payment Proof']);
+    keyboard.push(['📝 Submit Transaction ID']);
     keyboard.push(['⬅️ Back', '🏠 Main Menu']);
     
     return {
@@ -2099,6 +2099,15 @@ bot.on('message', async (msg) => {
             userStates.set(userId, { ...userState, state: 'bkash_payment' });
             
             const hasPaymentLink = course && course.payment_link;
+            const bkashInstruction = `💳 bKash Payment Instructions:\n\n` +
+            `✅ Make Payment এ pay করবেন!\n` +
+            `❌ Send Money করলে হবে না ।\n` +
+            `✅ Payment করার পর Transaction ID টা copy করেন ।\n` +
+            `✅ Submit Transaction ID এ ক্লিক করেন ।\n` +
+            `✅ শুধুমাত্র Transaction ID লিখুন।\n` +
+            `✅ Example: 9BG4R2G5N8\n\n` +
+            `⭐ Bkash Payment Auto Approve ⭐\n\n` +
+            `Amount: ${course.price} TK`;
             bot.sendMessage(msg.chat.id, `💳 bKash Payment for ${course.name}\n\nAmount: ${course.price} TK`, getBkashPaymentKeyboard(hasPaymentLink));
         } 
         else if (messageText === 'Nagad') {
