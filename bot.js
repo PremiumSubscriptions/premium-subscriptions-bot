@@ -878,7 +878,7 @@ const COURSES_DATA = {
           }
         }
       },
-      "battles_bio": {
+      "battles_bio25": {
         "name": "🎓 Battles of Biology ",
         "type": "submenu",
         "courses": {
@@ -889,7 +889,7 @@ const COURSES_DATA = {
             "groupLink": "https://t.me/+-Mqz-s3tcB00ZDJl",
             "paymentLink": "https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt150/rqLeje",
             "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20250814_133121_467.jpg",
-            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉সর্বমোট 120+ Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
+            "description": "🔥কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉সর্বমোট 120+ Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \nআগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।"
           }
         }
       },
