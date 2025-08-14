@@ -877,7 +877,7 @@ const COURSES_DATA = {
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
-            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+            "description": "🫡PHYSICS \n 🫡MATH \n 🫡EBC\n\n❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
           }
         }
       },
@@ -892,7 +892,7 @@ const COURSES_DATA = {
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
-            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+            "description": "✈️Course : দুরন্ত প্রয়াস 5.0s Restart ( 2nd Timer Medical Batch )\n\n❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉সর্বমোট 150+ Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
           }
         }
       },
@@ -907,7 +907,7 @@ const COURSES_DATA = {
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
-            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉সর্বমোট 120+ Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
           }
         }
       },
@@ -922,7 +922,7 @@ const COURSES_DATA = {
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
-            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+            "description": "🔥কোর্স এর সাথে পাবেন🔥\n☺️টপিক ভিক্তিক ক্লাস ( 1080p ) \n☺️প্রতি ক্লাস এর লেকচার শীট \n☺️বাড়ির কাজের পিডিএফ \n☺️প্রতি অধ্যায় শেষে প্র্যাকটিস শীট \n☺️মাঝে মাঝে অধ্যায় ভিক্তিক ডাউট সলভ ক্লাস\n☺️আগের ব্যাচ এর ক্লাস ( আর্কাইভ ) \n☺️লাইফটাইম এক্সেস পাবে\n☺️আইডি ব্যান হলে নতুন আইডি এড হতে পারবে"
           },
             "acs25_varsity": {
             "name": "📗 ACS VERSITY 25 ❤️",
@@ -931,7 +931,7 @@ const COURSES_DATA = {
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
-            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+            "description": "🔥কোর্স এর সাথে পাবেন🔥\n☺️টপিক ভিক্তিক ক্লাস ( 1080p ) \n☺️প্রতি ক্লাস এর লেকচার শীট \n☺️বাড়ির কাজের পিডিএফ \n☺️প্রতি অধ্যায় শেষে প্র্যাকটিস শীট \n☺️মাঝে মাঝে অধ্যায় ভিক্তিক ডাউট সলভ ক্লাস\n☺️আগের ব্যাচ এর ক্লাস ( আর্কাইভ ) \n☺️লাইফটাইম এক্সেস পাবে\n☺️আইডি ব্যান হলে নতুন আইডি এড হতে পারবে"
           },
             "acs25_eng": {
             "name": "🔥 ACS Engneering 2025 🔥",
@@ -940,7 +940,7 @@ const COURSES_DATA = {
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
-            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+            "description": "🔥কোর্স এর সাথে পাবেন🔥\n☺️টপিক ভিক্তিক ক্লাস ( 1080p ) \n☺️প্রতি ক্লাস এর লেকচার শীট \n☺️বাড়ির কাজের পিডিএফ \n☺️প্রতি অধ্যায় শেষে প্র্যাকটিস শীট \n☺️মাঝে মাঝে অধ্যায় ভিক্তিক ডাউট সলভ ক্লাস\n☺️আগের ব্যাচ এর ক্লাস ( আর্কাইভ ) \n☺️লাইফটাইম এক্সেস পাবে\n☺️আইডি ব্যান হলে নতুন আইডি এড হতে পারবে"
           }
         }
       },
@@ -955,7 +955,7 @@ const COURSES_DATA = {
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
-            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।"
           },
             "bp25_e&v": {
             "name": "🔥 BP ENGINEERING + Varsity Biology - HSC 2025 🔥",
@@ -964,7 +964,7 @@ const COURSES_DATA = {
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
-            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+            "description": "BP ENGINEERING + Varsity Biology - HSC 2025\n\n🌡️এক কোর্সেই পাচ্ছো সেরা শিক্ষকদের  Physics, Chemistry, Mathematics এর Content\n🧿সেকেন্ড অপশনে ব্যাকাপ হিসেবে থাকছে  Varsity Biology\n\n❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉সর্বমোট 150+ Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
           },
             "bp25_eng_phy": {
             "name": "🔥 Engneering Physics - HSC 2025 🔥",
@@ -973,7 +973,7 @@ const COURSES_DATA = {
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
-            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।"
           },
             "bp25_eng_chem": {
             "name": "🔥 Engneering Chemistry - HSC 2025 🔥",
@@ -982,7 +982,7 @@ const COURSES_DATA = {
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
-            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।"
           },
             "bp25_eng_math": {
             "name": "🔥 Engneering Math - HSC 2025 🔥",
@@ -991,7 +991,7 @@ const COURSES_DATA = {
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
-            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+            "description": "🧿সেকেন্ড অপশনে ব্যাকাপ হিসেবে থাকছে  Varsity Biology\n\n❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
           },
             "bp25_var_bio": {
             "name": "🔥 Varsity Biology - HSC 2025 🔥",
@@ -1000,7 +1000,7 @@ const COURSES_DATA = {
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
-            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।"
           },
             "bp25_mt_1st": {
             "name": "🔥 MediTroops - 1st Timer Medical Course (Avengers) 🔥",
@@ -1009,7 +1009,7 @@ const COURSES_DATA = {
             "groupLink": "https://t.me/+Medical2025",
             "paymentLink": "",
             "imageLink": "",
-            "description": "📖 Complete Medical Admission Preparation\n\n✅ MCQ Practice\n✅ Previous Years Questions\n✅ Mock Tests\n✅ Live Classes\n✅ Expert Guidance\n✅ Study Materials"
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।"
           }
         }
       }
