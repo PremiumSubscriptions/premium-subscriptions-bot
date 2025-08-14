@@ -1482,7 +1482,6 @@ async function getCourseKeyboard(courseId, userId) {
     
     return { reply_markup: { inline_keyboard: keyboard } };
 }
-
 // Bot Commands
 bot.onText(/\/start/, async (msg) => {
     const mainKeyboard = getMainMenuKeyboard();
@@ -1755,24 +1754,25 @@ bot.on('callback_query', async (callbackQuery) => {
     courseText += `💰 Price: ${course.price} TK`;
     
     // Send with image if available
-    if (course.image_link && !isPending && !isPurchased) {
+    // Inside the course_ callback handler
+if (course.image_link && !isPending && !isPurchased) {
+    try {
+        const courseKeyboard = await getCourseKeyboard(courseId, userId);
+        await bot.sendPhoto(msg.chat.id, course.image_link, {
+            caption: courseText,
+            reply_markup: courseKeyboard.reply_markup // Add this line
+        });
+        // Delete the original message
         try {
-            const courseKeyboard = await getCourseKeyboard(courseId, userId);
-            await bot.sendPhoto(msg.chat.id, course.image_link, {
-                caption: courseText,
-                reply_markup: courseKeyboard.reply_markup
-            });
-            // Delete the original message
-            try {
-                await bot.deleteMessage(msg.chat.id, msg.message_id);
-            } catch (deleteError) {
-                console.log('Could not delete original message:', deleteError.message);
-            }
-            return;
-        } catch (error) {
-            console.error('Error sending course image:', error);
+            await bot.deleteMessage(msg.chat.id, msg.message_id);
+        } catch (deleteError) {
+            console.log('Could not delete original message:', deleteError.message);
         }
+        return;
+    } catch (error) {
+        console.error('Error sending course image:', error);
     }
+}
     
     try {
         const courseKeyboard = await getCourseKeyboard(courseId, userId);
