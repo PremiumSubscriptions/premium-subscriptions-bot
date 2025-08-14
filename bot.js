@@ -1464,7 +1464,7 @@ function getBkashPaymentKeyboard(hasPaymentLink = false) {
         keyboard.push(['💳 Use bKash Link']);
     }
     
-    keyboard.push(['📝 Submit Transaction ID']);
+    keyboard.push(['📝 Submit Payment Proof']);
     keyboard.push(['⬅️ Back', '🏠 Main Menu']);
     
     return {
