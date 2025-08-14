@@ -1737,9 +1737,7 @@ bot.on('callback_query', async (callbackQuery) => {
             bot.sendMessage(msg.chat.id, submenuText, submenuKeyboard);
         }
     }
-
-    // Replace the course_ callback handler section with this fixed version:
-
+// Replace the course_ callback handler section with this fixed version:
 else if(data.startsWith('course_')){
     const courseId=data.replace('course_','');
     const course=findCourseById(courseId);
@@ -1757,7 +1755,8 @@ else if(data.startsWith('course_')){
 
     const courseKeyboard=await getCourseKeyboard(courseId,userId);
 
-    if(course.image_link && !isPending && !isPurchased){
+    // Check if this is a fresh course view (should show image) or returning from another action
+    if(course.image_link && !isPending && !isPurchased && !msg.photo){
         try{
             // Send new message with image and buttons
             await bot.sendPhoto(msg.chat.id, course.image_link, {
@@ -1774,24 +1773,35 @@ else if(data.startsWith('course_')){
             return;
         }catch(error){
             console.error('Error sending course image:', error);
-            // If image fails, fall back to text message
+            // If image fails, fall back to text message editing
         }
     }
 
-    // For text-only messages or when image fails
+    // For editing existing messages (text or photo caption)
     try{
-        bot.editMessageText(courseText,{
-            chat_id: msg.chat.id,
-            message_id: msg.message_id,
-            ...courseKeyboard
-        });
+        // If the current message has a photo, edit the caption
+        if(msg.photo && msg.photo.length > 0){
+            await bot.editMessageCaption(courseText, {
+                chat_id: msg.chat.id,
+                message_id: msg.message_id,
+                reply_markup: courseKeyboard.reply_markup
+            });
+        } else {
+            // If it's a text message, edit the text
+            await bot.editMessageText(courseText, {
+                chat_id: msg.chat.id,
+                message_id: msg.message_id,
+                reply_markup: courseKeyboard.reply_markup
+            });
+        }
     }catch(error){
         console.error('Error editing message:', error);
+        // If editing fails, send a new message
         bot.sendMessage(msg.chat.id, courseText, courseKeyboard);
     }
 }
 
-// Also update the buy_ callback handler to handle the payment method selection properly:
+// Also fix other callback handlers that might try to edit photo messages:
 
 else if(data.startsWith('buy_')){
     const courseId=data.replace('buy_','');
@@ -1816,11 +1826,20 @@ else if(data.startsWith('buy_')){
     };
 
     try{
-        bot.editMessageText(paymentText,{
-            chat_id: msg.chat.id,
-            message_id: msg.message_id,
-            ...paymentMethodKeyboard
-        });
+        // Check if current message has photo
+        if(msg.photo && msg.photo.length > 0){
+            await bot.editMessageCaption(paymentText, {
+                chat_id: msg.chat.id,
+                message_id: msg.message_id,
+                reply_markup: paymentMethodKeyboard.reply_markup
+            });
+        } else {
+            await bot.editMessageText(paymentText, {
+                chat_id: msg.chat.id,
+                message_id: msg.message_id,
+                reply_markup: paymentMethodKeyboard.reply_markup
+            });
+        }
     }catch(error){
         console.error('Error editing message:', error);
         bot.sendMessage(msg.chat.id, paymentText, paymentMethodKeyboard);
