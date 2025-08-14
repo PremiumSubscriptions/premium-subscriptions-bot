@@ -934,7 +934,7 @@ const COURSES_DATA = {
             "name": "🔥 TARGET DU 5.0 ❤️",
             "type": "course",
             "price": 150,
-            "groupLink": "https://t.me/+Medical2025",
+            "groupLink": "https://t.me/+9pNOMOI-pQA4NmY1",
             "paymentLink": "https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt150/KpstFa",
             "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20250814_133208_888.jpg",
             "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।"
@@ -943,7 +943,7 @@ const COURSES_DATA = {
             "name": "🔥 BP ENGINEERING + Varsity Biology - HSC 2025 🔥",
             "type": "course",
             "price": 250,
-            "groupLink": "https://t.me/+Medical2025",
+            "groupLink": "https://t.me/+AFGxJtW4evAwNTE9",
             "paymentLink": "https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt250/ZRZuZe",
             "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20250814_133216_067.jpg",
             "description": "BP ENGINEERING + Varsity Biology - HSC 2025\n\n🌡️এক কোর্সেই পাচ্ছো সেরা শিক্ষকদের  Physics, Chemistry, Mathematics এর Content\n🧿সেকেন্ড অপশনে ব্যাকাপ হিসেবে থাকছে  Varsity Biology\n\n❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉সর্বমোট 150+ Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
@@ -952,7 +952,7 @@ const COURSES_DATA = {
             "name": "🔥 Engneering Physics - HSC 2025 🔥",
             "type": "course",
             "price": 100,
-            "groupLink": "https://t.me/+Medical2025",
+            "groupLink": "https://t.me/+mCSo92oB5Pg4YTZl",
             "paymentLink": "https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt100/Xpnwcz",
             "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20250814_133224_683.jpg",
             "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।"
@@ -961,7 +961,7 @@ const COURSES_DATA = {
             "name": "🔥 Engneering Chemistry - HSC 2025 🔥",
             "type": "course",
             "price": 100,
-            "groupLink": "https://t.me/+Medical2025",
+            "groupLink": "https://t.me/+rsRKeQKi125kNzVl",
             "paymentLink": "https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt100/aQNdfO",
             "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20250814_133234_296.jpg",
             "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।"
@@ -970,7 +970,7 @@ const COURSES_DATA = {
             "name": "🔥 Engneering Math - HSC 2025 🔥",
             "type": "course",
             "price": 100,
-            "groupLink": "https://t.me/+Medical2025",
+            "groupLink": "https://t.me/+5hwwalMWPaEyOGM1",
             "paymentLink": "https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt100/OOi3XI",
             "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20250814_133242_687.jpg",
             "description": "🧿সেকেন্ড অপশনে ব্যাকাপ হিসেবে থাকছে  Varsity Biology\n\n❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
@@ -979,7 +979,7 @@ const COURSES_DATA = {
             "name": "🔥 Varsity Biology - HSC 2025 🔥",
             "type": "course",
             "price": 100,
-            "groupLink": "https://t.me/+Medical2025",
+            "groupLink": "https://t.me/+tKe2wHcUo980ZjM1",
             "paymentLink": "https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt100/1Synxc",
             "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20250814_133249_979.jpg",
             "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।"
@@ -988,7 +988,7 @@ const COURSES_DATA = {
             "name": "🔥 MediTroops - 1st Timer Medical Course (Avengers) 🔥",
             "type": "course",
             "price": 150,
-            "groupLink": "https://t.me/+Medical2025",
+            "groupLink": "https://t.me/+_SxLGnadkzxmNjY1",
             "paymentLink": "https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt150/cmI6sQ",
             "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20250814_133257_222.jpg",
             "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।"
