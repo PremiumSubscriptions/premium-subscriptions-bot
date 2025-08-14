@@ -1173,7 +1173,8 @@ if (userState.state === 'course') {
             });
         }
     }
-}
+ } 
+});
 
 // Express server
 app.get('/', (req, res) => {
