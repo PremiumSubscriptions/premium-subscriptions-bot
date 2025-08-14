@@ -2108,7 +2108,7 @@ bot.on('message', async (msg) => {
             `✅ Example: 9BG4R2G5N8\n\n` +
             `⭐ Bkash Payment Auto Approve ⭐\n\n` +
             `Amount: ${course.price} TK`;
-            bot.sendMessage(msg.chat.id, `💳 bKash Payment for ${course.name}\n\nAmount: ${course.price} TK`, getBkashPaymentKeyboard(hasPaymentLink));
+            bot.sendMessage(msg.chat.id, bkashInstruction, getBkashPaymentKeyboard(hasPaymentLink));
         } 
         else if (messageText === 'Nagad') {
             await updateUserData(userId, { pending_payment_method: 'Nagad' });
