@@ -2100,7 +2100,7 @@ bot.on('message', async (msg) => {
             
             const hasPaymentLink = course && course.payment_link;
             const bkashInstruction = `💳 bKash Payment Instructions:\n\n` +
-            `✅ Make Payment এ pay করবেন!\n` +
+            `✅ এই নাম্বার 01902912653 এ Make Payment করবেন!\n` +
             `❌ Send Money করলে হবে না ।\n` +
             `✅ Payment করার পর Transaction ID টা copy করেন ।\n` +
             `✅ Submit Transaction ID এ ক্লিক করেন ।\n` +
