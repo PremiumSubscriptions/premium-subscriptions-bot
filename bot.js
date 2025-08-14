@@ -1158,7 +1158,12 @@ if (userState.state === 'course') {
         bot.sendMessage(msg.chat.id, paymentText, paymentMethodKeyboard);
     } 
     else if (messageText === '🎯 Join Course Group') {
-        if (userData.purchases && userData.purchases.has(userState.courseId)) { 
+        // Ensure purchases exists and supports has/includes
+        const hasCourse = Array.isArray(userData.purchases)
+            ? userData.purchases.includes(userState.courseId)
+            : userData.purchases?.has?.(userState.courseId);
+
+        if (hasCourse) { 
             bot.sendMessage(msg.chat.id, `🎯 Join your course group:`, {
                 reply_markup: {
                     inline_keyboard: [[
@@ -1169,6 +1174,7 @@ if (userState.state === 'course') {
         }
     }
 }
+
 // Express server
 app.get('/', (req, res) => {
     res.send(`
@@ -1194,14 +1200,16 @@ app.listen(PORT, () => {
 });
 
 // Initialize and start bot
-initializeDatabase().then(() => {
-    console.log('Premium Subscription Bot started successfully with PostgreSQL!');
-    console.log('Features enabled:');
-    console.log('- Hardcoded courses with auto-update on deployment');
-    console.log('- Enhanced bKash verification with time checking');
-    console.log('- Payment date validation (next 24 hours from payment time )');
-    console.log('- Duplicate transaction prevention');
-    console.log('- PostgreSQL database: premium-subscription-bot-db');
-}).catch(error => {
-    console.error('Error starting bot:', error);
-});
+initializeDatabase()
+    .then(() => {
+        console.log('Premium Subscription Bot started successfully with PostgreSQL!');
+        console.log('Features enabled:');
+        console.log('- Hardcoded courses with auto-update on deployment');
+        console.log('- Enhanced bKash verification with time checking');
+        console.log('- Payment date validation (next 24 hours from payment time)');
+        console.log('- Duplicate transaction prevention');
+        console.log('- PostgreSQL database: premium-subscription-bot-db');
+    })
+    .catch(error => {
+        console.error('Error starting bot:', error);
+    });
