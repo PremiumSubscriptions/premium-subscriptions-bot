@@ -1480,7 +1480,6 @@ function getNagadPaymentKeyboard() {
     return {
         reply_markup: {
             keyboard: [
-                ['📝 Submit Payment Proof'],
                 ['💬 Contact Admin'],
                 ['⬅️ Back', '🏠 Main Menu']
             ],
@@ -1846,8 +1845,6 @@ bot.on('message', async (msg) => {
                     reply_markup: {
                         inline_keyboard: [[
                             { text: `🎯 Join ${course.name} Group`, url: course.group_link }
-                        ], [
-                            { text: '🏠 Main Menu', callback_data: 'main_menu' }
                         ]]
                     }
                 });
