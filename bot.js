@@ -1442,15 +1442,22 @@ async function getCourseKeyboard(courseId, userId) {
         }
     };
 }
-
-function getPaymentMethodKeyboard() {
+function getPaymentMethodKeyboard(courseId = '') {
+    const keyboard = [
+        ['bKash'],
+        ['Nagad']
+    ];
+    
+    if (courseId) {
+        keyboard[0].callback_data = getCallbackData('new_payment', courseId, 'bKash');
+        keyboard[1].callback_data = getCallbackData('new_payment', courseId, 'Nagad');
+    }
+    
+    keyboard.push(['⬅️ Back', '🏠 Main Menu']);
+    
     return {
         reply_markup: {
-            keyboard: [
-                ['bKash'],
-                ['Nagad'],
-                ['⬅️ Back', '🏠 Main Menu']
-            ],
+            keyboard: keyboard,
             resize_keyboard: true,
             one_time_keyboard: false
         }
@@ -1748,22 +1755,30 @@ bot.on('message', async (msg) => {
                 
                 if (!verificationResult.success) {
                     return bot.sendMessage(msg.chat.id, 
-    `❌ **${verificationResult.error}**`,
-    {
-        parse_mode: 'Markdown',
-        reply_markup: {
-            inline_keyboard: [
-                [{ text: '🔄 Try Another TRX ID', callback_data: `submit_proof_${courseId}` }],
-                [{ text: '💳 Make New Payment', callback_data: `payment_method_${courseId}` }],
-                [{ text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }]
-            ]
+        `❌ **${verificationResult.error}**`,
+        {
+            parse_mode: 'Markdown',
+            reply_markup: {
+                inline_keyboard: [
+                    [{
+                        text: '🔄 Try Another TRX ID', 
+                        callback_data: getCallbackData('retry_trx', courseId, 'bKash')
+                    }],
+                    [{
+                        text: '💳 Make New Payment', 
+                        callback_data: getCallbackData('new_payment', courseId)
+                    }],
+                    [{
+                        text: '💬 Contact Support', 
+                        url: 'https://t.me/Mehedi_X71'
+                    }]
+                ]
+            }
         }
-    }
-);
+    );
 }
-
-                if (await isTransactionUsed(trxId)) {
-                    return bot.sendMessage(msg.chat.id,
+ if (await isTransactionUsed(trxId)) {
+     return bot.sendMessage(msg.chat.id,
     "❌ **এই Transaction ID আগেই ব্যবহার করা হয়েছে!**\n\n" +
     "দয়া করে নতুন একটি Transaction ID দিন অথবা সাপোর্টে যোগাযোগ করুন।",
     {
@@ -2165,54 +2180,101 @@ bot.on('message', async (msg) => {
         }
     }
 });
+// Helper function to generate callback data with context
+function getCallbackData(action, courseId, paymentMethod = '') {
+    return `${action}_${courseId}_${paymentMethod}`;
+}
 bot.on('callback_query', async (callbackQuery) => {
     const data = callbackQuery.data;
     const chatId = callbackQuery.message.chat.id;
     const userId = callbackQuery.from.id;
-    
+    const messageId = callbackQuery.message.message_id;
     // Handle "Try Another TRX ID"
-    if (data.startsWith('submit_proof_')) {
-        const courseId = data.split('_')[2]; // Extract course ID
-        const userData = await getUserData(userId);
+    if (data.startsWith('retry_trx_')) {
+        const parts = data.split('_');
+        const courseId = parts[2];
+        const paymentMethod = parts[3];
         const course = findCourseById(courseId);
-
+        
         if (!course) {
-            await bot.answerCallbackQuery(callbackQuery.id, { text: '❌ Course not found! Returning to main menu.' });
-            const mainKeyboard = getMainMenuKeyboard();
-            return bot.sendMessage(chatId, "🎓 Main Menu", mainKeyboard);
+            await bot.answerCallbackQuery(callbackQuery.id, { text: '❌ Course not found!' });
+            return bot.sendMessage(chatId, "❌ Course not found! Returning to main menu.", getMainMenuKeyboard());
         }
 
-        // Reset to payment proof submission state
-        await updateUserData(userId, {
-            waiting_for_proof: JSON.stringify({ courseId, paymentMethod: userData.pending_payment_method })
+        // Set state for proof submission
+        await updateUserData(userId, { 
+            pending_course: courseId,
+            pending_payment_method: paymentMethod,
+            waiting_for_proof: JSON.stringify({ 
+                courseId, 
+                paymentMethod 
+            }) 
         });
 
-        const paymentMethod = userData.pending_payment_method;
-        let message = paymentMethod === 'bKash' 
-            ? `🔁 Please send the new bKash Transaction ID for ${course.name}:` 
-            : `🔁 Please send the payment screenshot for Nagad payment for ${course.name}:`;
-
         await bot.answerCallbackQuery(callbackQuery.id);
-        return bot.sendMessage(chatId, message, getCancelKeyboard());
+        return bot.sendMessage(chatId, 
+            `🔁 Please send new bKash Transaction ID for ${course.name}:`,
+            getCancelKeyboard()
+        );
     }
-
     // Handle "Make New Payment"
-    if (data.startsWith('payment_method_')) {
-        const courseId = data.split('_')[2]; // Extract course ID
+    if (data.startsWith('new_payment_')) {
+        const courseId = data.split('_')[2];
         const course = findCourseById(courseId);
-
+        
         if (!course) {
-            await bot.answerCallbackQuery(callbackQuery.id, { text: '❌ Course not found! Returning to main menu.' });
-            const mainKeyboard = getMainMenuKeyboard();
-            return bot.sendMessage(chatId, "🎓 Main Menu", mainKeyboard);
+            await bot.answerCallbackQuery(callbackQuery.id, { text: '❌ Course not found!' });
+            return bot.sendMessage(chatId, "❌ Course not found! Returning to main menu.", getMainMenuKeyboard());
         }
 
-        // Set pending course
-        await updateUserData(userId, { pending_course: courseId });
-        await bot.answerCallbackQuery(callbackQuery.id);
-        return bot.sendMessage(chatId, `💳 Select payment method for ${course.name}:`, getPaymentMethodKeyboard());
-    }
+        // Reset to payment method selection
+        await updateUserData(userId, { 
+            pending_course: courseId,
+            pending_payment_method: null,
+            waiting_for_proof: null
+        });
+        
+        userStates.set(userId, { 
+            state: 'payment_method', 
+            courseId: courseId 
+        });
 
+        await bot.answerCallbackQuery(callbackQuery.id);
+        return bot.sendMessage(chatId, 
+            `💳 Select payment method for ${course.name}:`,
+            getPaymentMethodKeyboard()
+        );
+    }
+    // Handle "Try Again" (same as new payment but keeps context)
+    if (data.startsWith('try_again_')) {
+        const parts = data.split('_');
+        const courseId = parts[2];
+        const paymentMethod = parts[3];
+        const course = findCourseById(courseId);
+        
+        if (!course) {
+            await bot.answerCallbackQuery(callbackQuery.id, { text: '❌ Course not found!' });
+            return bot.sendMessage(chatId, "❌ Course not found! Returning to main menu.", getMainMenuKeyboard());
+        }
+
+        // Set state for specific payment method
+        await updateUserData(userId, { 
+            pending_course: courseId,
+            pending_payment_method: paymentMethod
+        });
+        
+        userStates.set(userId, { 
+            state: 'bkash_payment', 
+            courseId: courseId 
+        });
+
+        const hasPaymentLink = course && course.payment_link;
+        await bot.answerCallbackQuery(callbackQuery.id);
+        return bot.sendMessage(chatId, 
+            `🔁 Retrying payment for ${course.name} via ${paymentMethod}`,
+            getBkashPaymentKeyboard(hasPaymentLink)
+        );
+    }
     // Handle "Main Menu"
     if (data === 'main_menu') {
         userStates.delete(userId);
