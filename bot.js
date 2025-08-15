@@ -2258,31 +2258,26 @@ bot.on('callback_query', async (callbackQuery) => {
         }
 
         // Set state for specific payment method
-        await updateUserData(userId, { 
-            pending_course: courseId,
-            pending_payment_method: paymentMethod
-        });
-        
         userStates.set(userId, { 
-            state: 'bkash_payment', 
-            courseId: courseId 
+            state: 'payment_proof',
+            courseId: courseId,
+            paymentMethod: paymentMethod
         });
 
         const hasPaymentLink = course && course.payment_link;
         await bot.answerCallbackQuery(callbackQuery.id);
         return bot.sendMessage(chatId, 
             `🔁 Retrying payment for ${course.name} via ${paymentMethod}`,
-            getBkashPaymentKeyboard(hasPaymentLink)
+           getPaymentProofKeyboard(paymentMethod, hasPaymentLink)
         );
     }
     // Handle "Main Menu"
-    if (data === 'main_menu') {
-        userStates.delete(userId);
-        const mainKeyboard = getMainMenuKeyboard();
-        await bot.answerCallbackQuery(callbackQuery.id);
-        return bot.sendMessage(chatId, "🎓 Main Menu", mainKeyboard);
-    }
-    bot.answerCallbackQuery(callbackQuery.id);
+    else if (data === 'main_menu') {
+    userStates.delete(userId);
+    await bot.answerCallbackQuery(callbackQuery.id);
+    return bot.sendMessage(chatId, "🎓 Main Menu", getMainMenuKeyboard());
+  }
+    await bot.answerCallbackQuery(callbackQuery.id);
 });
 // Callback query handler for admin actions
 bot.on('callback_query', async (callbackQuery) => {
