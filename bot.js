@@ -1760,7 +1760,7 @@ bot.on('message', async (msg) => {
                                 ], [
                                     { text: '💳 Make New Payment', callback_data: `payment_method_${courseId}` }
                                 ], [
-                                    { text: '💬 Contact Support', url: 'https://t.me/yoursupport' }
+                                    { text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }
                                 ]]
                             }
                         }
@@ -2173,6 +2173,69 @@ bot.on('message', async (msg) => {
         }
     }
 });
+// Handle callback queries for inline buttons
+bot.on('callback_query', async (callbackQuery) => {
+    const userId = callbackQuery.from.id;
+    const data = callbackQuery.data;
+    const message = callbackQuery.message;
+    const chatId = message.chat.id;
+
+    try {
+        // Acknowledge callback immediately
+        await bot.answerCallbackQuery(callbackQuery.id);
+
+        if (data.startsWith('submit_proof_')) {
+            // "Try Again" button
+            const courseId = data.split('_')[2];
+            const course = findCourseById(courseId);
+            
+            if (!course) {
+                return bot.sendMessage(chatId, '❌ Course not found!');
+            }
+
+            await updateUserData(userId, {
+                pending_course: courseId,
+                pending_payment_method: 'bKash',
+                waiting_for_proof: JSON.stringify({ 
+                    courseId, 
+                    paymentMethod: 'bKash' 
+                })
+            });
+
+            bot.sendMessage(chatId, 
+                '📝 Please send your bKash Transaction ID again:', 
+                getCancelKeyboard()
+            );
+        }
+        else if (data.startsWith('payment_method_')) {
+            // "Make New Payment" button
+            const courseId = data.split('_')[2];
+            const course = findCourseById(courseId);
+            
+            if (!course) {
+                return bot.sendMessage(chatId, '❌ Course not found!');
+            }
+
+            await updateUserData(userId, { 
+                pending_course: courseId 
+            });
+
+            bot.sendMessage(chatId, 
+                '💳 Please select a payment method:', 
+                getPaymentMethodKeyboard()
+            );
+        }
+        else if (data === 'main_menu') {
+            // "Main Menu" button
+            userStates.delete(userId);
+            const mainKeyboard = getMainMenuKeyboard();
+            bot.sendMessage(chatId, "🎓 Main Menu", mainKeyboard);
+        }
+    } catch (error) {
+        console.error('Callback query error:', error);
+        bot.sendMessage(chatId, '⚠️ An error occurred. Please try again.');
+    }
+}); 
 
 // Callback query handler for admin actions
 bot.on('callback_query', async (callbackQuery) => {
