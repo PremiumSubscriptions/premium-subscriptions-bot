@@ -1533,7 +1533,9 @@ bot.onText(/\/start/, async (msg) => {
 📚 Expert Teachers  
 🎯 Guaranteed Results
 💯 24/7 Support`;
-
+       await bot.sendVideo(msg.chat.id, 'https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/payment.mp4', {
+        caption: '💥 Payment Instructions Video'
+    });
     bot.sendMessage(msg.chat.id, welcomeText, mainKeyboard);
 });
 
