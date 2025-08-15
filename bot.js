@@ -1748,59 +1748,57 @@ bot.on('message', async (msg) => {
                 
                 if (!verificationResult.success) {
                     return bot.sendMessage(msg.chat.id, 
-                        `❌ **${verificationResult.error}**`,
-                        {
-                            parse_mode: 'Markdown',
-                            reply_markup: {
-                                inline_keyboard: [[
-                                    { text: '🔄 Try Another TRX ID', callback_data: `submit_proof_${courseId}` }
-                                ], [
-                                    { text: '💳 Make New Payment', callback_data: `payment_method_${courseId}` }
-                                ], [
-                                    { text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }
-                                ]]
-                            }
-                        }
-                    );
-                }
+    `❌ **${verificationResult.error}**`,
+    {
+        parse_mode: 'Markdown',
+        reply_markup: {
+            inline_keyboard: [
+                [{ text: '🔄 Try Another TRX ID', callback_data: `submit_proof_${courseId}` }],
+                [{ text: '💳 Make New Payment', callback_data: `payment_method_${courseId}` }],
+                [{ text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }]
+            ]
+        }
+    }
+);
+}
 
                 if (await isTransactionUsed(trxId)) {
                     return bot.sendMessage(msg.chat.id,
-                        "❌ **এই Transaction ID আগেই ব্যবহার করা হয়েছে!**\n\n" +
-                        "দয়া করে নতুন একটি Transaction ID দিন অথবা সাপোর্টে যোগাযোগ করুন।",
-                        {
-                            parse_mode: 'Markdown',
-                            reply_markup: {
-                                inline_keyboard: [[
-                                    { text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }
-                                ], [
-                                    { text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }
-                                ]]
-                            }
-                        }
-                    );
-                }
+    "❌ **এই Transaction ID আগেই ব্যবহার করা হয়েছে!**\n\n" +
+    "দয়া করে নতুন একটি Transaction ID দিন অথবা সাপোর্টে যোগাযোগ করুন।",
+    {
+        parse_mode: 'Markdown',
+        reply_markup: {
+            inline_keyboard: [
+                [{ text: '🔄 Try Another TRX ID', callback_data: `submit_proof_${courseId}` }],
+                [{ text: '💳 Make New Payment', callback_data: `payment_method_${courseId}` }],
+                [{ text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }]
+            ]
+        }
+    }
+);
+}
 
                 if (verificationResult.data.transactionStatus !== 'Completed' || 
                     parseInt(verificationResult.data.amount) < course.price) {
                     return bot.sendMessage(msg.chat.id,
-                        `❌ **Payment Verification Failed!**\n\n` +
-                        `🔍 Possible reasons:\n` +
-                        `• Payment status not completed\n` +
-                        `• Insufficient amount (Paid: ${verificationResult.data.amount} TK, Required: ${course.price} TK)\n\n` +
-                        `Transaction ID: ${trxId}`,
-                        {
-                            parse_mode: 'Markdown',
-                            reply_markup: {
-                                inline_keyboard: [[
-                                    { text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }
-                                ], [
-                                    { text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }
-                                ]]
-                            }
-                        }
-                    );
-                }
+    `❌ **Payment Verification Failed!**\n\n` +
+    `🔍 Possible reasons:\n` +
+    `• Payment status not completed\n` +
+    `• Insufficient amount (Paid: ${verificationResult.data.amount} TK, Required: ${course.price} TK)\n\n` +
+    `Transaction ID: ${trxId}`,
+    {
+        parse_mode: 'Markdown',
+        reply_markup: {
+            inline_keyboard: [
+                [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }],
+                [{ text: '💳 Make New Payment', callback_data: `payment_method_${courseId}` }],
+                [{ text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }]
+            ]
+        }
+    }
+);
+}
 
                 const added = await addTransaction(trxId, userId, courseId, course.price, paymentMethod, verificationResult.paymentDate);
                 if (!added) {
@@ -1853,21 +1851,19 @@ bot.on('message', async (msg) => {
             } catch (error) {
                 console.error('Payment verification error:', error);
                 bot.sendMessage(msg.chat.id,
-                    `⚠️ **Verification Error!**\n\nSomething went wrong. Please contact support.\n\nTransaction ID: ${trxId}`,
-                    {
-                        parse_mode: 'Markdown',
-                        reply_markup: {
-                            inline_keyboard: [[
-                                { text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }
-                            ], [
-                                { text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }
-                            ], [
-                                { text: '🏠 Main Menu', callback_data: 'main_menu' }
-                            ]]
-                        }
-                    }
-                );
-            }
+    `⚠️ **Verification Error!**\n\nSomething went wrong. Please contact support.\n\nTransaction ID: ${trxId}`,
+    {
+        parse_mode: 'Markdown',
+        reply_markup: {
+            inline_keyboard: [
+                [{ text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }],
+                [{ text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }],
+                [{ text: '🏠 Main Menu', callback_data: 'main_menu' }] // Added this line
+            ]
+        }
+    }
+);
+}
         } else {
             bot.sendMessage(msg.chat.id, '❌ Invalid payment proof format!');
         }
@@ -2168,6 +2164,36 @@ bot.on('message', async (msg) => {
             });
         }
     }
+});
+bot.on('callback_query', async (callbackQuery) => {
+    const data = callbackQuery.data;
+    const chatId = callbackQuery.message.chat.id;
+    const userId = callbackQuery.from.id;
+    
+    if (data.startsWith('submit_proof_')) {
+        const courseId = data.split('_')[2];
+        // Reset state to allow new proof submission
+        await updateUserData(userId, { 
+            waiting_for_proof: JSON.stringify({ courseId, paymentMethod: 'bKash' }) 
+        });
+        bot.sendMessage(chatId, '📝 Please send your bKash transaction ID again:');
+    }
+    else if (data.startsWith('payment_method_')) {
+        const courseId = data.split('_')[2];
+        // Return to payment method selection
+        await updateUserData(userId, { 
+            pending_course: courseId,
+            pending_payment_method: null
+        });
+        bot.sendMessage(chatId, '💳 Select payment method:', getPaymentMethodKeyboard());
+    }
+    else if (data === 'main_menu') {
+        // Return to main menu
+        userStates.delete(userId);
+        bot.sendMessage(chatId, '🏠 Returning to main menu...', getMainMenuKeyboard());
+    }
+    
+    bot.answerCallbackQuery(callbackQuery.id);
 });
 // Callback query handler for admin actions
 bot.on('callback_query', async (callbackQuery) => {
