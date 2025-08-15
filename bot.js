@@ -1460,22 +1460,16 @@ function getBkashPaymentKeyboard(hasPaymentLink = false) {
     const keyboard = [];
     
     if (hasPaymentLink) {
-        keyboard.push([{ text: '💳 Use bKash Link', callback_data: 'use_bkash_link' }]);
+        keyboard.push(['💳 Use bKash Link']);
     }
-    
-    keyboard.push([
-        { text: '📝 Submit Payment Proof', callback_data: 'submit_proof' },
-        { text: '🔄 Try Again', callback_data: 'try_again' }
-    ]);
-    
-    keyboard.push([
-        { text: '⬅️ Back', callback_data: 'back' },
-        { text: '🏠 Main Menu', callback_data: 'main_menu' }
-    ]);
+    keyboard.push(['📝 Submit Payment Proof']);
+    keyboard.push(['⬅️ Back', '🏠 Main Menu']);
     
     return {
         reply_markup: {
-            inline_keyboard: keyboard
+            keyboard: keyboard,
+            resize_keyboard: true,
+            one_time_keyboard: false
         }
     };
 }
@@ -1851,15 +1845,6 @@ bot.on('message', async (msg) => {
                         ]]
                     }
                 });
-                function resetUserState(userId) {
-    userStates.delete(userId);
-    updateUserData(userId, {
-        pending_course: null,
-        pending_payment_method: null,
-        waiting_for_proof: null,
-        current_menu: null
-    });
-}
                 // Reset user state and show main menu
                 userStates.delete(userId);
                 const mainKeyboard = getMainMenuKeyboard();
