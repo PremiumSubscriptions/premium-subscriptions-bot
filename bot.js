@@ -1777,7 +1777,7 @@ bot.on('message', async (msg) => {
                                 inline_keyboard: [[
                                     { text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }
                                 ], [
-                                    { text: '💬 Contact Support', url: 'https://t.me/yoursupport' }
+                                    { text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }
                                 ]]
                             }
                         }
@@ -1798,7 +1798,7 @@ bot.on('message', async (msg) => {
                                 inline_keyboard: [[
                                     { text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }
                                 ], [
-                                    { text: '💬 Contact Support', url: 'https://t.me/yoursupport' }
+                                    { text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }
                                 ]]
                             }
                         }
@@ -1862,7 +1862,7 @@ bot.on('message', async (msg) => {
                         parse_mode: 'Markdown',
                         reply_markup: {
                             inline_keyboard: [[
-                                { text: '💬 Contact Support', url: 'https://t.me/yoursupport' }
+                                { text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }
                             ], [
                                 { text: '🔄 Try Again', callback_data: `submit_proof_${courseId}` }
                             ], [
@@ -2103,7 +2103,7 @@ bot.on('message', async (msg) => {
             `✅ এই নাম্বার ${BKASH_NUMBER} এ Make Payment করবেন!\n` +
             `❌ Send Money করলে হবে না ।\n` +
             `✅ Payment করার পর Transaction ID টা copy করেন ।\n` +
-            `✅ Submit Transaction ID এ ক্লিক করেন ।\n` +
+            `✅ Submit Payment Proof এ ক্লিক করেন ।\n` +
             `✅ শুধুমাত্র Transaction ID লিখুন।\n` +
             `✅ Example: 9BG4R2G5N8\n\n` +
             `⭐ Bkash Payment Auto Approve ⭐\n\n` +
