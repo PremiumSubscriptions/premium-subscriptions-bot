@@ -875,6 +875,15 @@ const COURSES_DATA = {
             "paymentLink": "https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt150/rgZszI",
             "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20250814_133150_714.jpg",
             "description": "✈️Course : দুরন্ত প্রয়াস 5.0s Restart ( 2nd Timer Medical Batch )\n\n❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉সর্বমোট 150+ Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
+          },
+            "dp_5.2": {
+            "name": "✈️ দুরন্ত প্রয়াস 5.2 Final Medical Batch 2025",
+            "type": "course",
+            "price": 150,
+            "groupLink": "https://t.me/+T2cnSwELvyA2MDQ1",
+            "paymentLink": "",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/",
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉সর্বমোট 150+ Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
           }
         }
       },
