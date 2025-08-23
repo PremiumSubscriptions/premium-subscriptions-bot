@@ -882,7 +882,7 @@ const COURSES_DATA = {
             "price": 150,
             "groupLink": "https://t.me/+T2cnSwELvyA2MDQ1",
             "paymentLink": "",
-            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/photo_2025-08-23_21-01-12.jpg",
             "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉সর্বমোট 150+ Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
           }
         }
@@ -939,7 +939,7 @@ const COURSES_DATA = {
             "price": 100,
             "groupLink": "https://t.me/+BBNWHwTxdV03ZGNl",
             "paymentLink": "",
-            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/photo_2025-08-23_21-01-36.jpg",
             "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n➡️30+ Classes \n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n\n💢মূল্য : ১০০ টাকা"
           },
           "acs25_var&med_chem": {
@@ -948,7 +948,7 @@ const COURSES_DATA = {
             "price": 100,
             "groupLink": "https://t.me/+AC7TYk31LMw2MGNl",
             "paymentLink": "",
-            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/photo_2025-08-23_21-01-32.jpg",
             "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n➡️30+ Classes \n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n\n💢মূল্য : ১০০ টাকা"
           },
             "acs25_var&med_hm": {
@@ -957,7 +957,7 @@ const COURSES_DATA = {
             "price": 100,
             "groupLink": "https://t.me/+AGbqLJTAZ0s3NmE1",
             "paymentLink": "",
-            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/photo_2025-08-23_21-01-28.jpg",
             "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n➡️30+ Classes \n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n\n💢মূল্য : ১০০ টাকা"
           },
             "acs25_eng&var_bio": {
@@ -966,7 +966,7 @@ const COURSES_DATA = {
             "price": 100,
             "groupLink": "https://t.me/+sOcLp7cuLilmYjA1",
             "paymentLink": "",
-            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/photo_2025-08-23_21-01-24.jpg",
             "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n➡️30+ Classes \n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n\n💢মূল্য : ১০০ টাকা"
           }
         }
