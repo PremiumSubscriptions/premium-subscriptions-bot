@@ -923,6 +923,42 @@ const COURSES_DATA = {
             "paymentLink": "https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt250/iJAnKY",
             "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20250814_133136_528.jpg",
             "description": "🔥কোর্স এর সাথে পাবেন🔥\n☺️টপিক ভিক্তিক ক্লাস ( 1080p ) \n☺️প্রতি ক্লাস এর লেকচার শীট \n☺️বাড়ির কাজের পিডিএফ \n☺️প্রতি অধ্যায় শেষে প্র্যাকটিস শীট \n☺️মাঝে মাঝে অধ্যায় ভিক্তিক ডাউট সলভ ক্লাস\n☺️আগের ব্যাচ এর ক্লাস ( আর্কাইভ ) \n☺️লাইফটাইম এক্সেস পাবে\n☺️আইডি ব্যান হলে নতুন আইডি এড হতে পারবে"
+          },
+          "acs25_var_phy": {
+            "name": "🔥 ACS VERSITY PHYSICS  2025 🔥",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+BBNWHwTxdV03ZGNl",
+            "paymentLink": "",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/",
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n➡️30+ Classes \n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n\n💢মূল্য : ১০০ টাকা"
+          },
+          "acs25_var&med_chem": {
+            "name": "🔥 ACS VERSITY + MEDICAL  CHEMISTRY  PRIVATE BATCH 2025 🔥",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+AC7TYk31LMw2MGNl",
+            "paymentLink": "",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/",
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n➡️30+ Classes \n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n\n💢মূল্য : ১০০ টাকা"
+          },
+            "acs25_var&med_hm": {
+            "name": "🔥 ACS VERSITY + MEDICAL  HIGHER MATH PRIVATE BATCH 2025 🔥",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+AGbqLJTAZ0s3NmE1",
+            "paymentLink": "",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/",
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n➡️30+ Classes \n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n\n💢মূল্য : ১০০ টাকা"
+          },
+            "acs25_eng&var_bio": {
+            "name": "🔥 ACS ENGINEERING + VERSITY BIOLOGY 2025 🔥",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+sOcLp7cuLilmYjA1",
+            "paymentLink": "",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/",
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n➡️30+ Classes \n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n\n💢মূল্য : ১০০ টাকা"
           }
         }
       },
