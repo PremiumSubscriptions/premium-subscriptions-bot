@@ -860,6 +860,15 @@ const COURSES_DATA = {
             "paymentLink": "https://shop.bkash.com/mamun-gazipur-printer019029126/pay/bdt150/dd54lz",
             "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20250814_133111_915.jpg",
             "description": "🫡PHYSICS \n 🫡MATH \n 🫡EBC\n\n❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
+          },
+          "campus_5.0": {
+            "name": "🏥 ক্যাম্পাস ৫.০ সম্পূর্ণ - HSC 2024/25",
+            "type": "course",
+            "price": 150,
+            "groupLink": "https://t.me/+RPALfTegGaE1NGU1",
+            "paymentLink": "",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/photo_2025-10-03_17-46-37.jpg",
+            "description": "🫡PHYSICS \n 🫡MATH \n 🫡EBC\n\n❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
           }
         }
       },
