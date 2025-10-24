@@ -581,10 +581,21 @@ const COURSES_DATA = {
     "name": "🔥HSC 2026 All Courses🔥",
     "type": "menu",
     "submenus": {
-      "acs26_biomission_biology": {
-        "name": "⚛️ ACS 26 Biomission Biology",
+      "acs26_frb": {
+        "name": "⚛️ ACS FRB 2026",
         "type": "submenu",
         "courses": {
+           "acs26_frb_all": {
+            "name": "⚛️ ACS FRB 2026",
+            "type": "course",
+            "price": 150,
+            "groupLink": "https://t.me/+ygU8S-3dp-1hMjA9",
+            "paymentLink": "",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20251024_104733_122.jpg",
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n➡️120+ Classes \n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n\n💢মূল্য : 150 টাকা"
+           }
+        }
+      }, 
           "acs26_biology_all": {
             "name": "⚛️ ACS 27 Biomission Biology ALL Cycle Combo",
             "type": "course",
