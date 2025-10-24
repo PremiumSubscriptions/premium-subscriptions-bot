@@ -581,11 +581,11 @@ const COURSES_DATA = {
     "name": "🔥HSC 2026 All Courses🔥",
     "type": "menu",
     "submenus": {
-      "acs26_frb": {
+      "acs_26_frb_batch": {
         "name": "⚛️ ACS FRB 2026",
         "type": "submenu",
         "courses": {
-           "acs26_frb_all": {
+           "acs_26_frb_all": {
             "name": "⚛️ ACS FRB 2026",
             "type": "course",
             "price": 150,
