@@ -595,9 +595,13 @@ const COURSES_DATA = {
             "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n➡️120+ Classes \n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n\n💢মূল্য : 150 টাকা"
            }
         }
-      }, 
+      },
+        "acs26_bioall": {
+        "name": "🔥ACS 26 Biomission Biology ALL Combo🔥",
+        "type": "submenu",
+        "courses": {
           "acs26_biology_all": {
-            "name": "⚛️ ACS 27 Biomission Biology ALL Cycle Combo",
+            "name": "⚛️ ACS 26 Biomission Biology ALL Cycle Combo",
             "type": "course",
             "price": 300,
             "groupLink": "https://t.me/+_U3PoLkR498wNjY1",
