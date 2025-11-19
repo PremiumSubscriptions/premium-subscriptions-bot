@@ -906,6 +906,15 @@ const COURSES_DATA = {
         "name": "🌡️RTDS 🧿",
         "type": "submenu",
         "courses": {
+            "rtds_lf": {
+            "name": "✈️ RTDS LAST FIGHT",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+lIgdFyRwdaFiZWQ9",
+            "paymentLink": "",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20251119_093512_836.jpg",
+            "description": "✈️ RTDS LAST FIGHT\n\n❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉সর্বমোট 150+ Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
+          },
           "dp_5.0s": {
             "name": "✈️ দুরন্ত প্রয়াস 5.0s Restart ( 2nd Timer Medical Batch )",
             "type": "course",
