@@ -882,6 +882,15 @@ const COURSES_DATA = {
         "name": "📖 PHYSICS HUNTERS 📖",
         "type": "submenu",
         "courses": {
+          "phacs": {
+            "name": "🏥 Physics Hunters ACS Agri Batch 2025-26",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+h7x06-xiclA3YmY1",
+            "paymentLink": "",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20251120_153914_721.jpg",
+            "description": "🫡PHYSICS \n 🫡MATH \n 🫡EBC\n\n❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
+          },
           "pro_4.0": {
             "name": "🏥 প্রত্যাবর্তন ৪.০  সম্পূর্ণ - HSC 2024/25",
             "type": "course",
