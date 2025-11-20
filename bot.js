@@ -972,6 +972,15 @@ const COURSES_DATA = {
         "name": "🎓 ACS 📗",
         "type": "submenu",
         "courses": {
+          "ph&acs": {
+            "name": "🏥 Physics Hunters ACS Agri Batch 2025-26",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+h7x06-xiclA3YmY1",
+            "paymentLink": "",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20251120_153914_721.jpg",
+            "description": "🫡PHYSICS \n 🫡MATH \n 🫡EBC\n\n❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
+          },
           "acs25_medical": {
             "name": "🔥ACS MEDICAL 2025🔥",
             "type": "course",
