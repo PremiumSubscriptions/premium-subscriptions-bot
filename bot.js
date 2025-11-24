@@ -957,7 +957,7 @@ const COURSES_DATA = {
             "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20250814_133121_467.jpg",
             "description": "🫡❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n👉Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n👉Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)"
           },
-          "alpha_6.0": {
+          "alpha_6.1": {
             "name": "💲ALPHA 6.1Medical Admission Full Course",
             "type": "course",
             "price": 150,
