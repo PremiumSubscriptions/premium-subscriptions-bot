@@ -13,7 +13,6 @@ const NAGAD_NUMBER = process.env.NAGAD_NUMBER || '01902912653';
 const CHANNEL_ID = process.env.CHANNEL_ID || -1002855286349;
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'Mehedi_X71';
 const DATABASE_URL = process.env.DATABASE_URL;
-
 const pool = new Pool({
     connectionString: DATABASE_URL,
     ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
