@@ -1649,6 +1649,8 @@ bot.onText(/\/start/, async (msg) => {
     userStates.delete(userId);
     
     const mainKeyboard = getMainMenuKeyboard();
+    
+    // এখানে আপনার নতুন মেসেজ এবং হাইড করা লিঙ্ক দেওয়া হলো
     const welcomeText = `🎓 Welcome to Premium Subscription Bot! 🎓
 
 আমাদের premium courses গুলো দেখুন এবং আপনার পছন্দের course কিনুন।
@@ -1656,15 +1658,17 @@ bot.onText(/\/start/, async (msg) => {
 💎 High Quality Content
 📚 Expert Teachers  
 🎯 Guaranteed Results
-💯 24/7 Support`;
-try {
-    await bot.sendVideo(msg.chat.id, 'https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/payment.mp4', {
-        caption: '💥 Payment Instructions Video'
-    });
-} catch (error) {
-    console.error(`Failed to send video to ${msg.chat.id}: ${error.message}`);
-    // Don't crash, just log it
-}
+💯 24/7 Support
+
+Course কিনতে সমস্যা হলে <a href="https://t.me/premium_subscriptionss/1194">ভিডিওটি দেখবেন</a>`;
+    const options = {
+        parse_mode: 'HTML',
+        ...mainKeyboard
+    };
+    
+    // ভিডিও পাঠানোর অংশটি বাদ দেওয়া হয়েছে
+    bot.sendMessage(msg.chat.id, welcomeText, options);
+});
 bot.onText(/\/admin/, async (msg) => {
     if (!(await isAdmin(msg.from.id))) {
         return bot.sendMessage(msg.chat.id, '❌ You are not authorized!');
