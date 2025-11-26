@@ -23,6 +23,9 @@ const PORT = process.env.PORT || 10000;
 const BKASH_BASE_URL = 'https://tokenized.pay.bka.sh/v1.2.0-beta';
 
 const bot = new TelegramBot(BOT_TOKEN, { polling: true });
+bot.on('polling_error', (error) => {
+  console.error('Polling Error:', error.message);  // Logs the error but keeps running
+});
 const app = express();
 
 // User states for navigation
