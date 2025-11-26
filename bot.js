@@ -1654,12 +1654,14 @@ bot.onText(/\/start/, async (msg) => {
 📚 Expert Teachers  
 🎯 Guaranteed Results
 💯 24/7 Support`;
-       await bot.sendVideo(msg.chat.id, 'https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/payment.mp4', {
+try {
+    await bot.sendVideo(msg.chat.id, 'https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/payment.mp4', {
         caption: '💥 Payment Instructions Video'
     });
-    bot.sendMessage(msg.chat.id, welcomeText, mainKeyboard);
-});
-
+} catch (error) {
+    console.error(`Failed to send video to ${msg.chat.id}: ${error.message}`);
+    // Don't crash, just log it
+}
 bot.onText(/\/admin/, async (msg) => {
     if (!(await isAdmin(msg.from.id))) {
         return bot.sendMessage(msg.chat.id, '❌ You are not authorized!');
