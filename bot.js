@@ -2,7 +2,6 @@ const TelegramBot = require('node-telegram-bot-api');
 const express = require('express');
 const axios = require('axios');
 const { Pool } = require('pg');
-
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const BKASH_USERNAME = process.env.BKASH_USERNAME;
 const BKASH_PASSWORD = process.env.BKASH_PASSWORD;
