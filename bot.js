@@ -1659,6 +1659,7 @@ bot.onText(/\/start/, async (msg) => {
 📚 Expert Teachers  
 🎯 Guaranteed Results
 💯 24/7 Support
+🎓Bot Refresh করতে /start command ব্যাবহার করুন !
 
 Course কিনতে সমস্যা হলে <a href="https://t.me/premium_subscriptionss/1194">ভিডিওটি দেখবেন</a>`;
     const options = {
