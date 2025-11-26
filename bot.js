@@ -1664,28 +1664,8 @@ bot.onText(/\/admin/, async (msg) => {
     if (!(await isAdmin(msg.from.id))) {
         return bot.sendMessage(msg.chat.id, '❌ You are not authorized!');
     }
-
     const isPrimary = isPrimaryAdmin(msg.from.id);
     const adminText = `🔧 Admin Panel ${isPrimary ? '(Primary Admin)' : '(Sub Admin)'}
-    
-const request = require('request-promise'); // or whatever library you use
-
-const sendVideo = async () => {
-  try {
-    await request.post('https://api.telegram.org/bot<TOKEN>/sendVideo', {
-      qs: {
-        chat_id: '7553072870',
-        video: 'https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/payment.mp4',
-        caption: '💥 Payment Instructions Video'
-      }
-    });
-  } catch (error) {
-    // This prevents the bot from crashing
-    console.error("Failed to send video:");
-    // Log only the message, not the whole object
-    console.error(error.message || error.response?.body); 
-  }
-};
 🔧 **Available Commands:**
 /checktrx - Check transaction status
 /addtrx - Add transaction to used list
