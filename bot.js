@@ -630,7 +630,7 @@ const COURSES_DATA = {
             "name": "⚛️ ACS FRB 2026",
             "type": "course",
             "price": 150,
-            "groupLink": "https://t.me/+ygU8S-3dp-1hMjA9",
+            "groupLink": "https://t.me/+OWlfiG7B4-o2NGQ1",
             "paymentLink": "",
             "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20251024_104733_122.jpg",
             "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n➡️120+ Classes \n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n\n💢মূল্য : 150 টাকা"
