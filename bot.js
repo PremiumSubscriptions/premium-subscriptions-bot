@@ -607,6 +607,36 @@ const COURSES_DATA = {
     "name": "🔥HSC 2026 All Courses🔥",
     "type": "menu",
     "submenus": {
+        "cps_26": {
+        "name": "🔥CPS Compact Revision 26🔥",
+        "type": "submenu",
+        "courses": {
+           "cps_cr_26": {
+            "name": "⚛️ HSC 26 CPS Physics Compact Revision Batch",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+AYMNYxM1DXdjMTVl",
+            "paymentLink": "",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20251203_122140_684.jpg",
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n➡️120+ Classes \n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n\n💢মূল্য : 100 টাকা"
+           }
+        }
+      },
+        "ashik_26": {
+        "name": "🔥Ashik Vai One Shot 26 🔥",
+        "type": "submenu",
+        "courses": {
+           "ashik_oneshot_26": {
+            "name": "⚛️HSC 26 Ashik Vai One Shot",
+            "type": "course",
+            "price": 100,
+            "groupLink": "https://t.me/+gOEBpAZPcdY4ZTZl",
+            "paymentLink": "",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20251203_122142_442.jpg",
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n🥳 সাথে MCQ Boster সম্পূর্ণ ফ্রী।\n➡️120+ Classes \n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n\n💢মূল্য : 100 টাকা"
+           }
+        }
+      },
         "bp_powerplay_26": {
         "name": "⚛️ BP PowerPlay HSC 26",
         "type": "submenu",
