@@ -612,7 +612,7 @@ const COURSES_DATA = {
         "type": "submenu",
         "courses": {
            "udv-frb-batch-26": {
-            "name": "⚛️ HSC 26 FRC FINIAL REVISION BATCH 2026",
+            "name": "⚛️ HSC 26 FRB FINIAL REVISION BATCH 2026",
             "type": "course",
             "price": 100,
             "groupLink": "https://t.me/+oljI3N8TAuxhMjY1",
