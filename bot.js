@@ -945,6 +945,57 @@ const COURSES_DATA = {
       }
     }
   },
+"admission26": {
+    "name": "🔥HSC 2026 Admission All Courses🔥",
+    "type": "menu",
+    "submenus": {
+      "acs_admission26": {
+        "name": "🎯 ACS Admission 26 All Course",
+        "type": "submenu",
+        "courses": {
+          "acs27_premed": {
+            "name": "🔥ACS PRE- MEDICAL 2026🔥",
+            "type": "course",
+            "price": 150,
+            "groupLink": "https://t.me/+Yf4GutxMbT8xN2Vl",
+            "paymentLink": "",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20251213_190949_291.jpg",
+            "description": "🔥কোর্স এর সাথে পাবেন🔥\n☺️টপিক ভিক্তিক ক্লাস ( 1080p ) \n☺️প্রতি ক্লাস এর লেকচার শীট \n☺️বাড়ির কাজের পিডিএফ \n☺️প্রতি অধ্যায় শেষে প্র্যাকটিস শীট \n☺️মাঝে মাঝে অধ্যায় ভিক্তিক ডাউট সলভ ক্লাস\n☺️আগের ব্যাচ এর ক্লাস ( আর্কাইভ ) \n☺️লাইফটাইম এক্সেস পাবে\n☺️আইডি ব্যান হলে নতুন আইডি এড হতে পারবে"
+           }
+         }
+       },
+   "bp_admission26": {
+        "name": "🎯 BP Admission 26 All Course",
+        "type": "submenu",
+        "courses": {}
+     },
+    "rtds_admission26": {
+        "name": "🎯 Rtds Admission 26 All Course",
+        "type": "submenu",
+        "courses": {}
+     },
+    "bob_admission26": {
+        "name": "🎯 Battle of Biology Admission 26 All Course",
+        "type": "submenu",
+        "courses": {}
+     },
+    "ph_admission26": {
+        "name": "🎯 Physics Hunters Admission 26 All Course",
+        "type": "submenu",
+        "courses": {}
+     },
+    "udv_admission26": {
+        "name": "🎯 Udvash Admission 26 All Course",
+        "type": "submenu",
+        "courses": {}
+     },
+    "cps_admission26": {
+        "name": "🎯 CPS Admission 26 All Course",
+        "type": "submenu",
+        "courses": {}
+     },
+   }
+ },
   "admission25": {
     "name": "🔥 HSC 2025 সকল Admission কোর্স 🔥",
     "type": "menu",
