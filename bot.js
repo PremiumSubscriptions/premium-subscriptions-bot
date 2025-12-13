@@ -950,7 +950,7 @@ const COURSES_DATA = {
     "type": "menu",
     "submenus": {
       "acs_admission26": {
-        "name": "🎯 ACS Admission 26 All Course",
+        "name": "🎯 ACS🔥",
         "type": "submenu",
         "courses": {
           "acs27_premed": {
@@ -965,32 +965,32 @@ const COURSES_DATA = {
          }
        },
    "bp_admission26": {
-        "name": "🎯 BP Admission 26 All Course",
+        "name": "🎓 বন্ধী পাঠশালা 📘",
         "type": "submenu",
         "courses": {}
      },
     "rtds_admission26": {
-        "name": "🎯 Rtds Admission 26 All Course",
+        "name": "🎯 RTDS🔥",
         "type": "submenu",
         "courses": {}
      },
     "bob_admission26": {
-        "name": "🎯 Battle of Biology Admission 26 All Course",
+        "name": "🎯 Battle of Biology🔥",
         "type": "submenu",
         "courses": {}
      },
     "ph_admission26": {
-        "name": "🎯 Physics Hunters Admission 26 All Course",
+        "name": "🎯 Physics Hunters 🔥",
         "type": "submenu",
         "courses": {}
      },
     "udv_admission26": {
-        "name": "🎯 Udvash Admission 26 All Course",
+        "name": "🎯 Udvash🔥",
         "type": "submenu",
         "courses": {}
      },
     "cps_admission26": {
-        "name": "🎯 CPS Admission 26 All Course",
+        "name": "🎯 CPS🔥",
         "type": "submenu",
         "courses": {}
      },
