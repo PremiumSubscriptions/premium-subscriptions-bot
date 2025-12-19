@@ -992,7 +992,8 @@ const COURSES_DATA = {
     "cps_admission26": {
         "name": "🎯 CPS🔥",
         "type": "submenu",
-        "courses": {   "cps_cr_26": {
+        "courses": {   
+          "cps_cr_26": {
             "name": "⚛️CPS ENGNEERING PHYSICS 2026",
             "type": "course",
             "price": 100,
