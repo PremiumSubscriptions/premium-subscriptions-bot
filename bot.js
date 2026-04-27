@@ -615,7 +615,7 @@ const COURSES_DATA = {
             "name": "💥BP Oneshot Physics, Math & Biology💥",
             "type": "course",
             "price": 100,
-            "groupLink": "",
+            "groupLink": "https://t.me/+y9u_FDqBPh5hYmNl",
             "paymentLink": "",
             "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20260427_180926_785.jpg",
             "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n🔺 প্রতিদিনের ক্লাস প্রতিদিন।\n🔺 নিয়মিত না পেলে রিফান্ড করা হবে।\n➡️120+ Classes \n✏️Class ( With YouTube Link )\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n3টা একসাথে ১০০ টাকা। আলাদা কেনা যাবে না!\n\n💢মূল্য : 100 টাকা"
@@ -2550,11 +2550,21 @@ bot.on('message', async (msg) => {
                 `✅ Example: 9BG4R2G5N8\n\n` +
                 `⭐ Bkash Payment Auto Approve ⭐\n\n` +
                 `Amount: ${course.price} TK`;
-                await bot.sendMessage(msg.chat.id, bkashInstruction, getBkashPaymentKeyboard(hasPaymentLink));
+
+                // 📌 Image-এর URL বা Local Path এখানে দিন
+                const bkashImage = './bkash.jpg'; 
+                const bkashKeyboard = getBkashPaymentKeyboard(hasPaymentLink);
+
+                // বিকাশের জন্য sendPhoto ব্যবহার করা হলো
+                await bot.sendPhoto(msg.chat.id, bkashImage, {
+                    caption: bkashInstruction,
+                    ...bkashKeyboard 
+                });
             } 
             else if (messageText === 'Nagad') {
                 await updateUserData(userId, { pending_payment_method: 'Nagad' });
                 userStates.set(userId, { ...userState, state: 'nagad_payment' });
+                
                 const nagadInstruction = `💳 Nagad Payment Instructions:\n\n` +
                 `✅ এই নাম্বার ${NAGAD_NUMBER} এ Send Money করেন ।\n` +
                 `✅ Payment করার পর screenshot নিন ।\n` +
@@ -2564,6 +2574,7 @@ bot.on('message', async (msg) => {
                 await bot.sendMessage(msg.chat.id, nagadInstruction, getNagadPaymentKeyboard());
             }
         }
+
         
         // Handle bKash payment options
         if (userState.state === 'bkash_payment') {
