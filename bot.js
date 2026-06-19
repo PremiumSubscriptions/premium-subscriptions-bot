@@ -66,7 +66,9 @@ const COURSES_DATA = {
         "name": "🎯ACS🔥",
         "type": "submenu",
         "courses": {}
-     },
+         }
+       }
+    },
     "hsc27": {
     "name": "🔥HSC 2027 All Courses🔥",
     "type": "menu",
