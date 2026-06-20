@@ -57,7 +57,47 @@ const app = express();
 const userStates = new Map();
 
 const COURSES_DATA = {
-   
+    "hsc28": {
+    "name": "🔥HSC 2028 All Courses🔥",
+    "type": "menu",
+    "submenus": {
+      "acs28all": {
+        "name": "🎯 ACS HSC-28 All Course",
+        "type": "submenu",
+        "courses": {
+            
+          }
+        },
+        "bp28all": {
+        "name": "🎯 Bondi Pathshala 28 All Course",
+        "type": "submenu",
+        "courses": {
+            
+          }
+        },
+        "cps28all": {
+        "name": "🎯 CPS HSC-28 All Course",
+        "type": "submenu",
+        "courses": {
+            
+          }
+        },
+        "redwans28all": {
+        "name": "🎯 Redwan's Method 28 All Course",
+        "type": "submenu",
+        "courses": {
+            
+          }
+        },
+        "udvash28all": {
+        "name": "🎯 Udvash HSC-28 All Course",
+        "type": "submenu",
+        "courses": {
+            
+          }
+        },
+      }
+    },
     "hsc27": {
     "name": "🔥HSC 2027 All Courses🔥",
     "type": "menu",
