@@ -57,15 +57,7 @@ const app = express();
 const userStates = new Map();
 
 const COURSES_DATA = {
-   "hsc28": {
-        "name": "🔥HSC 2028 All Courses🔥",
-        "type": "menu",
-        "submenus": {
-      "acs28": {
-        "name": "🎯ACS🔥",
-        "type": "submenu",
-     }
-    },
+   
     "hsc27": {
     "name": "🔥HSC 2027 All Courses🔥",
     "type": "menu",
