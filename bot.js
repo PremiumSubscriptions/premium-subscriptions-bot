@@ -65,7 +65,195 @@ const COURSES_DATA = {
         "name": "🎯 ACS HSC-28 All Course",
         "type": "submenu",
         "courses": {
-            
+            "acs28hmall": {
+      "name": "🧮 ACS HM Full Combo",
+      "type": "course",
+      "price": 450,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmall.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📚 Full Combo-তে যা যা থাকছে\n\n✅ Math Cycle 01\n📌 ম্যাট্রিক্স ও নির্ণায়ক\n📌 ভেক্টর\n📌 বৃত্ত\n📌 সরলরেখা\n\n✅ Math Cycle 02\n📌 বিন্যাস ও সমাবেশ\n📌 ত্রিকোণমিতিক অনুপাত\n📌 সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত\n📌 ফাংশন ও ফাংশনের লেখচিত্র\n\n✅ Math Cycle 03\n📌 অন্তরীকরণ\n📌 যোগজীকরণ\n\n✅ Math Cycle 04\n📌 বাস্তব সংখ্যা ও অসমতা\n📌 যোগাশ্রয়ী প্রোগ্রাম\n📌 জটিল সংখ্যা\n📌 বহুপদী ও বহুপদী সমীকরণ\n\n✅ Math Cycle 05\n📌 দ্বিপদী বিস্তৃতি\n📌 কনিক\n📌 বিপরীত ত্রিকোণমিতি\n\n✅ Math Cycle 06\n📌 স্থিতিবিদ্যা\n📌 সমতলে বস্তুকণার গতি\n📌 বিস্তার পরিমাপ ও সম্ভাবনা\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28hmc1": {
+      "name": "🧮 ACS HM Cycle 1",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc1.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 ম্যাট্রিক্স ও নির্ণায়ক\n📥 ভেক্টর\n📥 বৃত্ত\n📥 সরলরেখা\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28hmc2": {
+      "name": "🧮 ACS HM Cycle 2",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc2.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 বিন্যাস ও সমাবেশ\n📥 ত্রিকোণমিতিক অনুপাত\n📥 সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত\n📥 ফাংশন ও ফাংশনের লেখচিত্র\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28hmc3": {
+      "name": "🧮 ACS HM Cycle 3",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc3.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 অন্তরীকরণ\n📥 যোগজীকরণ\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28hmc4": {
+      "name": "🧮 ACS HM Cycle 4",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc4.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 বাস্তব সংখ্যা ও অসমতা\n📥 যোগাশ্রয়ী প্রোগ্রাম\n📥 জটিল সংখ্যা\n📥 বহুপদী ও বহুপদী সমীকরণ\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28hmc5": {
+      "name": "🧮 ACS HM Cycle 5",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc5.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 দ্বিপদী বিস্তৃতি\n📥 কনিক\n📥 বিপরীত ত্রিকোণমিতি\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শীট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28hmc6": {
+      "name": "🧮 ACS HM Cycle 6",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc6.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 স্থিতিবিদ্যা\n📥 সমতলে বস্তুকণার গতি\n📥 বিস্তার পরিমাপ ও সম্ভাবনা\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28phyc1": {
+      "name": "🔭 ACS Physics Cycle 1",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc1.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 ভৌত জগৎ ও পরিমাপ\n📥 ভেক্টর\n📥 গতিবিদ্যা\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28phyc2": {
+      "name": "🔭 ACS Physics Cycle 2",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc2.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 নিউটনীয় বলবিদ্যা\n📥 কাজ, শক্তি ও ক্ষমতা\n📥 মহাকর্ষ ও অভিকর্ষ\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28phyc3": {
+      "name": "🔭 ACS Physics Cycle 3",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc3.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 পদার্থের গাঠনিক ধর্ম\n📥 পর্যাবৃত্ত গতি\n📥 তরঙ্গ\n📥 আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28phyc4": {
+      "name": "🔭 ACS Physics Cycle 4",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc4.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 তাপগতিবিদ্যা\n📥 স্থির তড়িৎ\n📥 চল তড়িৎ\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28phyc5": {
+      "name": "🔭 ACS Physics Cycle 5",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc5.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 তড়িৎ প্রবাহের চৌম্বক ক্রিয়া\n📥 তাড়িৎচৌম্বক আবেশ\n📥 সেমিকন্ডাক্টর\n📥 পরমাণুর মডেল ও নিউক্লিয়ার ফিজিক্স\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28phyc6": {
+      "name": "🔭 ACS Physics Cycle 6",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc6.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 জ্যামিতিক আলোকবিজ্ঞান\n📥 ভৌত আলোকবিজ্ঞান\n📥 আধুনিক পদার্থবিজ্ঞান\n📥 জ্যোতির্বিজ্ঞান\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28phyall": {
+      "name": "🔭 ACS Physics Full Combo",
+      "type": "course",
+      "price": 450,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyall.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📚 Full Combo-তে যা যা থাকছে\n\n✅ Physics Cycle 01\n📌 ভৌত জগৎ ও পরিমাপ\n📌 ভেক্টর\n📌 গতিবিদ্যা\n\n✅ Physics Cycle 02\n📌 নিউটনীয় বলবিদ্যা\n📌 কাজ, শক্তি ও ক্ষমতা\n📌 মহাকর্ষ ও অভিকর্ষ\n\n✅ Physics Cycle 03\n📌 পদার্থের গাঠনিক ধর্ম\n📌 পর্যাবৃত্ত গতি\n📌 তরঙ্গ\n📌 আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব\n\n✅ Physics Cycle 04\n📌 তাপগতিবিদ্যা\n📌 স্থির তড়িৎ\n📌 চল তড়িৎ\n\n✅ Physics Cycle 05\n📌 তড়িৎ প্রবাহের চৌম্বক ক্রিয়া\n📌 তাড়িৎচৌম্বক আবেশ\n📌 সেমিকন্ডাক্টর\n📌 পরমাণুর মডেল ও নিউক্লিয়ার ফিজিক্স\n\n✅ Physics Cycle 06\n📌 জ্যামিতিক আলোকবিজ্ঞান\n📌 ভৌত আলোকবিজ্ঞান\n📌 আধুনিক পদার্থবিজ্ঞান\n📌 জ্যোতির্বিজ্ঞান\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28aloronchemc1": {
+      "name": "🧪 ACS Aloron Chemistry Cycle 1",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc1.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 ল্যাবরেটরির নিরাপদ ব্যবহার\n📥 গুণগত রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28aloronchemc2": {
+      "name": "🧪 ACS Aloron Chemistry Cycle 2",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc2.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 মৌলের পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28aloronchemc3": {
+      "name": "🧪 ACS Aloron Chemistry Cycle 3",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc3.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 রাসায়নিক পরিবর্তন\n📥 কর্মমুখী রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28aloronchemc4": {
+      "name": "🧪 ACS Aloron Chemistry Cycle 4",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc4.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 পরিবেশ রসায়ন\n📥 তড়িৎ রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28aloronchemc5": {
+      "name": "🧪 ACS Aloron Chemistry Cycle 5",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc5.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 পরিমাণগত রসায়ন\n📥 অর্থনৈতিক রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28aloronchemc6": {
+      "name": "🧪 ACS Aloron Chemistry Cycle 6",
+      "type": "course",
+      "price": 100,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc6.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 জৈব রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    },
+    "acs28aloronchemall": {
+      "name": "🧪 ACS Aloron Chemistry Full Combo",
+      "type": "course",
+      "price": 450,
+      "groupLink": "",
+      "paymentLink": "",
+      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemall.jpg",
+      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 হেমেল ভাই\n🔹 Aloron Palovhi\n\n📚 এই কম্বোতে যা যা থাকছে\n\n✅ রসায়ন ১ম পত্রের সম্পূর্ণ সিলেবাস\n✅ রসায়ন ২য় পত্রের সম্পূর্ণ সিলেবাস\n✅ HSC 2028-এর জন্য ১ম ও ২য় পত্রের সকল অধ্যায় সম্পন্ন করা হবে\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+    }
           }
         },
         "bp28all": {
