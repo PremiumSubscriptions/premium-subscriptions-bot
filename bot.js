@@ -64,228 +64,238 @@ const COURSES_DATA = {
       "acs28all": {
         "name": "🎯 ACS HSC-28 All Course",
         "type": "submenu",
-        "courses": {
-            "acs28hmall": {
-      "name": "🧮 ACS HM Full Combo",
-      "type": "course",
-      "price": 450,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmall.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📚 Full Combo-তে যা যা থাকছে\n\n✅ Math Cycle 01\n📌 ম্যাট্রিক্স ও নির্ণায়ক\n📌 ভেক্টর\n📌 বৃত্ত\n📌 সরলরেখা\n\n✅ Math Cycle 02\n📌 বিন্যাস ও সমাবেশ\n📌 ত্রিকোণমিতিক অনুপাত\n📌 সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত\n📌 ফাংশন ও ফাংশনের লেখচিত্র\n\n✅ Math Cycle 03\n📌 অন্তরীকরণ\n📌 যোগজীকরণ\n\n✅ Math Cycle 04\n📌 বাস্তব সংখ্যা ও অসমতা\n📌 যোগাশ্রয়ী প্রোগ্রাম\n📌 জটিল সংখ্যা\n📌 বহুপদী ও বহুপদী সমীকরণ\n\n✅ Math Cycle 05\n📌 দ্বিপদী বিস্তৃতি\n📌 কনিক\n📌 বিপরীত ত্রিকোণমিতি\n\n✅ Math Cycle 06\n📌 স্থিতিবিদ্যা\n📌 সমতলে বস্তুকণার গতি\n📌 বিস্তার পরিমাপ ও সম্ভাবনা\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28hmc1": {
-      "name": "🧮 ACS HM Cycle 1",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc1.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 ম্যাট্রিক্স ও নির্ণায়ক\n📥 ভেক্টর\n📥 বৃত্ত\n📥 সরলরেখা\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28hmc2": {
-      "name": "🧮 ACS HM Cycle 2",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc2.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 বিন্যাস ও সমাবেশ\n📥 ত্রিকোণমিতিক অনুপাত\n📥 সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত\n📥 ফাংশন ও ফাংশনের লেখচিত্র\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28hmc3": {
-      "name": "🧮 ACS HM Cycle 3",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc3.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 অন্তরীকরণ\n📥 যোগজীকরণ\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28hmc4": {
-      "name": "🧮 ACS HM Cycle 4",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc4.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 বাস্তব সংখ্যা ও অসমতা\n📥 যোগাশ্রয়ী প্রোগ্রাম\n📥 জটিল সংখ্যা\n📥 বহুপদী ও বহুপদী সমীকরণ\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28hmc5": {
-      "name": "🧮 ACS HM Cycle 5",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc5.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 দ্বিপদী বিস্তৃতি\n📥 কনিক\n📥 বিপরীত ত্রিকোণমিতি\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শীট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28hmc6": {
-      "name": "🧮 ACS HM Cycle 6",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc6.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 স্থিতিবিদ্যা\n📥 সমতলে বস্তুকণার গতি\n📥 বিস্তার পরিমাপ ও সম্ভাবনা\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28phyc1": {
-      "name": "🔭 ACS Physics Cycle 1",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc1.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 ভৌত জগৎ ও পরিমাপ\n📥 ভেক্টর\n📥 গতিবিদ্যা\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28phyc2": {
-      "name": "🔭 ACS Physics Cycle 2",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc2.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 নিউটনীয় বলবিদ্যা\n📥 কাজ, শক্তি ও ক্ষমতা\n📥 মহাকর্ষ ও অভিকর্ষ\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28phyc3": {
-      "name": "🔭 ACS Physics Cycle 3",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc3.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 পদার্থের গাঠনিক ধর্ম\n📥 পর্যাবৃত্ত গতি\n📥 তরঙ্গ\n📥 আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28phyc4": {
-      "name": "🔭 ACS Physics Cycle 4",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc4.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 তাপগতিবিদ্যা\n📥 স্থির তড়িৎ\n📥 চল তড়িৎ\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28phyc5": {
-      "name": "🔭 ACS Physics Cycle 5",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc5.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 তড়িৎ প্রবাহের চৌম্বক ক্রিয়া\n📥 তাড়িৎচৌম্বক আবেশ\n📥 সেমিকন্ডাক্টর\n📥 পরমাণুর মডেল ও নিউক্লিয়ার ফিজিক্স\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28phyc6": {
-      "name": "🔭 ACS Physics Cycle 6",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc6.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 জ্যামিতিক আলোকবিজ্ঞান\n📥 ভৌত আলোকবিজ্ঞান\n📥 আধুনিক পদার্থবিজ্ঞান\n📥 জ্যোতির্বিজ্ঞান\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28phyall": {
-      "name": "🔭 ACS Physics Full Combo",
-      "type": "course",
-      "price": 450,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyall.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📚 Full Combo-তে যা যা থাকছে\n\n✅ Physics Cycle 01\n📌 ভৌত জগৎ ও পরিমাপ\n📌 ভেক্টর\n📌 গতিবিদ্যা\n\n✅ Physics Cycle 02\n📌 নিউটনীয় বলবিদ্যা\n📌 কাজ, শক্তি ও ক্ষমতা\n📌 মহাকর্ষ ও অভিকর্ষ\n\n✅ Physics Cycle 03\n📌 পদার্থের গাঠনিক ধর্ম\n📌 পর্যাবৃত্ত গতি\n📌 তরঙ্গ\n📌 আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব\n\n✅ Physics Cycle 04\n📌 তাপগতিবিদ্যা\n📌 স্থির তড়িৎ\n📌 চল তড়িৎ\n\n✅ Physics Cycle 05\n📌 তড়িৎ প্রবাহের চৌম্বক ক্রিয়া\n📌 তাড়িৎচৌম্বক আবেশ\n📌 সেমিকন্ডাক্টর\n📌 পরমাণুর মডেল ও নিউক্লিয়ার ফিজিক্স\n\n✅ Physics Cycle 06\n📌 জ্যামিতিক আলোকবিজ্ঞান\n📌 ভৌত আলোকবিজ্ঞান\n📌 আধুনিক পদার্থবিজ্ঞান\n📌 জ্যোতির্বিজ্ঞান\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28aloronchemc1": {
-      "name": "🧪 ACS Aloron Chemistry Cycle 1",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc1.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 ল্যাবরেটরির নিরাপদ ব্যবহার\n📥 গুণগত রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28aloronchemc2": {
-      "name": "🧪 ACS Aloron Chemistry Cycle 2",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc2.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 মৌলের পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28aloronchemc3": {
-      "name": "🧪 ACS Aloron Chemistry Cycle 3",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc3.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 রাসায়নিক পরিবর্তন\n📥 কর্মমুখী রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28aloronchemc4": {
-      "name": "🧪 ACS Aloron Chemistry Cycle 4",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc4.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 পরিবেশ রসায়ন\n📥 তড়িৎ রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28aloronchemc5": {
-      "name": "🧪 ACS Aloron Chemistry Cycle 5",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc5.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 পরিমাণগত রসায়ন\n📥 অর্থনৈতিক রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28aloronchemc6": {
-      "name": "🧪 ACS Aloron Chemistry Cycle 6",
-      "type": "course",
-      "price": 100,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc6.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 জৈব রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    },
-    "acs28aloronchemall": {
-      "name": "🧪 ACS Aloron Chemistry Full Combo",
-      "type": "course",
-      "price": 450,
-      "groupLink": "",
-      "paymentLink": "",
-      "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemall.jpg",
-      "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 হেমেল ভাই\n🔹 Aloron Palovhi\n\n📚 এই কম্বোতে যা যা থাকছে\n\n✅ রসায়ন ১ম পত্রের সম্পূর্ণ সিলেবাস\n✅ রসায়ন ২য় পত্রের সম্পূর্ণ সিলেবাস\n✅ HSC 2028-এর জন্য ১ম ও ২য় পত্রের সকল অধ্যায় সম্পন্ন করা হবে\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
-    }
+        "categories": {
+          "acs28_math": {
+            "name": "🧮 ACS Math Series",
+            "type": "category",
+            "courses": {
+              "acs28hmall": {
+                "name": "🧮 ACS HM Full Combo",
+                "type": "course",
+                "price": 450,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmall.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📚 Full Combo-তে যা যা থাকছে\n\n✅ Math Cycle 01\n📌 ম্যাট্রিক্স ও নির্ণায়ক\n📌 ভেক্টর\n📌 বৃত্ত\n📌 সরলরেখা\n\n✅ Math Cycle 02\n📌 বিন্যাস ও সমাবেশ\n📌 ত্রিকোণমিতিক অনুপাত\n📌 সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত\n📌 ফাংশন ও ফাংশনের লেখচিত্র\n\n✅ Math Cycle 03\n📌 অন্তরীকরণ\n📌 যোগজীকরণ\n\n✅ Math Cycle 04\n📌 বাস্তব সংখ্যা ও অসমতা\n📌 যোগাশ্রয়ী প্রোগ্রাম\n📌 জটিল সংখ্যা\n📌 বহুপদী ও বহুপদী সমীকরণ\n\n✅ Math Cycle 05\n📌 দ্বিপদী বিস্তৃতি\n📌 কনিক\n📌 বিপরীত ত্রিকোণমিতি\n\n✅ Math Cycle 06\n📌 স্থিতিবিদ্যা\n📌 সমতলে বস্তুকণার গতি\n📌 বিস্তার পরিমাপ ও সম্ভাবনা\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28hmc1": {
+                "name": "🧮 ACS HM Cycle 1",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc1.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 ম্যাট্রিক্স ও নির্ণায়ক\n📥 ভেক্টর\n📥 বৃত্ত\n📥 সরলরেখা\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28hmc2": {
+                "name": "🧮 ACS HM Cycle 2",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc2.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 বিন্যাস ও সমাবেশ\n📥 ত্রিকোণমিতিক অনুপাত\n📥 সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত\n📥 ফাংশন ও ফাংশনের লেখচিত্র\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28hmc3": {
+                "name": "🧮 ACS HM Cycle 3",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc3.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 অন্তরীকরণ\n📥 যোগজীকরণ\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28hmc4": {
+                "name": "🧮 ACS HM Cycle 4",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc4.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 বাস্তব সংখ্যা ও অসমতা\n📥 যোগাশ্রয়ী প্রোগ্রাম\n📥 জটিল সংখ্যা\n📥 বহুপদী ও বহুপদী সমীকরণ\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28hmc5": {
+                "name": "🧮 ACS HM Cycle 5",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc5.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 দ্বিপদী বিস্তৃতি\n📥 কনিক\n📥 বিপরীত ত্রিকোণমিতি\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শীট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28hmc6": {
+                "name": "🧮 ACS HM Cycle 6",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28hmc6.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অভিদত্ত তুশার\n🔹 রকিবুল হাসান\n\n📥 স্থিতিবিদ্যা\n📥 সমতলে বস্তুকণার গতি\n📥 বিস্তার পরিমাপ ও সম্ভাবনা\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              }
+            }
+          },
+          "acs28_physics": {
+            "name": "🔭 ACS Physics Series",
+            "type": "category",
+            "courses": {
+              "acs28phyall": {
+                "name": "🔭 ACS Physics Full Combo",
+                "type": "course",
+                "price": 450,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyall.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📚 Full Combo-তে যা যা থাকছে\n\n✅ Physics Cycle 01\n📌 ভৌত জগৎ ও পরিমাপ\n📌 ভেক্টর\n📌 গতিবিদ্যা\n\n✅ Physics Cycle 02\n📌 নিউটনীয় বলবিদ্যা\n📌 কাজ, শক্তি ও ক্ষমতা\n📌 মহাকর্ষ ও অভিকর্ষ\n\n✅ Physics Cycle 03\n📌 পদার্থের গাঠনিক ধর্ম\n📌 পর্যাবৃত্ত গতি\n📌 তরঙ্গ\n📌 আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব\n\n✅ Physics Cycle 04\n📌 তাপগতিবিদ্যা\n📌 স্থির তড়িৎ\n📌 চল তড়িৎ\n\n✅ Physics Cycle 05\n📌 তড়িৎ প্রবাহের চৌম্বক ক্রিয়া\n📌 তাড়িৎচৌম্বক আবেশ\n📌 সেমিকন্ডাক্টর\n📌 পরমাণুর মডেল ও নিউক্লিয়ার ফিজিক্স\n\n✅ Physics Cycle 06\n📌 জ্যামিতিক আলোকবিজ্ঞান\n📌 ভৌত আলোকবিজ্ঞান\n📌 আধুনিক পদার্থবিজ্ঞান\n📌 জ্যোতির্বিজ্ঞান\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28phyc1": {
+                "name": "🔭 ACS Physics Cycle 1",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc1.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 ভৌত জগৎ ও পরিমাপ\n📥 ভেক্টর\n📥 গতিবিদ্যা\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28phyc2": {
+                "name": "🔭 ACS Physics Cycle 2",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc2.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 নিউটনীয় বলবিদ্যা\n📥 কাজ, শক্তি ও ক্ষমতা\n📥 মহাকর্ষ ও অভিকর্ষ\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28phyc3": {
+                "name": "🔭 ACS Physics Cycle 3",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc3.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 পদার্থের গাঠনিক ধর্ম\n📥 পর্যাবৃত্ত গতি\n📥 তরঙ্গ\n📥 আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28phyc4": {
+                "name": "🔭 ACS Physics Cycle 4",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc4.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 তাপগতিবিদ্যা\n📥 স্থির তড়িৎ\n📥 চল তড়িৎ\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28phyc5": {
+                "name": "🔭 ACS Physics Cycle 5",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc5.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 তড়িৎ প্রবাহের চৌম্বক ক্রিয়া\n📥 তাড়িৎচৌম্বক আবেশ\n📥 সেমিকন্ডাক্টর\n📥 পরমাণুর মডেল ও নিউক্লিয়ার ফিজিক্স\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28phyc6": {
+                "name": "🔭 ACS Physics Cycle 6",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28phyc6.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 অপূর্ব অপু\n🔹 এম মাশরুর হুসাইন\n\n📥 জ্যামিতিক আলোকবিজ্ঞান\n📥 ভৌত আলোকবিজ্ঞান\n📥 আধুনিক পদার্থবিজ্ঞান\n📥 জ্যোতির্বিজ্ঞান\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              }
+            }
+          },
+          "acs28_chemistry": {
+            "name": "🧪 ACS Chemistry Series",
+            "type": "category",
+            "courses": {
+              "acs28aloronchemall": {
+                "name": "🧪 ACS Aloron Chemistry Full Combo",
+                "type": "course",
+                "price": 450,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemall.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 হেমেল ভাই\n🔹 Aloron Palovhi\n\n📚 এই কম্বোতে যা যা থাকছে\n\n✅ রসায়ন ১ম পত্রের সম্পূর্ণ সিলেবাস\n✅ রসায়ন ২য় পত্রের সম্পূর্ণ সিলেবাস\n✅ HSC 2028-এর জন্য ১ম ও ২য় পত্রের সকল অধ্যায় সম্পন্ন করা হবে\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28aloronchemc1": {
+                "name": "🧪 ACS Aloron Chemistry Cycle 1",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc1.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 ল্যাবরেটরির নিরাপদ ব্যবহার\n📥 গুণগত রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28aloronchemc2": {
+                "name": "🧪 ACS Aloron Chemistry Cycle 2",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc2.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 মৌলের পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28aloronchemc3": {
+                "name": "🧪 ACS Aloron Chemistry Cycle 3",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc3.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 রাসায়নিক পরিবর্তন\n📥 কর্মমুখী রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28aloronchemc4": {
+                "name": "🧪 ACS Aloron Chemistry Cycle 4",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc4.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 পরিবেশ রসায়ন\n📥 তড়িৎ রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28aloronchemc5": {
+                "name": "🧪 ACS Aloron Chemistry Cycle 5",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc5.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 পরিমাণগত রসায়ন\n📥 অর্থনৈতিক রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              },
+              "acs28aloronchemc6": {
+                "name": "🧪 ACS Aloron Chemistry Cycle 6",
+                "type": "course",
+                "price": 100,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/acs28aloronchemc6.jpg",
+                "description": "👨‍🏫 শিক্ষক প্যানেল ❤️\n\n🔹 মোত্তাসিন পাহলভী (BUET)\n🔹 হেমেল (EEE '17, BUET)\n\n📥 জৈব রসায়ন\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ প্রতিটি অধ্যায় শেষে প্র্যাকটিস শিট\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং ক্লাস\n✨ আগের ব্যাচের সম্পূর্ণ আর্কাইভ ক্লাস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              }
+            }
           }
-        },
-        "bp28all": {
+        }
+      },
+      "bp28all": {
         "name": "🎯 Bondi Pathshala 28 All Course",
         "type": "submenu",
-        "courses": {
-            
-          }
-        },
-        "cps28all": {
+        "courses": {}
+      },
+      "cps28all": {
         "name": "🎯 CPS HSC-28 All Course",
         "type": "submenu",
-        "courses": {
-            
-          }
-        },
-        "redwans28all": {
+        "courses": {}
+      },
+      "redwans28all": {
         "name": "🎯 Redwan's Method 28 All Course",
         "type": "submenu",
-        "courses": {
-            
-          }
-        },
-        "udvash28all": {
+        "courses": {}
+      },
+      "udvash28all": {
         "name": "🎯 Udvash HSC-28 All Course",
         "type": "submenu",
-        "courses": {
-            
-          }
-        },
+        "courses": {}
       }
-    },
+    }
+  },
     "hsc27": {
     "name": "🔥HSC 2027 All Courses🔥",
     "type": "menu",
@@ -1711,9 +1721,8 @@ async function initializeDatabase() {
     }
 }
 
-// Helper functions (Unchanged)
+// Helper functions
 function getMenus() {
-    // Note: Assuming COURSES_DATA is fully populated as per your original file
     return Object.entries(COURSES_DATA).map(([menuId, menu]) => ({
         menu_id: menuId,
         name: menu.name,
@@ -1732,17 +1741,37 @@ function getSubmenus(menuId) {
     }));
 }
 
-function getCourses(menuId, submenuId) {
-    const menu = COURSES_DATA[menuId];
-    if (!menu || !menu.submenus || !menu.submenus[submenuId]) return [];
+// 🆕 New Helper for Categories (For HSC 28)
+function getCategories(menuId, submenuId) {
+    const submenu = COURSES_DATA[menuId]?.submenus?.[submenuId];
+    if (!submenu || !submenu.categories) return [];
     
-    const submenu = menu.submenus[submenuId];
-    if (!submenu.courses) return [];
+    return Object.entries(submenu.categories).map(([catId, category]) => ({
+        category_id: catId,
+        menu_id: menuId,
+        submenu_id: submenuId,
+        name: category.name,
+        type: category.type
+    }));
+}
+
+// 🔄 Modified to support both Old (courses) and New (categories) structures
+function getCourses(menuId, submenuId, categoryId = null) {
+    const submenu = COURSES_DATA[menuId]?.submenus?.[submenuId];
+    if (!submenu) return [];
     
-    return Object.entries(submenu.courses).map(([courseId, course]) => ({
+    let coursesObj = {};
+    if (categoryId && submenu.categories && submenu.categories[categoryId]) {
+        coursesObj = submenu.categories[categoryId].courses || {};
+    } else if (submenu.courses) {
+        coursesObj = submenu.courses;
+    }
+
+    return Object.entries(coursesObj).map(([courseId, course]) => ({
         course_id: courseId,
         menu_id: menuId,
         submenu_id: submenuId,
+        category_id: categoryId,
         name: course.name,
         type: course.type,
         price: course.price,
@@ -1753,24 +1782,26 @@ function getCourses(menuId, submenuId) {
     }));
 }
 
+// 🔄 Modified to search everywhere safely
 function findCourseById(courseId) {
     for (const [menuId, menu] of Object.entries(COURSES_DATA)) {
         if (menu.submenus) {
             for (const [submenuId, submenu] of Object.entries(menu.submenus)) {
+                
+                // Check in old structure (Direct Courses)
                 if (submenu.courses && submenu.courses[courseId]) {
                     const course = submenu.courses[courseId];
-                    return {
-                        course_id: courseId,
-                        menu_id: menuId,
-                        submenu_id: submenuId,
-                        name: course.name,
-                        type: course.type,
-                        price: course.price,
-                        group_link: course.groupLink,
-                        payment_link: course.paymentLink,
-                        image_link: course.imageLink,
-                        description: course.description
-                    };
+                    return { course_id: courseId, menu_id: menuId, submenu_id: submenuId, category_id: null, ...course, group_link: course.groupLink, payment_link: course.paymentLink, image_link: course.imageLink };
+                }
+                
+                // Check in new structure (Categories -> Courses)
+                if (submenu.categories) {
+                    for (const [catId, category] of Object.entries(submenu.categories)) {
+                        if (category.courses && category.courses[courseId]) {
+                            const course = category.courses[courseId];
+                            return { course_id: courseId, menu_id: menuId, submenu_id: submenuId, category_id: catId, ...course, group_link: course.groupLink, payment_link: course.paymentLink, image_link: course.imageLink };
+                        }
+                    }
                 }
             }
         }
@@ -2048,7 +2079,31 @@ async function getSubmenuKeyboard(menuId, submenuId, userId) {
         }
     };
 }
+// 🆕 For HSC 28 Categories
+async function getCategoryKeyboard(menuId, submenuId) {
+    const categories = getCategories(menuId, submenuId);
+    const keyboard = [];
+    categories.forEach(category => {
+        keyboard.push([category.name]);
+    });
+    keyboard.push(['⬅️ Back', '🏠 Main Menu']);
+    return {
+        reply_markup: { keyboard: keyboard, resize_keyboard: true, one_time_keyboard: false }
+    };
+}
 
+// 🆕 For Courses inside Categories
+async function getCourseListKeyboard(menuId, submenuId, categoryId) {
+    const courses = getCourses(menuId, submenuId, categoryId);
+    const keyboard = [];
+    for (const course of courses) {
+        keyboard.push([`${course.name} - ${course.price} TK`]);
+    }
+    keyboard.push(['⬅️ Back', '🏠 Main Menu']);
+    return {
+        reply_markup: { keyboard: keyboard, resize_keyboard: true, one_time_keyboard: false }
+    };
+}
 async function getCourseKeyboard(courseId, userId) {
     const course = findCourseById(courseId);
     if (!course) return getMainMenuKeyboard();
@@ -2072,22 +2127,14 @@ async function getCourseKeyboard(courseId, userId) {
         }
     };
 }
-function getPaymentMethodKeyboard(courseId = '') {
-    const keyboard = [
-        ['bKash'],
-        ['Nagad']
-    ];
-    
-    if (courseId) {
-        keyboard[0].callback_data = getCallbackData('new_payment', courseId, 'bKash');
-        keyboard[1].callback_data = getCallbackData('new_payment', courseId, 'Nagad');
-    }
-    
-    keyboard.push(['⬅️ Back', '🏠 Main Menu']);
-    
+function getPaymentMethodKeyboard() {
     return {
         reply_markup: {
-            keyboard: keyboard,
+            keyboard: [
+                ['bKash'],
+                ['Nagad'],
+                ['⬅️ Back', '🏠 Main Menu']
+            ],
             resize_keyboard: true,
             one_time_keyboard: false
         }
@@ -2358,16 +2405,15 @@ bot.onText(/\/listadmins/, async (msg) => {
         console.error('Error in /listadmins:', error.message);
     }
 });
-
 bot.on('message', async (msg) => {
     try {
         if (msg.text && msg.text.startsWith('/')) return;
         
         const userId = msg.from.id;
-        const messageText = msg.text;
+        const messageText = msg.text?.trim();
         const userData = await getUserData(userId);
         
-        // Handle payment proof submission
+        // 1. Handle Payment Proof Submission (bKash/Nagad) - Keep existing logic untouched!
         if (userData.waiting_for_proof) {
             const proofData = JSON.parse(userData.waiting_for_proof);
             const { courseId, paymentMethod } = proofData;
@@ -2380,7 +2426,6 @@ bot.on('message', async (msg) => {
 
             await updateUserData(userId, { waiting_for_proof: null });
 
-            // Handle Nagad screenshot
             if (msg.photo && paymentMethod === 'Nagad') {
                 const photo = msg.photo[msg.photo.length - 1];
                 const fileId = photo.file_id;
@@ -2404,22 +2449,15 @@ bot.on('message', async (msg) => {
                         }
                     });
 
-                    await bot.sendMessage(msg.chat.id, 
+                    return bot.sendMessage(msg.chat.id, 
                         `✅ Payment proof received for ${course.name}!\n\nAdmin will verify your payment shortly.`,
-                        {
-                            reply_markup: {
-                                inline_keyboard: [[
-                                    { text: '💬 Contact Admin', url: `https://t.me/${ADMIN_USERNAME}` }
-                                ]]
-                            }
-                        }
+                        { reply_markup: { inline_keyboard: [[ { text: '💬 Contact Admin', url: `https://t.me/${ADMIN_USERNAME}` } ]] } }
                     );
                 } catch (error) {
                     console.error('Error sending proof to admin:', error);
-                    await bot.sendMessage(msg.chat.id, '⚠️ Error submitting payment proof. Please try again or contact support.');
+                    return bot.sendMessage(msg.chat.id, '⚠️ Error submitting payment proof. Please try again or contact support.');
                 }
             }
-            // Handle bKash transaction ID
             else if (msg.text && paymentMethod === 'bKash') {
                 const trxId = msg.text.trim();
                 await bot.sendMessage(msg.chat.id, '⏳ Verifying payment time validity...');
@@ -2434,18 +2472,9 @@ bot.on('message', async (msg) => {
                                 parse_mode: 'Markdown',
                                 reply_markup: {
                                     inline_keyboard: [
-                                        [{
-                                            text: '🔄 Try Another TRX ID', 
-                                            callback_data: getCallbackData('retry_trx', courseId, 'bKash')
-                                        }],
-                                        [{
-                                            text: '💳 Make New Payment', 
-                                            callback_data: getCallbackData('new_payment', courseId)
-                                        }],
-                                        [{
-                                            text: '💬 Contact Support', 
-                                            url: 'https://t.me/Mehedi_X71'
-                                        }]
+                                        [{ text: '🔄 Try Another TRX ID', callback_data: getCallbackData('retry_trx', courseId, 'bKash') }],
+                                        [{ text: '💳 Make New Payment', callback_data: getCallbackData('new_payment', courseId) }],
+                                        [{ text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }]
                                     ]
                                 }
                             }
@@ -2453,8 +2482,7 @@ bot.on('message', async (msg) => {
                     }
                     if (await isTransactionUsed(trxId)) {
                         return bot.sendMessage(msg.chat.id,
-                            "❌ **এই Transaction ID আগেই ব্যবহার করা হয়েছে!**\n\n" +
-                            "দয়া করে নতুন একটি Transaction ID দিন অথবা সাপোর্টে যোগাযোগ করুন।",
+                            "❌ **এই Transaction ID আগেই ব্যবহার করা হয়েছে!**\n\nদয়া করে নতুন একটি Transaction ID দিন অথবা সাপোর্টে যোগাযোগ করুন।",
                             {
                                 parse_mode: 'Markdown',
                                 reply_markup: {
@@ -2468,14 +2496,10 @@ bot.on('message', async (msg) => {
                         );
                     }
 
-                    if (verificationResult.data.transactionStatus !== 'Completed' || 
-                        parseInt(verificationResult.data.amount) < course.price) {
+                    if (verificationResult.data.transactionStatus !== 'Completed' || parseInt(verificationResult.data.amount) < course.price) {
                         return bot.sendMessage(msg.chat.id,
                             `❌ **Payment Verification Failed!**\n\n` +
-                            `🔍 Possible reasons:\n` +
-                            `• Payment status not completed\n` +
-                            `• Insufficient amount (Paid: ${verificationResult.data.amount} TK, Required: ${course.price} TK)\n\n` +
-                            `Transaction ID: ${trxId}`,
+                            `🔍 Possible reasons:\n• Payment status not completed\n• Insufficient amount (Paid: ${verificationResult.data.amount} TK, Required: ${course.price} TK)\n\nTransaction ID: ${trxId}`,
                             {
                                 parse_mode: 'Markdown',
                                 reply_markup: {
@@ -2491,55 +2515,29 @@ bot.on('message', async (msg) => {
 
                     const added = await addTransaction(trxId, userId, courseId, course.price, paymentMethod, verificationResult.paymentDate);
                     if (!added) {
-                        return bot.sendMessage(msg.chat.id,
-                            "❌ **Transaction processing error!**\n\n" +
-                            "Please contact support immediately.",
-                            { parse_mode: 'Markdown' }
-                        );
+                        return bot.sendMessage(msg.chat.id, "❌ **Transaction processing error!**\n\nPlease contact support immediately.", { parse_mode: 'Markdown' });
                     }
 
                     await logTransaction(trxId, userId, course.price, course.name, paymentMethod, verificationResult.paymentDate);
                     await addUserPurchase(userId, courseId, course.menu_id, course.submenu_id, trxId, paymentMethod, course.price, verificationResult.paymentDate);
-                    await updateUserData(userId, { 
-                        pending_course: null, 
-                        pending_payment_method: null 
-                    });
+                    await updateUserData(userId, { pending_course: null, pending_payment_method: null });
 
                     const validityEndTime = new Date(verificationResult.paymentTime.getTime() + 24 * 60 * 60 * 1000);
-                    const options = {
-                        timeZone: 'Asia/Dhaka',
-                        hour12: true,
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    };
-                    const validityEndStr = validityEndTime.toLocaleString('en-BD', options);
+                    const validityEndStr = validityEndTime.toLocaleString('en-BD', { timeZone: 'Asia/Dhaka', hour12: true, year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 
-                    const successText = `✅ **পেমেন্ট সফলভাবে ভেরিফাই হয়েছে!**\n\n` +
-                        `📱 ${course.name} Unlocked!\n` +
-                        `💰 Amount: ${course.price} TK\n` +
-                        `🎫 Transaction ID: ${trxId}\n` +
-                        `⏰ Valid Until: ${validityEndStr}\n\n` +
-                        `🎯 Join your course group:\n👉 Click the button below`;
+                    const successText = `✅ **পেমেন্ট সফলভাবে ভেরিফাই হয়েছে!**\n\n📱 ${course.name} Unlocked!\n💰 Amount: ${course.price} TK\n🎫 Transaction ID: ${trxId}\n⏰ Valid Until: ${validityEndStr}\n\n🎯 Join your course group:\n👉 Click the button below`;
 
                     await bot.sendMessage(msg.chat.id, successText, {
                         parse_mode: 'Markdown',
-                        reply_markup: {
-                            inline_keyboard: [[
-                                { text: `🎯 Join ${course.name} Group`, url: course.group_link }
-                            ]]
-                        }
+                        reply_markup: { inline_keyboard: [[ { text: `🎯 Join ${course.name} Group`, url: course.group_link } ]] }
                     });
-                    // Reset user state and show main menu
+                    
                     userStates.delete(userId);
-                    const mainKeyboard = getMainMenuKeyboard();
-                    await bot.sendMessage(msg.chat.id, "🎓 Main Menu", mainKeyboard);
+                    return bot.sendMessage(msg.chat.id, "🎓 Main Menu", getMainMenuKeyboard());
 
                 } catch (error) {
                     console.error('Payment verification error:', error);
-                    await bot.sendMessage(msg.chat.id,
+                    return bot.sendMessage(msg.chat.id,
                         `⚠️ **Verification Error!**\n\nSomething went wrong. Please contact support.\n\nTransaction ID: ${trxId}`,
                         {
                             parse_mode: 'Markdown',
@@ -2554,223 +2552,173 @@ bot.on('message', async (msg) => {
                     );
                 }
             } else {
-                await bot.sendMessage(msg.chat.id, '❌ Invalid payment proof format!');
+                return bot.sendMessage(msg.chat.id, '❌ Invalid payment proof format!');
             }
-            return;
         }
 
-        // Handle navigation based on message text
-        const userState = userStates.get(userId) || {};
+        // 2. 🛡️ Auto-Healing State (Recover state if RAM clears on Render)
+        let userState = userStates.get(userId);
         
-        // Main menu navigation
+        if (!userState && messageText && messageText !== '🏠 Main Menu' && messageText !== '⬅️ Back' && messageText !== '❌ Cancel') {
+            const possibleCourseName = messageText.split(' - ')[0]; 
+            const foundCourse = findCourseById(possibleCourseName); 
+            
+            if (foundCourse) {
+                userState = { state: 'course', menuId: foundCourse.menu_id, submenuId: foundCourse.submenu_id, categoryId: foundCourse.category_id, courseId: foundCourse.course_id };
+                userStates.set(userId, userState);
+            } else {
+                userState = {}; // Let it fall through to generic navigation
+            }
+        } else if (!userState) {
+            userState = {};
+        }
+
+        // 3. Static Buttons
         if (messageText === '🏠 Main Menu') {
             userStates.delete(userId);
-            const mainKeyboard = getMainMenuKeyboard();
-            const welcomeText = `🎓 Premium Subscription Bot - Main Menu 🎓
-
-আপনার পছন্দের course category সিলেক্ট করুন:`;
-            
-            await bot.sendMessage(msg.chat.id, welcomeText, mainKeyboard);
-            return;
+            return bot.sendMessage(msg.chat.id, '🎓 Premium Subscription Bot - Main Menu 🎓\n\nআপনার পছন্দের course category সিলেক্ট করুন:', getMainMenuKeyboard());
         }
-        
-        // Support buttons
         if (messageText === '🔥 Support 🔥') {
-            await bot.sendMessage(msg.chat.id, '💬 Contact our support team:', {
-                reply_markup: {
-                    inline_keyboard: [[
-                        { text: '💬 Support', url: 'https://t.me/Mehedi_X71' }
-                    ]]
-                }
-            });
-            return;
+            return bot.sendMessage(msg.chat.id, '💬 Contact our support team:', { reply_markup: { inline_keyboard: [[ { text: '💬 Support', url: 'https://t.me/Mehedi_X71' } ]] } });
         }
-        
         if (messageText === '🔥 Our Channel ❤️') {
-            await bot.sendMessage(msg.chat.id, '📢 Join our channel for updates:', {
-                reply_markup: {
-                    inline_keyboard: [[
-                        { text: '📢 Our Channel', url: 'https://t.me/premium_subscriptionss' }
-                    ]]
-                }
-            });
-            return;
+            return bot.sendMessage(msg.chat.id, '📢 Join our channel for updates:', { reply_markup: { inline_keyboard: [[ { text: '📢 Our Channel', url: 'https://t.me/premium_subscriptionss' } ]] } });
         }
-        
-        // Cancel button
         if (messageText === '❌ Cancel') {
-            await updateUserData(userId, { 
-                pending_course: null,
-                pending_payment_method: null,
-                waiting_for_proof: null
-            });
-            
+            await updateUserData(userId, { pending_course: null, pending_payment_method: null, waiting_for_proof: null });
             userStates.delete(userId);
-            const mainKeyboard = getMainMenuKeyboard();
-            await bot.sendMessage(msg.chat.id, '🚫 Operation canceled. Returning to main menu.', mainKeyboard);
-            return;
+            return bot.sendMessage(msg.chat.id, '🚫 Operation canceled. Returning to main menu.', getMainMenuKeyboard());
         }
-        
-        // Back button
+
+        // 4. 🧠 The "Smart" BACK Button
         if (messageText === '⬅️ Back') {
             if (userState.state === 'submenu') {
-                // Go back to menu
                 userStates.set(userId, { state: 'menu', menuId: userState.menuId });
-                const menuKeyboard = getMenuKeyboard(userState.menuId);
-                const menus = getMenus();
-                const menu = menus.find(m => m.menu_id === userState.menuId);
+                const menu = getMenus().find(m => m.menu_id === userState.menuId);
+                return bot.sendMessage(msg.chat.id, `${menu.name}\n\n📚 Available Categories:`, getMenuKeyboard(userState.menuId));
                 
-                await bot.sendMessage(msg.chat.id, `${menu.name}\n\n📚 Available Categories:`, menuKeyboard);
+            } else if (userState.state === 'category') {
+                userStates.set(userId, { state: 'submenu', menuId: userState.menuId, submenuId: userState.submenuId });
+                const submenu = getSubmenus(userState.menuId).find(s => s.submenu_id === userState.submenuId);
+                return bot.sendMessage(msg.chat.id, `${submenu.name}\n\n📚 Available Options:`, await getSubmenuKeyboard(userState.menuId, userState.submenuId, userId));
+                
             } else if (userState.state === 'course') {
-                // Go back to submenu
-                userStates.set(userId, { 
-                    state: 'submenu', 
-                    menuId: userState.menuId, 
-                    submenuId: userState.submenuId 
-                });
-                const submenuKeyboard = await getSubmenuKeyboard(userState.menuId, userState.submenuId, userId);
-                const submenus = getSubmenus(userState.menuId);
-                const submenu = submenus.find(s => s.submenu_id === userState.submenuId);
+                if (userState.categoryId) {
+                    userStates.set(userId, { state: 'category', menuId: userState.menuId, submenuId: userState.submenuId, categoryId: userState.categoryId });
+                    const categories = getCategories(userState.menuId, userState.submenuId);
+                    const category = categories.find(c => c.category_id === userState.categoryId);
+                    return bot.sendMessage(msg.chat.id, `${category.name}\n\n📚 Available Courses:`, await getCourseListKeyboard(userState.menuId, userState.submenuId, userState.categoryId));
+                } else {
+                    userStates.set(userId, { state: 'submenu', menuId: userState.menuId, submenuId: userState.submenuId });
+                    const submenu = getSubmenus(userState.menuId).find(s => s.submenu_id === userState.submenuId);
+                    return bot.sendMessage(msg.chat.id, `${submenu.name}\n\n📚 Available Courses:`, await getSubmenuKeyboard(userState.menuId, userState.submenuId, userId));
+                }
                 
-                await bot.sendMessage(msg.chat.id, `${submenu.name}\n\n📚 Available Courses:`, submenuKeyboard);
-            } else if (userState.state === 'payment_method') {
-                // Go back to course
-                const course = findCourseById(userState.courseId);
+            } else if (userState.state === 'payment_method' || userState.state === 'bkash_payment' || userState.state === 'nagad_payment') {
+                const course = findCourseById(userState.courseId || userData.pending_course);
                 if (course) {
-                    userStates.set(userId, { 
-                        state: 'course', 
-                        menuId: course.menu_id, 
-                        submenuId: course.submenu_id,
-                        courseId: userState.courseId 
-                    });
-                    const courseKeyboard = await getCourseKeyboard(userState.courseId, userId);
-                    
-                    let courseText = `${course.name}\n\n`;
-                    courseText += course.description + '\n\n';
-                    courseText += `💰 Price: ${course.price} TK`;
+                    userStates.set(userId, { state: 'course', menuId: course.menu_id, submenuId: course.submenu_id, categoryId: course.category_id, courseId: course.course_id });
+                    const courseKeyboard = await getCourseKeyboard(course.course_id, userId);
+                    let courseText = `${course.name}\n\n${course.description}\n\n💰 Price: ${course.price} TK`;
                     
                     if (course.image_link) {
                         try {
-                            await bot.sendPhoto(msg.chat.id, course.image_link, {
-                                caption: courseText,
-                                ...courseKeyboard
-                            });
-                        } catch (error) {
-                            await bot.sendMessage(msg.chat.id, courseText, courseKeyboard);
+                            return await bot.sendPhoto(msg.chat.id, course.image_link, { caption: courseText, ...courseKeyboard });
+                        } catch (e) {
+                            return await bot.sendMessage(msg.chat.id, courseText, courseKeyboard);
                         }
-                    } else {
-                        await bot.sendMessage(msg.chat.id, courseText, courseKeyboard);
                     }
+                    return bot.sendMessage(msg.chat.id, courseText, courseKeyboard);
                 }
-            } else {
-                // Default back to main menu
-                userStates.delete(userId);
-                const mainKeyboard = getMainMenuKeyboard();
-                await bot.sendMessage(msg.chat.id, '🎓 Main Menu', mainKeyboard);
             }
-            return;
+            // Default Fallback
+            userStates.delete(userId);
+            return bot.sendMessage(msg.chat.id, '🎓 Main Menu', getMainMenuKeyboard());
         }
-        
-        // Check for menu selection
+
+        // 5. 🚀 Forward Navigation Logic
+
+        // 5.1 Menu Selection
         const menus = getMenus();
         const selectedMenu = menus.find(menu => menu.name === messageText);
         if (selectedMenu) {
             userStates.set(userId, { state: 'menu', menuId: selectedMenu.menu_id });
-            const menuKeyboard = getMenuKeyboard(selectedMenu.menu_id);
-            const menuText = `${selectedMenu.name}\n\n📚 Available Categories:`;
-            
-            await bot.sendMessage(msg.chat.id, menuText, menuKeyboard);
-            return;
+            return bot.sendMessage(msg.chat.id, `${selectedMenu.name}\n\n📚 Select an option:`, getMenuKeyboard(selectedMenu.menu_id));
         }
         
-        // Check for submenu selection
+        // 5.2 Submenu Selection
         if (userState.state === 'menu') {
             const submenus = getSubmenus(userState.menuId);
             const selectedSubmenu = submenus.find(submenu => submenu.name === messageText);
             
             if (selectedSubmenu) {
-                userStates.set(userId, { 
-                    state: 'submenu', 
-                    menuId: userState.menuId, 
-                    submenuId: selectedSubmenu.submenu_id 
-                });
-                const submenuKeyboard = await getSubmenuKeyboard(userState.menuId, selectedSubmenu.submenu_id, userId);
-                const submenuText = `${selectedSubmenu.name}\n\n📚 Available Courses:`;
-                
-                await bot.sendMessage(msg.chat.id, submenuText, submenuKeyboard);
-                return;
+                const categories = getCategories(userState.menuId, selectedSubmenu.submenu_id);
+                if (categories.length > 0) {
+                    userStates.set(userId, { state: 'submenu', menuId: userState.menuId, submenuId: selectedSubmenu.submenu_id, hasCategories: true });
+                    return bot.sendMessage(msg.chat.id, `${selectedSubmenu.name}\n\n📚 Select a Category:`, await getCategoryKeyboard(userState.menuId, selectedSubmenu.submenu_id));
+                } else {
+                    userStates.set(userId, { state: 'submenu', menuId: userState.menuId, submenuId: selectedSubmenu.submenu_id, hasCategories: false });
+                    return bot.sendMessage(msg.chat.id, `${selectedSubmenu.name}\n\n📚 Available Courses:`, await getSubmenuKeyboard(userState.menuId, selectedSubmenu.submenu_id, userId));
+                }
             }
         }
-        
-        // Check for course selection
-        if (userState.state === 'submenu') {
-            const courses = getCourses(userState.menuId, userState.submenuId);
-            const selectedCourse = courses.find(course => 
-                messageText === `${course.name} - ${course.price} TK`
-            );
+
+        // 5.3 Category Selection (HSC 28)
+        if (userState.state === 'submenu' && userState.hasCategories) {
+            const categories = getCategories(userState.menuId, userState.submenuId);
+            const selectedCategory = categories.find(cat => cat.name === messageText);
+            
+            if (selectedCategory) {
+                userStates.set(userId, { state: 'category', menuId: userState.menuId, submenuId: userState.submenuId, categoryId: selectedCategory.category_id });
+                return bot.sendMessage(msg.chat.id, `${selectedCategory.name}\n\n📚 Available Courses:`, await getCourseListKeyboard(userState.menuId, userState.submenuId, selectedCategory.category_id));
+            }
+        }
+
+        // 5.4 Course Selection
+        if (userState.state === 'submenu' || userState.state === 'category') {
+            const courses = getCourses(userState.menuId, userState.submenuId, userState.categoryId);
+            const selectedCourse = courses.find(course => messageText === `${course.name} - ${course.price} TK`);
             
             if (selectedCourse) {
                 userStates.set(userId, { 
-                    state: 'course', 
-                    menuId: userState.menuId, 
-                    submenuId: userState.submenuId,
-                    courseId: selectedCourse.course_id 
+                    state: 'course', menuId: userState.menuId, submenuId: userState.submenuId,
+                    categoryId: selectedCourse.category_id, courseId: selectedCourse.course_id 
                 });
                 
                 const courseKeyboard = await getCourseKeyboard(selectedCourse.course_id, userId);
-                
-                let courseText = `${selectedCourse.name}\n\n`;
-                courseText += selectedCourse.description + '\n\n';
-                courseText += `💰 Price: ${selectedCourse.price} TK`;
+                let courseText = `${selectedCourse.name}\n\n${selectedCourse.description}\n\n💰 Price: ${selectedCourse.price} TK`;
                 
                 if (selectedCourse.image_link) {
                     try {
-                        await bot.sendPhoto(msg.chat.id, selectedCourse.image_link, {
-                            caption: courseText,
-                            ...courseKeyboard
-                        });
+                        return await bot.sendPhoto(msg.chat.id, selectedCourse.image_link, { caption: courseText, ...courseKeyboard });
                     } catch (error) {
-                        console.error('Error sending course image:', error);
-                        await bot.sendMessage(msg.chat.id, courseText, courseKeyboard);
+                        return await bot.sendMessage(msg.chat.id, courseText, courseKeyboard);
                     }
                 } else {
-                    await bot.sendMessage(msg.chat.id, courseText, courseKeyboard);
+                    return await bot.sendMessage(msg.chat.id, courseText, courseKeyboard);
                 }
-                return;
             }
         }
-        
-        // Handle course actions
+
+        // 5.5 Course Actions (Buy Now / Join)
         if (userState.state === 'course') {
             const course = findCourseById(userState.courseId);
-
-            if (messageText === '💳 Buy Now') {
-                await updateUserData(userId, { pending_course: userState.courseId });
-                userStates.set(userId, { ...userState, state: 'payment_method' });
-
-                const paymentText = `💳 Select Payment Method for ${course.name}\n\n💰 Amount: ${course.price} TK`;
-                const paymentMethodKeyboard = getPaymentMethodKeyboard();
-
-                await bot.sendMessage(msg.chat.id, paymentText, paymentMethodKeyboard);
-            } 
-            else if (messageText === '🎯 Join Course Group') {
-                const hasCourse = Array.isArray(userData.purchases)
-                    ? userData.purchases.includes(userState.courseId)
-                    : userData.purchases?.has?.(userState.courseId);
-
-                if (hasCourse) { 
-                    await bot.sendMessage(msg.chat.id, `🎯 Join your course group:`, {
-                        reply_markup: {
-                            inline_keyboard: [[
-                                { text: `Join ${course.name} Group`, url: course.group_link }
-                            ]]
-                        }
-                    });
+            if (course) {
+                if (messageText === '💳 Buy Now') {
+                    await updateUserData(userId, { pending_course: userState.courseId });
+                    userStates.set(userId, { ...userState, state: 'payment_method' });
+                    return bot.sendMessage(msg.chat.id, `💳 Select Payment Method for ${course.name}\n\n💰 Amount: ${course.price} TK`, getPaymentMethodKeyboard(course.course_id));
+                } 
+                else if (messageText === '🎯 Join Course Group') {
+                    const hasCourse = Array.isArray(userData.purchases) ? userData.purchases.includes(userState.courseId) : userData.purchases?.has?.(userState.courseId);
+                    if (hasCourse) { 
+                        return bot.sendMessage(msg.chat.id, `🎯 Join your course group:`, { reply_markup: { inline_keyboard: [[ { text: `Join ${course.name} Group`, url: course.group_link } ]] }});
+                    }
                 }
             }
         }
-        
-        // Handle payment method selection
+
+        // 5.6 Payment Method Router
         if (userState.state === 'payment_method') {
             const course = findCourseById(userData.pending_course);
             
@@ -2779,95 +2727,60 @@ bot.on('message', async (msg) => {
                 userStates.set(userId, { ...userState, state: 'bkash_payment' });
                 
                 const hasPaymentLink = course && course.payment_link;
-                const bkashInstruction = `💳 bKash Payment Instructions:\n\n` +
-                `✅ এই নাম্বার ${BKASH_NUMBER} এ Make Payment করবেন!\n` +
-                `❌ Send Money করলে হবে না ।\n` +
-                `✅ Payment করার পর Transaction ID টা copy করেন ।\n` +
-                `✅ Submit Payment Proof এ ক্লিক করেন ।\n` +
-                `✅ শুধুমাত্র Transaction ID লিখুন।\n` +
-                `✅ Example: 9BG4R2G5N8\n\n` +
-                `⭐ Bkash Payment Auto Approve ⭐\n\n` +
-                `Amount: ${course.price} TK`;
+                const bkashInstruction = `💳 bKash Payment Instructions:\n\n✅ এই নাম্বার ${BKASH_NUMBER} এ Make Payment করবেন!\n❌ Send Money করলে হবে না ।\n✅ Payment করার পর Transaction ID টা copy করেন ।\n✅ Submit Payment Proof এ ক্লিক করেন ।\n✅ শুধুমাত্র Transaction ID লিখুন।\n✅ Example: 9BG4R2G5N8\n\n⭐ Bkash Payment Auto Approve ⭐\n\nAmount: ${course.price} TK`;
 
-                // 📌 Image-এর URL বা Local Path এখানে দিন
-                const bkashImage = './bkash.jpg'; 
-                const bkashKeyboard = getBkashPaymentKeyboard(hasPaymentLink);
-
-                // বিকাশের জন্য sendPhoto ব্যবহার করা হলো
-                await bot.sendPhoto(msg.chat.id, bkashImage, {
-                    caption: bkashInstruction,
-                    ...bkashKeyboard 
-                });
+                try {
+                    return await bot.sendPhoto(msg.chat.id, './bkash.jpg', { caption: bkashInstruction, ...getBkashPaymentKeyboard(hasPaymentLink) });
+                } catch (e) {
+                    return await bot.sendMessage(msg.chat.id, bkashInstruction, getBkashPaymentKeyboard(hasPaymentLink));
+                }
             } 
             else if (messageText === 'Nagad') {
                 await updateUserData(userId, { pending_payment_method: 'Nagad' });
                 userStates.set(userId, { ...userState, state: 'nagad_payment' });
                 
-                const nagadInstruction = `💳 Nagad Payment Instructions:\n\n` +
-                `✅ এই নাম্বার ${NAGAD_NUMBER} এ Send Money করেন ।\n` +
-                `✅ Payment করার পর screenshot নিন ।\n` +
-                `✅ এডমিন কে course নাম সহ screenshot পাঠান ।\n\n` +
-                `⭐ Nagad Payment Manually Approve ⭐\n\n` +
-                `Amount: ${course.price} TK`;
-                await bot.sendMessage(msg.chat.id, nagadInstruction, getNagadPaymentKeyboard());
+                const nagadInstruction = `💳 Nagad Payment Instructions:\n\n✅ এই নাম্বার ${NAGAD_NUMBER} এ Send Money করেন ।\n✅ Payment করার পর screenshot নিন ।\n✅ এডমিন কে course নাম সহ screenshot পাঠান ।\n\n⭐ Nagad Payment Manually Approve ⭐\n\nAmount: ${course.price} TK`;
+                return bot.sendMessage(msg.chat.id, nagadInstruction, getNagadPaymentKeyboard());
             }
         }
 
-        
-        // Handle bKash payment options
+        // 5.7 Final Payment Option Selectors (Use Link vs Submit Proof)
         if (userState.state === 'bkash_payment') {
             const course = findCourseById(userData.pending_course);
-            
             if (messageText === '💳 Use bKash Link') {
                 if (course && course.payment_link) {
                     await bot.sendMessage(msg.chat.id, `💳 Pay with bKash:\n\n${course.payment_link}\n\nAfter payment, please send the Transaction ID (TRX ID) here.`, getCancelKeyboard());
-                    await updateUserData(userId, { 
-                        waiting_for_proof: JSON.stringify({ 
-                            courseId: userData.pending_course, 
-                            paymentMethod: 'bKash' 
-                        }) 
-                    });
+                    return await updateUserData(userId, { waiting_for_proof: JSON.stringify({ courseId: userData.pending_course, paymentMethod: 'bKash' }) });
                 } else {
-                    await bot.sendMessage(msg.chat.id, '❌ Payment link not available for this course. Please use "📝 Submit Payment Proof" instead.', getBkashPaymentKeyboard(false));
+                    return bot.sendMessage(msg.chat.id, '❌ Payment link not available for this course. Please use "📝 Submit Payment Proof" instead.', getBkashPaymentKeyboard(false));
                 }
             } 
             else if (messageText === '📝 Submit Payment Proof') {
                 await bot.sendMessage(msg.chat.id, '🔢 Please send the bKash Transaction ID (TRX ID):', getCancelKeyboard());
-                await updateUserData(userId, { 
-                    waiting_for_proof: JSON.stringify({ 
-                        courseId: userData.pending_course, 
-                        paymentMethod: 'bKash' 
-                    }) 
-                });
+                return await updateUserData(userId, { waiting_for_proof: JSON.stringify({ courseId: userData.pending_course, paymentMethod: 'bKash' }) });
             }
         }
         
-        // Handle Nagad payment options
         if (userState.state === 'nagad_payment') {
             if (messageText === '📝 Submit Payment Proof') {
                 await bot.sendMessage(msg.chat.id, '📸 Please send the Nagad payment screenshot:', getCancelKeyboard());
-                await updateUserData(userId, { 
-                    waiting_for_proof: JSON.stringify({ 
-                        courseId: userData.pending_course, 
-                        paymentMethod: 'Nagad' 
-                    }) 
-                });
+                return await updateUserData(userId, { waiting_for_proof: JSON.stringify({ courseId: userData.pending_course, paymentMethod: 'Nagad' }) });
             } 
             else if (messageText === '💬 Contact Admin') {
-                await bot.sendMessage(msg.chat.id, `Contact admin for Nagad payment: @${ADMIN_USERNAME}`, {
-                    reply_markup: {
-                        inline_keyboard: [[
-                            { text: '💬 Contact Admin', url: `https://t.me/${ADMIN_USERNAME}` }
-                        ]]
-                    }
-                });
+                return bot.sendMessage(msg.chat.id, `Contact admin for Nagad payment: @${ADMIN_USERNAME}`, { reply_markup: { inline_keyboard: [[ { text: '💬 Contact Admin', url: `https://t.me/${ADMIN_USERNAME}` } ]] } });
             }
         }
+
+        // 6. 🗑️ Fallback / Garbage Handler
+        if (messageText && !messageText.startsWith('/')) {
+            bot.sendMessage(msg.chat.id, "⚠️ দয়া করে নিচের বাটনগুলো থেকে একটি অপশন সিলেক্ট করুন।");
+        }
+
     } catch (error) {
         console.error('Error in message handler:', error.message);
+        bot.sendMessage(msg.chat.id, "⚠️ সিস্টেমে একটি সাময়িক সমস্যা হয়েছে। দয়া করে /start লিখে আবার চেষ্টা করুন।");
     }
 });
-
 bot.on('callback_query', async (callbackQuery) => {
     try {
         const data = callbackQuery.data;
