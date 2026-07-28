@@ -203,6 +203,21 @@ const COURSES_DATA = {
               }
             }
           },
+          "acs28_ebi": {
+            "name": "🧮 ACS EBI Series",
+            "type": "category",
+            "courses": {
+              "acs28ebi": {
+                "name": "🧮 ACS EBI BATCH HSC 28",
+                "type": "course",
+                "price": 150,
+                "groupLink": "",
+                "paymentLink": "",
+                "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20260729_001808_133.jpg",
+                "description": "📘 HSC 28 ACS ICT Course\n\n💡 কলেজ জীবনের শুরুতে ICT বিষয়টির ভয় দূর করতে এবং বেসিক থেকে এডমিশন লেভেল পর্যন্ত সম্পূর্ণ প্রস্তুত করতে আমাদের এই বিশেষ কোর্স।\n\n📚 কোর্সে যা যা থাকছে\n\n✨ লাইভ ক্লাস (Live Classes)\n✨ আগের ব্যাচের আর্কাইভ ক্লাস (Archive Classes)\n✨ অধ্যায়ভিত্তিক মেগা এক্সাম (Chapter-wise Mega Exam)\n✨ ফাইনাল এক্সাম (Final Exam)\n✨ প্র্যাকটিস শিট (Practice Sheet)\n\n🎯 এক্সক্লুসিভ সুবিধাসমূহ 🔥\n\n✨ ডেডিকেটেড ওয়েব অ্যাপ সার্ভিস (Dedicated Web App Service)\n✨ টপিকভিত্তিক HD (1080p) ক্লাস\n✨ প্রতিটি ক্লাসের লেকচার শিট\n✨ নিয়মিত হোমওয়ার্ক PDF\n✨ অধ্যায়ভিত্তিক ডাউট সলভিং সার্ভিস\n✨ লাইফটাইম অ্যাক্সেস\n✨ আইডি ব্যান হলে নতুন আইডিতে পুনরায় অ্যাক্সেসের সুবিধা"
+              }
+            }
+          }
           "acs28_chemistry": {
             "name": "🧪 ACS Chemistry Series",
             "type": "category",
@@ -1220,6 +1235,15 @@ const COURSES_DATA = {
         "name": "🎯 ACS🔥",
         "type": "submenu",
         "courses": {
+            "acs26_var&gst": {
+            "name": "🔥 ACS Varsity & GST 2026🔥",
+            "type": "course",
+            "price": 150,
+            "groupLink": "https://t.me/+BYl87uJOjndhZWY1",
+            "paymentLink": "",
+            "imageLink": "https://cdn.jsdelivr.net/gh/PremiumSubscriptions/premium-subscriptions-bot@main/IMG_20260729_001812_511.jpg",
+            "description": "❄️কোর্স এর সাথে যা যা পাচ্ছো :\n\n📚Physics Hunters + ACS এর মত Exam \n📚প্রতিদিনের ক্লাস প্রতিদিন।\n📚নিয়মিত না পেলে রিফান্ড করা হবে।\n▶️Archive Classes \n➡️ক্লাস এর লেকচার শীট \n🗒️Practice Sheet\n➡️Super Fast Uploading\n➡️লাইফটাইম এক্সেস\n➡️ ক্লাস সাজানো থাকবে টপিক অনুযায়ী \n(আগের আইডি নষ্ট হলে নতুন আইডি এড করা হবে।)\n\n🔥মূল্য মাত্র : 150 টাকা🔥"
+           },
             "acs26_eng": {
             "name": "🔥 ACS ENGNEERING 2026🔥",
             "type": "course",
