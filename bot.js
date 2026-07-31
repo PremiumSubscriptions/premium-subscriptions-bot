@@ -218,8 +218,15 @@ const COURSES_DATA = {
               }
             }
           },
-          "acs28_chemistry": {
-            "name": "🧪 ACS Chemistry Series",
+          "acs28_hemel_chemistry": {
+            "name": "🧪 ACS Hemel Chemistry Series",
+            "type": "category",
+            "courses": {
+                
+            }
+          },
+          "acs28_aloron_chemistry": {
+            "name": "🧪 ACS Aloron Chemistry Series",
             "type": "category",
             "courses": {
               "acs28aloronchemall": {
