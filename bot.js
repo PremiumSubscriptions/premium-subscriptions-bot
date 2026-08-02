@@ -3,6 +3,16 @@ const express = require('express');
 const axios = require('axios');
 const { Pool } = require('pg');
 
+// ==========================================
+// 🛡️ PART 1: ENV VALIDATION (Early Check)
+// ==========================================
+const requiredEnv = ['BOT_TOKEN', 'DATABASE_URL', 'ADMIN_ID', 'GITHUB_TOKEN'];
+const missingEnv = requiredEnv.filter(k => !process.env[k]);
+if (missingEnv.length > 0) {
+    console.error(`❌ CRITICAL ERROR: Missing required environment variables: ${missingEnv.join(', ')}`);
+    process.exit(1);
+}
+
 // Global Error Handling
 process.on('uncaughtException', (error) => {
     console.error('❌ Uncaught Exception:', error.message);
@@ -50,19 +60,17 @@ const REPO_OWNER = 'PremiumSubscriptions';
 const REPO_NAME = 'CourseDataDB'; 
 
 // ==============================================================
-// 🧠 1. THE DYNAMIC FETCHING ENGINE (Auto-Discover & Anti-Cache)
+// ⚡ PART 2: PARALLEL FETCHING ENGINE (Rocket Speed & Anti-Cache)
 // ==============================================================
 async function syncCourseData() {
-    console.log("🔄 Syncing course data from GitHub...");
+    console.log("🔄 Syncing course data from GitHub in parallel...");
     let newData = {};
     let hasError = false;
 
     try {
         const rootUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/`;
-        
-        // 🚀 Bypassing GitHub API Cache using timestamp & strict headers
         const rootResponse = await axios.get(rootUrl, {
-            params: { t: Date.now() }, // Cache-Buster
+            params: { t: Date.now() },
             headers: { 
                 'Authorization': `token ${GITHUB_TOKEN}`, 
                 'Accept': 'application/vnd.github.v3+json',
@@ -75,31 +83,35 @@ async function syncCourseData() {
         const jsonFiles = rootResponse.data.filter(item => item.name.endsWith('.json'));
         if (jsonFiles.length === 0) return false;
 
-        for (const file of jsonFiles) {
-            try {
-                const fileKey = file.name.replace('.json', '');
-                
-                // 🚀 Bypassing Cache for individual files as well
-                const fileResponse = await axios.get(file.url, {
-                    params: { t: Date.now() }, // Cache-Buster
-                    headers: { 
-                        'Authorization': `token ${GITHUB_TOKEN}`, 
-                        'Accept': 'application/vnd.github.v3+json',
-                        'Cache-Control': 'no-cache, no-store, must-revalidate',
-                        'Pragma': 'no-cache',
-                        'Expires': '0'
-                    }
-                });
-                
-                const content = Buffer.from(fileResponse.data.content, 'base64').toString('utf-8');
-                newData[fileKey] = JSON.parse(content);
-                console.log(`✅ Loaded: ${file.name}`);
-            } catch (err) {
-                console.error(`❌ Failed to fetch ${file.name}:`, err.message);
+        // 🚀 Parallel Downloading using Promise.all
+        const filePromises = jsonFiles.map(async (file) => {
+            const fileKey = file.name.replace('.json', '');
+            const fileResponse = await axios.get(file.url, {
+                params: { t: Date.now() },
+                headers: { 
+                    'Authorization': `token ${GITHUB_TOKEN}`, 
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                }
+            });
+            const content = Buffer.from(fileResponse.data.content, 'base64').toString('utf-8');
+            return { key: fileKey, data: JSON.parse(content), filename: file.name };
+        });
+
+        const results = await Promise.allSettled(filePromises);
+
+        for (const result of results) {
+            if (result.status === 'fulfilled') {
+                newData[result.value.key] = result.value.data;
+                console.log(`✅ Loaded: ${result.value.filename}`);
+            } else {
+                console.error(`❌ Failed to fetch file:`, result.reason.message);
                 hasError = true;
-                break;
             }
         }
+
     } catch (err) {
         console.error(`❌ Failed to connect to repo:`, err.message);
         hasError = true;
@@ -107,7 +119,7 @@ async function syncCourseData() {
 
     if (!hasError && Object.keys(newData).length > 0) {
         COURSES_DATA = newData;
-        console.log("🎉 All courses successfully synced in RAM!");
+        console.log("🎉 All courses successfully synced & updated in RAM!");
         return true;
     } else {
         console.log("⚠️ Sync failed! Keeping last known good state.");
@@ -116,7 +128,7 @@ async function syncCourseData() {
 }
 
 // ==============================================================
-// 🗄️ 2. DATABASE INITIALIZATION & HELPERS
+// 🗄️ DATABASE INITIALIZATION & HELPERS
 // ==============================================================
 async function initializeDatabase() {
     try {
@@ -188,7 +200,7 @@ async function isAdmin(userId) {
 function isPrimaryAdmin(userId) { return userId.toString() === ADMIN_ID; }
 
 // ==============================================================
-// 💳 3. PAYMENT VERIFICATION HELPERS
+// 💳 PAYMENT VERIFICATION HELPERS
 // ==============================================================
 let bkashToken = null;
 let tokenExpiry = null;
@@ -217,13 +229,14 @@ async function verifyPaymentWithDateCheck(trxId) {
     } catch (e) { return { success: false, error: 'Verification failed' }; }
 }
 
+// 🛡️ Added escapeMarkdown here as well for log safety
 async function logTransaction(trxId, userId, amount, courseName, paymentMethod, paymentDate) {
-    const msg = `💰 **New Payment**\n\n👤 User: \`${userId}\`\n📚 Course: ${courseName}\n💵 Amount: ${amount} TK\n💳 Method: ${paymentMethod}\n🆔 TRX ID: \`${trxId}\`\n📅 Date: ${paymentDate}`;
+    const msg = `💰 **New Payment**\n\n👤 User: \`${userId}\`\n📚 Course: ${escapeMarkdown(courseName)}\n💵 Amount: ${amount} TK\n💳 Method: ${paymentMethod}\n🆔 TRX ID: \`${trxId}\`\n📅 Date: ${paymentDate}`;
     try { await bot.sendMessage(CHANNEL_ID, msg, { parse_mode: 'Markdown' }); } catch (e) {}
 }
 
 // ==============================================================
-// 🌳 4. UNIVERSAL RECURSIVE ENGINE (Infinite Tree Navigation)
+// 🌳 UNIVERSAL RECURSIVE ENGINE (Infinite Tree Navigation)
 // ==============================================================
 function getNodeByPath(pathArray) {
     if (!pathArray || pathArray.length === 0) return { type: 'root', children: COURSES_DATA };
@@ -242,7 +255,7 @@ function findNodePathByKey(targetKey) {
     let resultPath = null;
     function traverse(node, currentPath) {
         if (resultPath) return;
-        const children = node.type === 'root' ? node.children : node.children;
+        const children = node.children;
         if (!children) return;
         for (const key in children) {
             const newPath = [...currentPath, key];
@@ -258,7 +271,7 @@ function globalSearchByName(text) {
     let resultPath = null;
     function traverse(node, currentPath) {
         if (resultPath) return;
-        const children = node.type === 'root' ? node.children : node.children;
+        const children = node.children;
         if (!children) return;
         for (const key in children) {
             const child = children[key];
@@ -273,8 +286,12 @@ function globalSearchByName(text) {
 }
 
 // ==============================================================
-// 🎛️ 5. DYNAMIC KEYBOARDS
+// 🎛️ DYNAMIC KEYBOARDS & PART 4: MARKDOWN ESCAPE HELPER
 // ==============================================================
+function escapeMarkdown(text = '') {
+    return text.replace(/([_*[\]()~`>#+\-=|{}.!])/g, '\\$1');
+}
+
 function getKeyboardForPath(pathArray) {
     const node = getNodeByPath(pathArray);
     const keyboard = [];
@@ -311,7 +328,7 @@ function getNagadPaymentKeyboard() { return { reply_markup: { keyboard: [['💬 
 function getCancelKeyboard() { return { reply_markup: { keyboard: [['❌ Cancel'], ['🏠 Main Menu']], resize_keyboard: true } }; }
 
 // ==============================================================
-// 🚀 6. BOT COMMANDS & MESSAGE HANDLERS
+// 🚀 BOT COMMANDS & MESSAGE HANDLERS
 // ==============================================================
 bot.onText(/\/start/, async (msg) => {
     userStates.delete(msg.from.id);
@@ -326,45 +343,52 @@ bot.onText(/\/admin/, async (msg) => {
     bot.sendMessage(msg.chat.id, text, { parse_mode: 'Markdown' });
 });
 
+// ==============================================================
+// 🚀 PART 3: RATE-LIMITED BROADCASTING IN /SYNC COMMAND
+// ==============================================================
 bot.onText(/\/sync/, async (msg) => {
     if (!(await isAdmin(msg.from.id))) return bot.sendMessage(msg.chat.id, '❌ You are not authorized!');
     
-    await bot.sendMessage(msg.chat.id, '🔄 Syncing courses from GitHub Cloud... Please wait.');
+    await bot.sendMessage(msg.chat.id, '🔄 Syncing courses from GitHub Cloud in parallel... Please wait.');
     const success = await syncCourseData();
     
     if (success) {
         await bot.sendMessage(msg.chat.id, '✅ **Sync Complete!**\n\nAll courses have been updated from GitHub.', { parse_mode: 'Markdown' });
 
-        // 🚀 THE HYPER THINKING: Live Broadcast Refresh to ALL Active Users!
         let refreshCount = 0;
+        const entries = Array.from(userStates.entries());
         
-        for (const [activeUserId, state] of userStates.entries()) {
-            try {
-                // পেমেন্ট স্টেটে থাকা ইউজারদের ডিস্টার্ব না করে, শুধু যারা মেনুতে ঘুরছে তাদের রিফ্রেশ করব
-                if (state.path && !['payment_method', 'bkash_payment', 'nagad_payment'].includes(state.state)) {
-                    
-                    const newKeyboard = getKeyboardForPath(state.path);
-                    const node = getNodeByPath(state.path);
-                    const titleName = node.type === 'root' ? 'Main Menu' : node.name;
-                    
-                    // ইউজারকে নতুন কিবোর্ডসহ একটি অটোমেটিক নোটিফিকেশন দেওয়া
-                    await bot.sendMessage(
-                        activeUserId, 
-                        `🔄 **সিস্টেম আপডেট!**\nনতুন কোর্স/ফোল্ডার যুক্ত হয়েছে। আপনার *${titleName}* অটো-রিফ্রেশ করা হলো:`, 
-                        { parse_mode: 'Markdown', ...newKeyboard }
-                    );
-                    refreshCount++;
-                }
-            } catch (e) {
-                // ইউজার যদি বট ব্লক করে থাকে, তাহলে স্কিপ করবে
+        // 🚀 Helper function with delay to respect Telegram Rate Limits (< 30 msgs/sec)
+        const sendWithDelay = (userId, text, replyMarkup, index) => {
+            return new Promise((resolve) => {
+                setTimeout(async () => {
+                    try {
+                        await bot.sendMessage(userId, text, { parse_mode: 'Markdown', ...replyMarkup });
+                        resolve(true);
+                    } catch (e) {
+                        resolve(false);
+                    }
+                }, index * 50); // 50ms delay per user prevents Spam/Rate-limit block
+            });
+        };
+
+        for (let i = 0; i < entries.length; i++) {
+            const [activeUserId, state] = entries[i];
+            if (state.path && !['payment_method', 'bkash_payment', 'nagad_payment'].includes(state.state)) {
+                const newKeyboard = getKeyboardForPath(state.path);
+                const node = getNodeByPath(state.path);
+                const titleName = node.type === 'root' ? 'Main Menu' : escapeMarkdown(node.name);
+                
+                const notificationText = `🔄 **সিস্টেম আপডেট!**\nনতুন কোর্স/ফোল্ডার যুক্ত হয়েছে। আপনার *${titleName}* অটো-রিফ্রেশ করা হলো:`;
+                
+                const sent = await sendWithDelay(activeUserId, notificationText, newKeyboard, refreshCount);
+                if (sent) refreshCount++;
             }
         }
 
-        // অ্যাডমিনকে রিপোর্ট দেওয়া
         if (refreshCount > 0) {
             bot.sendMessage(msg.chat.id, `🚀 **Live Push Successful:** ${refreshCount} জন অ্যাক্টিভ ইউজারের স্ক্রিন অটোমেটিক রিফ্রেশ করা হয়েছে!`);
         } else {
-            // যদি অ্যাক্টিভ ইউজার না থাকে, তবে অ্যাডমিনের নিজের স্ক্রিনটাই রিফ্রেশ করে দেবে
             bot.sendMessage(msg.chat.id, "🎓 Main Menu (Refreshed):", getMainMenuKeyboard());
         }
 
@@ -373,7 +397,7 @@ bot.onText(/\/sync/, async (msg) => {
     }
 });
 
-// Admin TRx commands
+// Admin TRx & Admin Management commands
 bot.onText(/\/checktrx (.+)/, async (msg, match) => { if (await isAdmin(msg.from.id)) bot.sendMessage(msg.chat.id, `ℹ️ **TRX Status:** ${(await isTransactionUsed(match[1])) ? "🟢 Used" : "🔴 Not Used"}\nID: \`${match[1]}\``, { parse_mode: 'Markdown' }); });
 bot.onText(/\/addtrx (.+)/, async (msg, match) => { if (await isAdmin(msg.from.id)) { try { await pool.query('INSERT INTO transactions (transaction_id, user_id, course_id, amount, payment_method, payment_date) VALUES ($1, $2, $3, $4, $5, $6)', [match[1], 'admin_added', 'manual', 0, 'manual', new Date().toISOString().split('T')[0]]); bot.sendMessage(msg.chat.id, `✅ TRX Added`); } catch(e) { bot.sendMessage(msg.chat.id, '❌ Error'); } } });
 bot.onText(/\/removetrx (.+)/, async (msg, match) => { if (await isAdmin(msg.from.id)) { try { await pool.query('DELETE FROM transactions WHERE transaction_id = $1', [match[1]]); bot.sendMessage(msg.chat.id, `♻️ TRX Removed`); } catch(e) { bot.sendMessage(msg.chat.id, '❌ Error'); } } });
@@ -422,7 +446,7 @@ bot.on('message', async (msg) => {
             if (!course) return bot.sendMessage(msg.chat.id, '❌ Course not found!');
 
             if (msg.photo && proofData.paymentMethod === 'Nagad') {
-                const adminMsg = `🆕 New Proof (Nagad)\n👤 User: \`${userId}\`\n📚 ${course.name}\n💰 ${course.price} TK`;
+                const adminMsg = `🆕 New Proof (Nagad)\n👤 User: \`${userId}\`\n📚 ${escapeMarkdown(course.name)}\n💰 ${course.price} TK`;
                 try {
                     await bot.sendPhoto(ADMIN_ID, msg.photo[msg.photo.length - 1].file_id, { caption: adminMsg, parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[ { text: '✅ Approve', callback_data: `approve_${userId}_${proofData.courseId}` }, { text: '❌ Reject', callback_data: `reject_${userId}_${proofData.courseId}` } ]] }});
                     return bot.sendMessage(msg.chat.id, `✅ Payment proof received! Admin will verify.`, { reply_markup: { inline_keyboard: [[ { text: '💬 Contact Admin', url: `https://t.me/${ADMIN_USERNAME}` } ]] } });
@@ -442,7 +466,7 @@ bot.on('message', async (msg) => {
                     await updateUserData(userId, { pending_course: null, pending_payment_method: null });
 
                     userStates.delete(userId);
-                    await bot.sendMessage(msg.chat.id, `✅ **পেমেন্ট সফল!**\n\n📱 ${course.name} Unlocked!\n🎫 TRX ID: ${trxId}\n\n🎯 Click below to join:`, { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[ { text: `🎯 Join Group`, url: course.groupLink } ]] } });
+                    await bot.sendMessage(msg.chat.id, `✅ **পেমেন্ট সফল!**\n\n📱 ${escapeMarkdown(course.name)} Unlocked!\n🎫 TRX ID: ${trxId}\n\n🎯 Click below to join:`, { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[ { text: `🎯 Join Group`, url: course.groupLink } ]] } });
                     return bot.sendMessage(msg.chat.id, "🎓 Main Menu", getMainMenuKeyboard());
                 } catch (e) { return bot.sendMessage(msg.chat.id, `⚠️ **Verification Error!**`, { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[{ text: '🔄 Try Again', callback_data: `retry_trx_${proofData.courseId}_bKash` }]] }}); }
             } else return bot.sendMessage(msg.chat.id, '❌ Invalid format!');
@@ -618,14 +642,14 @@ bot.on('callback_query', async (query) => {
     } catch (e) {}
 });
 
-app.get('/', (req, res) => res.send('<h1>Bot Running (Tree Engine)</h1>'));
+app.get('/', (req, res) => res.send('<h1>Bot Running (Tree Engine & Hyper Sync)</h1>'));
 app.listen(PORT, () => console.log(`Server on ${PORT}`));
 
 async function startSystem() {
     try {
         await syncCourseData();
         await initializeDatabase();
-        console.log('✅ Bot is LIVE with Infinite Tree & DB Support!');
+        console.log('✅ Bot is LIVE with Parallel Sync & Rate-Limited Broadcasting!');
     } catch (e) { console.error('❌ Startup error:', e); }
 }
 startSystem();
