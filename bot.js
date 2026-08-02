@@ -587,7 +587,7 @@ bot.on('message', async (msg) => {
         }
     } catch (error) {
         console.error('Error in message handler:', error.message);
-        bot.sendMessage(msg.chat.id, "⚠️ সিস্টেমে একটি সাময়িক সমস্যা হয়েছে। দয়া করে /start লিখে আবার চেষ্টা করুন।");
+        bot.sendMessage(msg.chat.id, "⚠️ সিস্টেমে একটি সাময়িক সমস্যা হয়েছে। দয়া করে /start লিখে আবার চেষ্টা করুন। Bot আপডেট করার কারনে দয়া করে Manual Bot ব্যাবহার করুন।");
     }
 });
 
