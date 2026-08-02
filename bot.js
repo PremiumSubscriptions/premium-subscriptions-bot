@@ -223,7 +223,7 @@ function findNodePathByKey(targetKey) {
     let resultPath = null;
     function traverse(node, currentPath) {
         if (resultPath) return;
-        const children = node.children;
+        const children = node.type === 'root' ? node.children : node.children;
         if (!children) return;
         for (const key in children) {
             const newPath = [...currentPath, key];
@@ -435,12 +435,17 @@ bot.on('message', async (msg) => {
             if (messageText === 'bKash') {
                 await updateUserData(userId, { pending_payment_method: 'bKash' });
                 userState.state = 'bkash_payment'; userStates.set(userId, userState);
-                const txt = `💳 bKash Payment:\n✅ Number: ${BKASH_NUMBER}\n💰 Amount: ${course.price} TK\nSend TRX ID after payment.`;
-                try { return await bot.sendPhoto(msg.chat.id, './bkash.jpg', { caption: txt, ...getBkashPaymentKeyboard(!!course.paymentLink) }); } catch(e) { return bot.sendMessage(msg.chat.id, txt, getBkashPaymentKeyboard(!!course.paymentLink)); }
+                
+                const bkashInst = `💳 bKash Payment Instructions:\n\n✅ এই নাম্বার ${BKASH_NUMBER} এ Make Payment করবেন!\n❌ Send Money করলে হবে না ।\n✅ Payment করার পর Transaction ID টা copy করেন ।\n✅ Submit Payment Proof এ ক্লিক করেন ।\n✅ শুধুমাত্র Transaction ID লিখুন।\n✅ Example: 9BG4R2G5N8\n\n⭐ Bkash Payment Auto Approve ⭐\n\nAmount: ${course.price} TK`;
+                
+                try { return await bot.sendPhoto(msg.chat.id, './bkash.jpg', { caption: bkashInst, ...getBkashPaymentKeyboard(!!course.paymentLink) }); } catch(e) { return bot.sendMessage(msg.chat.id, bkashInst, getBkashPaymentKeyboard(!!course.paymentLink)); }
             } else if (messageText === 'Nagad') {
                 await updateUserData(userId, { pending_payment_method: 'Nagad' });
                 userState.state = 'nagad_payment'; userStates.set(userId, userState);
-                return bot.sendMessage(msg.chat.id, `💳 Nagad:\n✅ Number: ${NAGAD_NUMBER}\n💰 Amount: ${course.price} TK`, getNagadPaymentKeyboard());
+                
+                const nagadInst = `💳 Nagad Payment Instructions:\n\n✅ এই নাম্বার ${NAGAD_NUMBER} এ Send Money করেন ।\n✅ Payment করার পর screenshot নিন ।\n✅ এডমিন কে course নাম সহ screenshot পাঠান ।\n\n⭐ Nagad Payment Manually Approve ⭐\n\nAmount: ${course.price} TK`;
+                
+                return bot.sendMessage(msg.chat.id, nagadInst, getNagadPaymentKeyboard());
             }
         }
         if (userState.state === 'bkash_payment') {
@@ -505,7 +510,7 @@ bot.on('message', async (msg) => {
 
     } catch (error) {
         console.error('Error in msg handler:', error.message);
-        bot.sendMessage(msg.chat.id, "⚠️ সিস্টেমে একটি সাময়িক সমস্যা হয়েছে। দয়া করে /start লিখে আবার চেষ্টা করুন।");
+        bot.sendMessage(msg.chat.id, "⚠️ সিস্টেমে একটি সাময়িক সমস্যা হয়েছে। দয়া করে /start লিখে আবার চেষ্টা করুন।");
     }
 });
 
