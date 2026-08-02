@@ -3,15 +3,12 @@ const express = require('express');
 const axios = require('axios');
 const { Pool } = require('pg');
 
-// Global Error Handling to prevent crashes (Fixes EFATAL & AggregateError)
+// Global Error Handling
 process.on('uncaughtException', (error) => {
     console.error('❌ Uncaught Exception:', error.message);
-    // Bot continues running
 });
-
 process.on('unhandledRejection', (error) => {
     console.error('❌ Unhandled Rejection:', error.message);
-    // Bot continues running
 });
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
@@ -35,188 +32,180 @@ const adminUsers = new Set([ADMIN_ID]);
 const PORT = process.env.PORT || 10000;
 const BKASH_BASE_URL = 'https://tokenized.pay.bka.sh/v1.2.0-beta';
 
-// 👇 UPDATED: Robust Polling Configuration
-// Short interval and timeout helps recover from cloud network drops quickly
 const bot = new TelegramBot(BOT_TOKEN, { 
-    polling: {
-        interval: 300,      // Check for messages every 300ms
-        autoStart: true,
-        params: {
-            timeout: 10     // Short timeout to prevent "hanging" connections
-        }
-    }
+    polling: { interval: 300, autoStart: true, params: { timeout: 10 } }
 });
 
 bot.on('polling_error', (error) => {
-  console.error('Polling Error (Handled):', error.message); 
+  console.error('Polling Error:', error.message); 
 });
 
 const app = express();
-
-// User states for navigation
 const userStates = new Map();
 
 // Global variable for dynamic courses
 let COURSES_DATA = {}; 
-
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const REPO_OWNER = 'PremiumSubscriptions'; // আপনার গিটহাব ইউজারনেম
-const REPO_NAME = 'CourseDataDB'; // আপনার রিপোজিটরির নাম
+const REPO_OWNER = 'PremiumSubscriptions'; 
+const REPO_NAME = 'CourseDataDB'; 
 
-// 🧠 The Dynamic Fetching Engine (Auto-Discover & Auto-Healing)
+// ==============================================================
+// 🧠 1. THE DYNAMIC FETCHING ENGINE (Auto-Discover)
+// ==============================================================
 async function syncCourseData() {
     console.log("🔄 Syncing course data from GitHub...");
     let newData = {};
     let hasError = false;
 
     try {
-        // Step 1: Auto-discover all JSON files in the root of the repo
         const rootUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/`;
         const rootResponse = await axios.get(rootUrl, {
-            headers: {
-                'Authorization': `token ${GITHUB_TOKEN}`,
-                'Accept': 'application/vnd.github.v3+json'
-            }
+            headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
         });
 
-        // Filter out only files ending with .json
         const jsonFiles = rootResponse.data.filter(item => item.name.endsWith('.json'));
-        
-        if (jsonFiles.length === 0) {
-            console.warn("⚠️ No JSON files found in the repository!");
-            return false;
-        }
+        if (jsonFiles.length === 0) return false;
 
-        console.log(`📁 Found ${jsonFiles.length} JSON files. Starting download...`);
-
-        // Step 2: Download each JSON file
         for (const file of jsonFiles) {
             try {
-                // file.name includes the extension (e.g., "hsc28.json"), so we remove it for the key
                 const fileKey = file.name.replace('.json', '');
-                
                 const fileResponse = await axios.get(file.url, {
-                    headers: {
-                        'Authorization': `token ${GITHUB_TOKEN}`,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
+                    headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
                 });
-                
-                // GitHub API returns Base64 encoded content
                 const content = Buffer.from(fileResponse.data.content, 'base64').toString('utf-8');
                 newData[fileKey] = JSON.parse(content);
                 console.log(`✅ Loaded: ${file.name}`);
-            } catch (fileError) {
-                console.error(`❌ Failed to fetch or parse ${file.name}:`, fileError.message);
+            } catch (err) {
+                console.error(`❌ Failed to fetch ${file.name}:`, err.message);
                 hasError = true;
-                break; // Stop updating if any file is corrupted
+                break;
             }
         }
-
-    } catch (rootError) {
-        console.error(`❌ Failed to connect to repository ${REPO_NAME}:`, rootError.message);
+    } catch (err) {
+        console.error(`❌ Failed to connect to repo:`, err.message);
         hasError = true;
     }
 
-    // Step 3: Fallback Logic
     if (!hasError && Object.keys(newData).length > 0) {
         COURSES_DATA = newData;
-        console.log("🎉 All courses successfully synced & updated in RAM!");
+        console.log("🎉 All courses successfully synced in RAM!");
         return true;
     } else {
-        console.log("⚠️ Sync failed! Keeping the last known good state in RAM.");
+        console.log("⚠️ Sync failed! Keeping last known good state.");
         return false;
     }
 }
 
-// Database initialization
+// ==============================================================
+// 🗄️ 2. DATABASE INITIALIZATION & HELPERS
+// ==============================================================
 async function initializeDatabase() {
     try {
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS users (
-                id SERIAL PRIMARY KEY,
-                user_id VARCHAR(50) UNIQUE NOT NULL,
-                username VARCHAR(100),
-                first_name VARCHAR(100),
-                last_name VARCHAR(100),
-                pending_course VARCHAR(100),
-                pending_payment_method VARCHAR(20),
-                current_menu VARCHAR(100),
-                waiting_for_proof TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS transactions (
-                id SERIAL PRIMARY KEY,
-                transaction_id VARCHAR(100) UNIQUE NOT NULL,
-                user_id VARCHAR(50) NOT NULL,
-                course_id VARCHAR(100) NOT NULL,
-                amount INTEGER NOT NULL,
-                payment_method VARCHAR(20) NOT NULL,
-                payment_date DATE NOT NULL,
-                status VARCHAR(20) DEFAULT 'completed',
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
-
-        await pool.query(`
-            DO $$ 
-            BEGIN 
-                BEGIN
-                    ALTER TABLE transactions ADD COLUMN payment_date DATE NOT NULL DEFAULT CURRENT_DATE;
-                EXCEPTION
-                    WHEN duplicate_column THEN
-                        NULL;
-                END;
-            END $$;
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS user_purchases (
-                id SERIAL PRIMARY KEY,
-                user_id VARCHAR(50) NOT NULL,
-                course_id VARCHAR(100) NOT NULL,
-                menu_id VARCHAR(100) NOT NULL,
-                submenu_id VARCHAR(100) NOT NULL,
-                purchase_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                transaction_id VARCHAR(100),
-                payment_method VARCHAR(20),
-                amount INTEGER,
-                payment_date DATE
-            )
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS admins (
-                id SERIAL PRIMARY KEY,
-                admin_id VARCHAR(50) UNIQUE NOT NULL,
-                username VARCHAR(100),
-                is_primary BOOLEAN DEFAULT FALSE,
-                added_by VARCHAR(50),
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
-
-        await pool.query(`
-            INSERT INTO admins (admin_id, is_primary) 
-            VALUES ($1, TRUE) 
-            ON CONFLICT (admin_id) DO NOTHING
-        `, [ADMIN_ID]);
-
-        console.log('Database initialized successfully');
-    } catch (error) {
-        console.error('Database initialization error:', error);
+        await pool.query(`CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, user_id VARCHAR(50) UNIQUE NOT NULL, username VARCHAR(100), first_name VARCHAR(100), last_name VARCHAR(100), pending_course VARCHAR(100), pending_payment_method VARCHAR(20), current_menu VARCHAR(100), waiting_for_proof TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`);
+        await pool.query(`CREATE TABLE IF NOT EXISTS transactions (id SERIAL PRIMARY KEY, transaction_id VARCHAR(100) UNIQUE NOT NULL, user_id VARCHAR(50) NOT NULL, course_id VARCHAR(100) NOT NULL, amount INTEGER NOT NULL, payment_method VARCHAR(20) NOT NULL, payment_date DATE NOT NULL, status VARCHAR(20) DEFAULT 'completed', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`);
+        await pool.query(`DO $$ BEGIN BEGIN ALTER TABLE transactions ADD COLUMN payment_date DATE NOT NULL DEFAULT CURRENT_DATE; EXCEPTION WHEN duplicate_column THEN NULL; END; END $$;`);
+        await pool.query(`CREATE TABLE IF NOT EXISTS user_purchases (id SERIAL PRIMARY KEY, user_id VARCHAR(50) NOT NULL, course_id VARCHAR(100) NOT NULL, menu_id VARCHAR(100) NOT NULL, submenu_id VARCHAR(100) NOT NULL, purchase_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, transaction_id VARCHAR(100), payment_method VARCHAR(20), amount INTEGER, payment_date DATE)`);
+        await pool.query(`CREATE TABLE IF NOT EXISTS admins (id SERIAL PRIMARY KEY, admin_id VARCHAR(50) UNIQUE NOT NULL, username VARCHAR(100), is_primary BOOLEAN DEFAULT FALSE, added_by VARCHAR(50), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`);
+        await pool.query(`INSERT INTO admins (admin_id, is_primary) VALUES ($1, TRUE) ON CONFLICT (admin_id) DO NOTHING`, [ADMIN_ID]);
+    } catch (err) {
+        console.error('Database init error:', err);
     }
 }
 
-// ==============================================================
-// 🧠 UNIVERSAL RECURSIVE ENGINE (The "Infinite Tree" Logic)
-// ==============================================================
+async function getUserPurchases(userId) {
+    try {
+        const result = await pool.query('SELECT course_id FROM user_purchases WHERE user_id = $1', [userId]);
+        return new Set(result.rows.map(row => row.course_id));
+    } catch (e) { return new Set(); }
+}
 
-// 1. Get any Node (Folder/Course) dynamically based on Path
+async function isTransactionUsed(transactionId) {
+    try {
+        const result = await pool.query('SELECT id FROM transactions WHERE transaction_id = $1', [transactionId]);
+        return result.rows.length > 0;
+    } catch (e) { return false; }
+}
+
+async function addTransaction(transactionId, userId, courseId, amount, paymentMethod, paymentDate) {
+    try {
+        const formattedDate = paymentDate instanceof Date ? paymentDate.toISOString().split('T')[0] : paymentDate;
+        await pool.query('INSERT INTO transactions (transaction_id, user_id, course_id, amount, payment_method, payment_date) VALUES ($1, $2, $3, $4, $5, $6)', [transactionId, userId.toString(), courseId, parseInt(amount), paymentMethod, formattedDate]);
+        return true;
+    } catch (e) { return false; }
+}
+
+async function addUserPurchase(userId, courseId, menuId, submenuId, transactionId, paymentMethod, amount, paymentDate) {
+    try {
+        await pool.query(`INSERT INTO user_purchases (user_id, course_id, menu_id, submenu_id, transaction_id, payment_method, amount, payment_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`, [userId, courseId, menuId, submenuId, transactionId, paymentMethod, amount, paymentDate]);
+    } catch (e) {}
+}
+
+async function getUserData(userId) {
+    try {
+        let result = await pool.query('SELECT * FROM users WHERE user_id = $1', [userId]);
+        if (result.rows.length === 0) {
+            await pool.query('INSERT INTO users (user_id) VALUES ($1)', [userId]);
+            result = await pool.query('SELECT * FROM users WHERE user_id = $1', [userId]);
+        }
+        const userData = result.rows[0];
+        userData.purchases = await getUserPurchases(userId);
+        return userData;
+    } catch (e) { return { user_id: userId, purchases: new Set(), waiting_for_proof: null }; }
+}
+
+async function updateUserData(userId, updates) {
+    try {
+        const setClause = Object.keys(updates).map((key, index) => `${key} = $${index + 2}`).join(', ');
+        await pool.query(`UPDATE users SET ${setClause}, updated_at = CURRENT_TIMESTAMP WHERE user_id = $1`, [userId, ...Object.values(updates)]);
+    } catch (e) {}
+}
+
+async function isAdmin(userId) {
+    try {
+        const result = await pool.query('SELECT id FROM admins WHERE admin_id = $1', [userId.toString()]);
+        return result.rows.length > 0;
+    } catch (e) { return adminUsers.has(userId.toString()); }
+}
+function isPrimaryAdmin(userId) { return userId.toString() === ADMIN_ID; }
+
+// ==============================================================
+// 💳 3. PAYMENT VERIFICATION HELPERS
+// ==============================================================
+let bkashToken = null;
+let tokenExpiry = null;
+
+async function getBkashToken() {
+    if (bkashToken && tokenExpiry && Date.now() < tokenExpiry) return bkashToken;
+    try {
+        const res = await axios.post(`${BKASH_BASE_URL}/tokenized/checkout/token/grant`, { app_key: BKASH_APP_KEY, app_secret: BKASH_APP_SECRET }, { headers: { 'username': BKASH_USERNAME, 'password': BKASH_PASSWORD } });
+        bkashToken = res.data.id_token;
+        tokenExpiry = Date.now() + (res.data.expires_in * 1000) - 60000;
+        return bkashToken;
+    } catch (e) { throw e; }
+}
+
+async function verifyPaymentWithDateCheck(trxId) {
+    try {
+        const token = await getBkashToken();
+        const res = await axios.post(`${BKASH_BASE_URL}/tokenized/checkout/general/searchTransaction`, { trxID: trxId }, { headers: { 'Authorization': token, 'X-APP-Key': BKASH_APP_KEY } });
+        const data = res.data;
+        if (!data || !data.completedTime) return { success: false, error: 'Payment not found or incomplete' };
+        
+        const [datePart, timePart] = data.completedTime.split('T');
+        const paymentDateTime = new Date(`${datePart}T${timePart.split(':')[0]}:${timePart.split(':')[1]}:${timePart.split(':')[2]}+06:00`);
+        if (new Date() > new Date(paymentDateTime.getTime() + 24 * 60 * 60 * 1000)) return { success: false, error: 'Transaction expired! Valid only for 24 hours.' };
+        return { success: true, data, paymentDate: datePart, paymentTime: paymentDateTime };
+    } catch (e) { return { success: false, error: 'Verification failed' }; }
+}
+
+async function logTransaction(trxId, userId, amount, courseName, paymentMethod, paymentDate) {
+    const msg = `💰 **New Payment**\n\n👤 User: \`${userId}\`\n📚 Course: ${courseName}\n💵 Amount: ${amount} TK\n💳 Method: ${paymentMethod}\n🆔 TRX ID: \`${trxId}\`\n📅 Date: ${paymentDate}`;
+    try { await bot.sendMessage(CHANNEL_ID, msg, { parse_mode: 'Markdown' }); } catch (e) {}
+}
+
+// ==============================================================
+// 🌳 4. UNIVERSAL RECURSIVE ENGINE (Infinite Tree Navigation)
+// ==============================================================
 function getNodeByPath(pathArray) {
     if (!pathArray || pathArray.length === 0) return { type: 'root', children: COURSES_DATA };
     let current = COURSES_DATA[pathArray[0]];
@@ -230,481 +219,349 @@ function getNodeByPath(pathArray) {
     return current;
 }
 
-// 2. Find Full Path by searching uniquely for a Node Key
 function findNodePathByKey(targetKey) {
     let resultPath = null;
     function traverse(node, currentPath) {
         if (resultPath) return;
-        const children = node.type === 'root' ? node.children : node.children;
+        const children = node.children;
         if (!children) return;
         for (const key in children) {
             const newPath = [...currentPath, key];
-            if (key === targetKey) {
-                resultPath = newPath;
-                return;
-            }
-            if (children[key].children) {
-                traverse(children[key], newPath);
-            }
+            if (key === targetKey) { resultPath = newPath; return; }
+            if (children[key].children) traverse(children[key], newPath);
         }
     }
     traverse({ type: 'root', children: COURSES_DATA }, []);
     return resultPath;
 }
 
-// 3. Global Reverse Search (Auto-Healing Fallback for Render Restarts)
 function globalSearchByName(text) {
     let resultPath = null;
     function traverse(node, currentPath) {
         if (resultPath) return;
         const children = node.type === 'root' ? node.children : node.children;
         if (!children) return;
-        
         for (const key in children) {
             const child = children[key];
             const newPath = [...currentPath, key];
-            
-            // Check button name
-            const buttonText = child.type === 'course' ? `${child.name} - ${child.price} TK` : child.name;
-            if (buttonText === text || child.name === text.split(' - ')[0]) {
-                resultPath = newPath;
-                return;
-            }
-            
-            if (child.type === 'folder' || child.children) {
-                traverse(child, newPath);
-            }
+            const btnText = child.type === 'course' ? `${child.name} - ${child.price} TK` : child.name;
+            if (btnText === text) { resultPath = newPath; return; }
+            if (child.type === 'folder' || child.children) traverse(child, newPath);
         }
     }
     traverse({ type: 'root', children: COURSES_DATA }, []);
     return resultPath;
 }
 
-// ==========================================
-// 🎛️ DYNAMIC KEYBOARDS
-// ==========================================
-
+// ==============================================================
+// 🎛️ 5. DYNAMIC KEYBOARDS
+// ==============================================================
 function getKeyboardForPath(pathArray) {
     const node = getNodeByPath(pathArray);
     const keyboard = [];
-    
     if (node && node.children) {
         for (const key in node.children) {
             const child = node.children[key];
-            if (child.type === 'course') {
-                keyboard.push([`${child.name} - ${child.price} TK`]);
-            } else {
-                keyboard.push([child.name]);
-            }
+            keyboard.push([child.type === 'course' ? `${child.name} - ${child.price} TK` : child.name]);
         }
     }
-
     if (!pathArray || pathArray.length === 0) {
         keyboard.push(['🔥 Support 🔥', '🔥 Our Channel ❤️']);
     } else {
         keyboard.push(['⬅️ Back', '🏠 Main Menu']);
     }
-
-    return { reply_markup: { keyboard: keyboard, resize_keyboard: true, one_time_keyboard: false } };
+    return { reply_markup: { keyboard, resize_keyboard: true } };
 }
 
-function getMainMenuKeyboard() {
-    return getKeyboardForPath([]);
-}
+function getMainMenuKeyboard() { return getKeyboardForPath([]); }
 
 async function getCourseKeyboard(coursePath, userId) {
     const course = getNodeByPath(coursePath);
     if (!course || course.type !== 'course') return getKeyboardForPath([]);
-    
-    const keyboard = [];
+    const keyboard = [['💳 Buy Now']];
     const userData = await getUserData(userId);
     const courseId = coursePath[coursePath.length - 1]; 
-    
-    keyboard.push(['💳 Buy Now']);
-    
-    if (userData.purchases.has(courseId)) {
-        keyboard.push(['🎯 Join Course Group']);
-    }
-    
+    if (userData.purchases.has(courseId)) keyboard.push(['🎯 Join Course Group']);
     keyboard.push(['⬅️ Back', '🏠 Main Menu']);
-    return { reply_markup: { keyboard: keyboard, resize_keyboard: true, one_time_keyboard: false } };
+    return { reply_markup: { keyboard, resize_keyboard: true } };
 }
 
-function getPaymentMethodKeyboard() {
-    return { reply_markup: { keyboard: [['bKash'], ['Nagad'], ['⬅️ Back', '🏠 Main Menu']], resize_keyboard: true } };
-}
+function getPaymentMethodKeyboard() { return { reply_markup: { keyboard: [['bKash'], ['Nagad'], ['⬅️ Back', '🏠 Main Menu']], resize_keyboard: true } }; }
+function getBkashPaymentKeyboard(hasLink = false) { const kb = []; if (hasLink) kb.push(['💳 Use bKash Link']); kb.push(['📝 Submit Payment Proof'], ['⬅️ Back', '🏠 Main Menu']); return { reply_markup: { keyboard: kb, resize_keyboard: true } }; }
+function getNagadPaymentKeyboard() { return { reply_markup: { keyboard: [['💬 Contact Admin'], ['⬅️ Back', '🏠 Main Menu']], resize_keyboard: true } }; }
+function getCancelKeyboard() { return { reply_markup: { keyboard: [['❌ Cancel'], ['🏠 Main Menu']], resize_keyboard: true } }; }
 
-function getBkashPaymentKeyboard(hasPaymentLink = false) {
-    const keyboard = [];
-    if (hasPaymentLink) keyboard.push(['💳 Use bKash Link']);
-    keyboard.push(['📝 Submit Payment Proof']);
-    keyboard.push(['⬅️ Back', '🏠 Main Menu']);
-    return { reply_markup: { keyboard: keyboard, resize_keyboard: true } };
-}
+// ==============================================================
+// 🚀 6. BOT COMMANDS & MESSAGE HANDLERS
+// ==============================================================
+bot.onText(/\/start/, async (msg) => {
+    userStates.delete(msg.from.id);
+    const welcome = `🎓 Welcome to Premium Subscription Bot! 🎓\nআমাদের premium courses গুলো দেখুন এবং আপনার পছন্দের course কিনুন।\n\n💎 High Quality Content\n📚 Expert Teachers\n🎯 Guaranteed Results\n💯 24/7 Support\n🎓Bot Refresh করতে /start command ব্যাবহার করুন!\nCourse কিনতে সমস্যা হলে <a href="https://t.me/premium_subscriptionss/1194">ভিডিওটি দেখবেন</a>`;
+    bot.sendMessage(msg.chat.id, welcome, { parse_mode: 'HTML', ...getMainMenuKeyboard() });
+});
 
-function getNagadPaymentKeyboard() {
-    return { reply_markup: { keyboard: [['💬 Contact Admin'], ['⬅️ Back', '🏠 Main Menu']], resize_keyboard: true } };
-}
+bot.onText(/\/admin/, async (msg) => {
+    if (!(await isAdmin(msg.from.id))) return bot.sendMessage(msg.chat.id, '❌ You are not authorized!');
+    const isPrimary = isPrimaryAdmin(msg.from.id);
+    const text = `🔧 Admin Panel\n/checktrx - Check transaction status\n/addtrx - Add transaction\n/removetrx - Remove transaction` + (isPrimary ? `\n\n👨‍💼 **Admin Mgt:**\n/addadmin - Add new admin\n/removeadmin - Remove admin\n/listadmins - List all admins\n/sync - Force Sync from GitHub` : ``);
+    bot.sendMessage(msg.chat.id, text, { parse_mode: 'Markdown' });
+});
 
-function getCancelKeyboard() {
-    return { reply_markup: { keyboard: [['❌ Cancel'], ['🏠 Main Menu']], resize_keyboard: true } };
-}
+bot.onText(/\/sync/, async (msg) => {
+    if (!(await isAdmin(msg.from.id))) return;
+    await bot.sendMessage(msg.chat.id, '🔄 Syncing courses from GitHub Cloud... Please wait.');
+    const success = await syncCourseData();
+    bot.sendMessage(msg.chat.id, success ? '✅ **Sync Complete!**' : '❌ **Sync Failed!**', { parse_mode: 'Markdown' });
+});
 
-// ==========================================
-// 🚀 MAIN BOT LOGIC (MESSAGE HANDLER)
-// ==========================================
+// Admin TRx commands
+bot.onText(/\/checktrx (.+)/, async (msg, match) => { if (await isAdmin(msg.from.id)) bot.sendMessage(msg.chat.id, `ℹ️ **TRX Status:** ${(await isTransactionUsed(match[1])) ? "🟢 Used" : "🔴 Not Used"}\nID: \`${match[1]}\``, { parse_mode: 'Markdown' }); });
+bot.onText(/\/addtrx (.+)/, async (msg, match) => { if (await isAdmin(msg.from.id)) { try { await pool.query('INSERT INTO transactions (transaction_id, user_id, course_id, amount, payment_method, payment_date) VALUES ($1, $2, $3, $4, $5, $6)', [match[1], 'admin_added', 'manual', 0, 'manual', new Date().toISOString().split('T')[0]]); bot.sendMessage(msg.chat.id, `✅ TRX Added`); } catch(e) { bot.sendMessage(msg.chat.id, '❌ Error'); } } });
+bot.onText(/\/removetrx (.+)/, async (msg, match) => { if (await isAdmin(msg.from.id)) { try { await pool.query('DELETE FROM transactions WHERE transaction_id = $1', [match[1]]); bot.sendMessage(msg.chat.id, `♻️ TRX Removed`); } catch(e) { bot.sendMessage(msg.chat.id, '❌ Error'); } } });
+
+bot.onText(/\/addadmin (.+)/, async (msg, match) => {
+    if (!isPrimaryAdmin(msg.from.id)) return bot.sendMessage(msg.chat.id, '❌ Only primary admin can add new admins!');
+    try {
+        await pool.query('INSERT INTO admins (admin_id, added_by) VALUES ($1, $2)', [match[1], msg.from.id]);
+        bot.sendMessage(msg.chat.id, `✅ Admin ${match[1]} added successfully!`);
+    } catch (e) { bot.sendMessage(msg.chat.id, '❌ Error or Admin already exists!'); }
+});
+
+bot.onText(/\/removeadmin (.+)/, async (msg, match) => {
+    if (!isPrimaryAdmin(msg.from.id)) return bot.sendMessage(msg.chat.id, '❌ Only primary admin can remove admins!');
+    if (match[1] === ADMIN_ID) return bot.sendMessage(msg.chat.id, '❌ Cannot remove primary admin!');
+    try {
+        const res = await pool.query('DELETE FROM admins WHERE admin_id = $1 AND is_primary = FALSE', [match[1]]);
+        bot.sendMessage(msg.chat.id, res.rowCount > 0 ? `✅ Admin removed!` : `❌ Admin not found!`);
+    } catch (e) { bot.sendMessage(msg.chat.id, '❌ Error!'); }
+});
+
+bot.onText(/\/listadmins/, async (msg) => {
+    if (!isPrimaryAdmin(msg.from.id)) return bot.sendMessage(msg.chat.id, '❌ Only primary admin can view admin list!');
+    try {
+        const res = await pool.query('SELECT admin_id, is_primary FROM admins ORDER BY is_primary DESC');
+        let txt = '👥 **Admin List:**\n\n';
+        res.rows.forEach((a, i) => txt += `${i + 1}. \`${a.admin_id}\` ${a.is_primary ? '(Primary)' : ''}\n`);
+        bot.sendMessage(msg.chat.id, txt, { parse_mode: 'Markdown' });
+    } catch (e) { bot.sendMessage(msg.chat.id, '❌ Error!'); }
+});
 
 bot.on('message', async (msg) => {
     try {
         if (msg.text && msg.text.startsWith('/')) return;
-        
         const userId = msg.from.id;
         const messageText = msg.text?.trim();
         const userData = await getUserData(userId);
-        
+
         // --- 1. HANDLE PAYMENT PROOFS ---
         if (userData.waiting_for_proof) {
             const proofData = JSON.parse(userData.waiting_for_proof);
-            const { courseId, paymentMethod } = proofData;
-            const coursePath = findNodePathByKey(courseId);
+            const coursePath = findNodePathByKey(proofData.courseId);
             const course = getNodeByPath(coursePath);
-            
-            if (!course) {
-                await updateUserData(userId, { waiting_for_proof: null });
-                return bot.sendMessage(msg.chat.id, '❌ Course not found!');
-            }
-
             await updateUserData(userId, { waiting_for_proof: null });
 
-            if (msg.photo && paymentMethod === 'Nagad') {
-                const photo = msg.photo[msg.photo.length - 1];
-                const adminMessage = `🆕 New Payment Proof (Nagad)\n\n👤 User: \`${userId}\`\n📚 Course: ${course.name}\n💰 Amount: ${course.price} TK\n💳 Method: ${paymentMethod}\n\n⚠️ Manual approval required`;
+            if (!course) return bot.sendMessage(msg.chat.id, '❌ Course not found!');
 
+            if (msg.photo && proofData.paymentMethod === 'Nagad') {
+                const adminMsg = `🆕 New Proof (Nagad)\n👤 User: \`${userId}\`\n📚 ${course.name}\n💰 ${course.price} TK`;
                 try {
-                    await bot.sendPhoto(ADMIN_ID, photo.file_id, {
-                        caption: adminMessage, parse_mode: 'Markdown',
-                        reply_markup: { inline_keyboard: [[ { text: '✅ Approve', callback_data: `approve_${userId}_${courseId}` }, { text: '❌ Reject', callback_data: `reject_${userId}_${courseId}` } ]] }
-                    });
-                    return bot.sendMessage(msg.chat.id, `✅ Payment proof received for ${course.name}!\n\nAdmin will verify your payment shortly.`, { reply_markup: { inline_keyboard: [[ { text: '💬 Contact Admin', url: `https://t.me/${ADMIN_USERNAME}` } ]] } });
-                } catch (error) {
-                    return bot.sendMessage(msg.chat.id, '⚠️ Error submitting payment proof. Please try again or contact support.');
-                }
-            }
-            else if (msg.text && paymentMethod === 'bKash') {
+                    await bot.sendPhoto(ADMIN_ID, msg.photo[msg.photo.length - 1].file_id, { caption: adminMsg, parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[ { text: '✅ Approve', callback_data: `approve_${userId}_${proofData.courseId}` }, { text: '❌ Reject', callback_data: `reject_${userId}_${proofData.courseId}` } ]] }});
+                    return bot.sendMessage(msg.chat.id, `✅ Payment proof received! Admin will verify.`, { reply_markup: { inline_keyboard: [[ { text: '💬 Contact Admin', url: `https://t.me/${ADMIN_USERNAME}` } ]] } });
+                } catch(e) { return bot.sendMessage(msg.chat.id, '⚠️ Error sending proof.'); }
+            } else if (msg.text && proofData.paymentMethod === 'bKash') {
                 const trxId = msg.text.trim();
-                await bot.sendMessage(msg.chat.id, '⏳ Verifying payment time validity...');
-
+                await bot.sendMessage(msg.chat.id, '⏳ Verifying payment...');
                 try {
-                    const verificationResult = await verifyPaymentWithDateCheck(trxId);
-                    
-                    if (!verificationResult.success) {
-                        return bot.sendMessage(msg.chat.id, `❌ **${verificationResult.error}**`, {
-                            parse_mode: 'Markdown', reply_markup: { inline_keyboard: [ [{ text: '🔄 Try Another TRX ID', callback_data: `retry_trx_${courseId}_bKash` }], [{ text: '💳 Make New Payment', callback_data: `new_payment_${courseId}_bKash` }], [{ text: '💬 Contact Support', url: 'https://t.me/Mehedi_X71' }] ] }
-                        });
-                    }
-                    if (await isTransactionUsed(trxId)) {
-                        return bot.sendMessage(msg.chat.id, "❌ **এই Transaction ID আগেই ব্যবহার করা হয়েছে!**\n\nদয়া করে নতুন একটি Transaction ID দিন অথবা সাপোর্টে যোগাযোগ করুন।", { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[{ text: '🔄 Try Another TRX ID', callback_data: `retry_trx_${courseId}_bKash` }]] } });
-                    }
-                    if (verificationResult.data.transactionStatus !== 'Completed' || parseInt(verificationResult.data.amount) < course.price) {
-                        return bot.sendMessage(msg.chat.id, `❌ **Payment Verification Failed!**\n\n🔍 Possible reasons:\n• Payment status not completed\n• Insufficient amount\n\nTransaction ID: ${trxId}`, { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[{ text: '🔄 Try Again', callback_data: `retry_trx_${courseId}_bKash` }]] } });
-                    }
+                    const vRes = await verifyPaymentWithDateCheck(trxId);
+                    if (!vRes.success) return bot.sendMessage(msg.chat.id, `❌ **${vRes.error}**`, { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[{ text: '🔄 Try Another TRX', callback_data: `retry_trx_${proofData.courseId}_bKash` }], [{ text: '💬 Support', url: 'https://t.me/Mehedi_X71' }]] }});
+                    if (await isTransactionUsed(trxId)) return bot.sendMessage(msg.chat.id, "❌ **Transaction ID already used!**", { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[{ text: '🔄 Try Another TRX', callback_data: `retry_trx_${proofData.courseId}_bKash` }]] }});
+                    if (vRes.data.transactionStatus !== 'Completed' || parseInt(vRes.data.amount) < course.price) return bot.sendMessage(msg.chat.id, `❌ **Verification Failed!** Amount/Status issue.`, { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[{ text: '🔄 Try Again', callback_data: `retry_trx_${proofData.courseId}_bKash` }]] }});
 
-                    const added = await addTransaction(trxId, userId, courseId, course.price, paymentMethod, verificationResult.paymentDate);
-                    if (!added) return bot.sendMessage(msg.chat.id, "❌ **Transaction processing error!**", { parse_mode: 'Markdown' });
-
-                    const menuId = coursePath[0] || 'N/A';
-                    const submenuId = coursePath[1] || 'N/A';
-                    
-                    await logTransaction(trxId, userId, course.price, course.name, paymentMethod, verificationResult.paymentDate);
-                    await addUserPurchase(userId, courseId, menuId, submenuId, trxId, paymentMethod, course.price, verificationResult.paymentDate);
+                    await addTransaction(trxId, userId, proofData.courseId, course.price, 'bKash', vRes.paymentDate);
+                    await logTransaction(trxId, userId, course.price, course.name, 'bKash', vRes.paymentDate);
+                    await addUserPurchase(userId, proofData.courseId, coursePath[0]||'N/A', coursePath[1]||'N/A', trxId, 'bKash', course.price, vRes.paymentDate);
                     await updateUserData(userId, { pending_course: null, pending_payment_method: null });
 
-                    const successText = `✅ **পেমেন্ট সফলভাবে ভেরিফাই হয়েছে!**\n\n📱 ${course.name} Unlocked!\n💰 Amount: ${course.price} TK\n🎫 Transaction ID: ${trxId}\n\n🎯 Join your course group:\n👉 Click the button below`;
-                    await bot.sendMessage(msg.chat.id, successText, { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[ { text: `🎯 Join Group`, url: course.groupLink } ]] } });
-                    
                     userStates.delete(userId);
+                    await bot.sendMessage(msg.chat.id, `✅ **পেমেন্ট সফল!**\n\n📱 ${course.name} Unlocked!\n🎫 TRX ID: ${trxId}\n\n🎯 Click below to join:`, { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[ { text: `🎯 Join Group`, url: course.groupLink } ]] } });
                     return bot.sendMessage(msg.chat.id, "🎓 Main Menu", getMainMenuKeyboard());
-                } catch (error) {
-                    return bot.sendMessage(msg.chat.id, `⚠️ **Verification Error!**\n\nSomething went wrong.`, { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[{ text: '🔄 Try Again', callback_data: `retry_trx_${courseId}_bKash` }]] } });
-                }
-            } else {
-                return bot.sendMessage(msg.chat.id, '❌ Invalid payment proof format!');
-            }
+                } catch (e) { return bot.sendMessage(msg.chat.id, `⚠️ **Verification Error!**`, { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[{ text: '🔄 Try Again', callback_data: `retry_trx_${proofData.courseId}_bKash` }]] }}); }
+            } else return bot.sendMessage(msg.chat.id, '❌ Invalid format!');
         }
 
-        // --- 2. AUTO-HEALING & STATE MANAGEMENT ---
+        // --- 2. STATE MANAGEMENT & STATIC BUTTONS ---
         let userState = userStates.get(userId);
-        
-        if (!userState && messageText && !['🏠 Main Menu', '⬅️ Back', '❌ Cancel'].includes(messageText)) {
-            const recoveredPath = globalSearchByName(messageText);
-            if (recoveredPath) {
-                const node = getNodeByPath(recoveredPath);
-                userState = { path: recoveredPath, state: node.type === 'course' ? 'course_view' : null };
-                userStates.set(userId, userState);
-            } else {
-                userState = { path: [] };
-            }
-        } else if (!userState) {
+        if (!userState || !Array.isArray(userState.path)) {
             userState = { path: [] };
+            userStates.set(userId, userState);
         }
 
-        // --- 3. STATIC BUTTONS ---
-        if (messageText === '🏠 Main Menu') {
-            userStates.delete(userId);
-            return bot.sendMessage(msg.chat.id, '🎓 Premium Subscription Bot - Main Menu 🎓\n\nআপনার পছন্দের course category সিলেক্ট করুন:', getMainMenuKeyboard());
-        }
-        if (messageText === '🔥 Support 🔥') return bot.sendMessage(msg.chat.id, '💬 Contact our support team:', { reply_markup: { inline_keyboard: [[ { text: '💬 Support', url: 'https://t.me/Mehedi_X71' } ]] } });
-        if (messageText === '🔥 Our Channel ❤️') return bot.sendMessage(msg.chat.id, '📢 Join our channel for updates:', { reply_markup: { inline_keyboard: [[ { text: '📢 Our Channel', url: 'https://t.me/premium_subscriptionss' } ]] } });
-        if (messageText === '❌ Cancel') {
-            await updateUserData(userId, { pending_course: null, pending_payment_method: null, waiting_for_proof: null });
-            userStates.delete(userId);
-            return bot.sendMessage(msg.chat.id, '🚫 Operation canceled. Returning to main menu.', getMainMenuKeyboard());
-        }
+        if (messageText === '🏠 Main Menu') { userStates.delete(userId); return bot.sendMessage(msg.chat.id, '🎓 Main Menu:', getMainMenuKeyboard()); }
+        if (messageText === '🔥 Support 🔥') return bot.sendMessage(msg.chat.id, '💬 Support team:', { reply_markup: { inline_keyboard: [[{text: '💬 Support', url: 'https://t.me/Mehedi_X71'}]] }});
+        if (messageText === '🔥 Our Channel ❤️') return bot.sendMessage(msg.chat.id, '📢 Join channel:', { reply_markup: { inline_keyboard: [[{text: '📢 Channel', url: 'https://t.me/premium_subscriptionss'}]] }});
+        if (messageText === '❌ Cancel') { await updateUserData(userId, { pending_course: null, pending_payment_method: null }); userStates.delete(userId); return bot.sendMessage(msg.chat.id, '🚫 Canceled.', getMainMenuKeyboard()); }
 
-        // --- 4. SMART BACK BUTTON ---
+        // --- 3. SMART BACK BUTTON ---
         if (messageText === '⬅️ Back') {
             if (['payment_method', 'bkash_payment', 'nagad_payment'].includes(userState.state)) {
-                userState.state = 'course_view';
-                userStates.set(userId, userState);
+                userState.state = 'course_view'; userStates.set(userId, userState);
                 const course = getNodeByPath(userState.path);
                 const courseKb = await getCourseKeyboard(userState.path, userId);
-                const cText = `${course.name}\n\n${course.description}\n\n💰 Price: ${course.price} TK`;
-                if (course.imageLink) {
-                    try { return await bot.sendPhoto(msg.chat.id, course.imageLink, { caption: cText, ...courseKb }); } catch (e) {}
-                }
-                return bot.sendMessage(msg.chat.id, cText, courseKb);
+                const text = `${course.name}\n\n${course.description}\n\n💰 Price: ${course.price} TK`;
+                if (course.imageLink) { try { return await bot.sendPhoto(msg.chat.id, course.imageLink, { caption: text, ...courseKb }); } catch(e){} }
+                return bot.sendMessage(msg.chat.id, text, courseKb);
             }
-
-            if (userState.path && userState.path.length > 0) {
-                userState.path.pop(); // Go up one level
-                userState.state = null; // Clear states
-                userStates.set(userId, userState);
-                
-                const node = getNodeByPath(userState.path);
-                const title = node.type === 'root' ? '🎓 Premium Subscription Bot - Main Menu 🎓\n\nআপনার পছন্দের course category সিলেক্ট করুন:' : `${node.name}\n\n📚 Available Options:`;
-                return bot.sendMessage(msg.chat.id, title, getKeyboardForPath(userState.path));
+            if (userState.path.length > 0) {
+                userState.path.pop(); userState.state = null; userStates.set(userId, userState);
+                if (userState.path.length === 0) return bot.sendMessage(msg.chat.id, '🎓 Main Menu:', getMainMenuKeyboard());
+                return bot.sendMessage(msg.chat.id, `${getNodeByPath(userState.path).name}\n\n📚 Available Options:`, getKeyboardForPath(userState.path));
             }
             return bot.sendMessage(msg.chat.id, '🎓 Main Menu', getMainMenuKeyboard());
         }
 
-        // --- 5. ACTIVE COURSE ACTIONS ---
+        // --- 4. COURSE ACTIONS & PAYMENT ROUTER ---
         if (userState.state === 'course_view') {
             const course = getNodeByPath(userState.path);
-            const courseId = userState.path[userState.path.length - 1];
-            
             if (messageText === '💳 Buy Now') {
-                await updateUserData(userId, { pending_course: courseId });
-                userState.state = 'payment_method';
-                userStates.set(userId, userState);
-                return bot.sendMessage(msg.chat.id, `💳 Select Payment Method for ${course.name}\n\n💰 Amount: ${course.price} TK`, getPaymentMethodKeyboard());
+                await updateUserData(userId, { pending_course: userState.path[userState.path.length-1] });
+                userState.state = 'payment_method'; userStates.set(userId, userState);
+                return bot.sendMessage(msg.chat.id, `💳 Select Payment Method\n💰 Amount: ${course.price} TK`, getPaymentMethodKeyboard());
             } else if (messageText === '🎯 Join Course Group') {
-                const hasCourse = Array.isArray(userData.purchases) ? userData.purchases.includes(courseId) : userData.purchases?.has?.(courseId);
-                if (hasCourse) return bot.sendMessage(msg.chat.id, `🎯 Join your course group:`, { reply_markup: { inline_keyboard: [[ { text: `Join Group`, url: course.groupLink } ]] }});
+                if (userData.purchases.has(userState.path[userState.path.length-1])) return bot.sendMessage(msg.chat.id, `🎯 Join group:`, { reply_markup: { inline_keyboard: [[{text: `Join Group`, url: course.groupLink}]] }});
             }
         }
-
-        // --- 6. PAYMENT METHODS ROUTER ---
         if (userState.state === 'payment_method') {
-            const coursePath = findNodePathByKey(userData.pending_course);
-            const course = getNodeByPath(coursePath);
-            
+            const course = getNodeByPath(findNodePathByKey(userData.pending_course));
             if (messageText === 'bKash') {
                 await updateUserData(userId, { pending_payment_method: 'bKash' });
-                userStates.set(userId, { ...userState, state: 'bkash_payment' });
-                const bkashInst = `💳 bKash Payment Instructions:\n\n✅ এই নাম্বার ${BKASH_NUMBER} এ Make Payment করবেন!\n❌ Send Money করলে হবে না ।\n✅ Payment করার পর Transaction ID টা copy করেন ।\n✅ Submit Payment Proof এ ক্লিক করেন ।\n✅ শুধুমাত্র Transaction ID লিখুন।\n\n⭐ Bkash Auto Approve ⭐\n💰 Amount: ${course.price} TK`;
-                try { return await bot.sendPhoto(msg.chat.id, './bkash.jpg', { caption: bkashInst, ...getBkashPaymentKeyboard(!!course.paymentLink) }); } 
-                catch (e) { return await bot.sendMessage(msg.chat.id, bkashInst, getBkashPaymentKeyboard(!!course.paymentLink)); }
+                userState.state = 'bkash_payment'; userStates.set(userId, userState);
+                const txt = `💳 bKash Payment:\n✅ Number: ${BKASH_NUMBER}\n💰 Amount: ${course.price} TK\nSend TRX ID after payment.`;
+                try { return await bot.sendPhoto(msg.chat.id, './bkash.jpg', { caption: txt, ...getBkashPaymentKeyboard(!!course.paymentLink) }); } catch(e) { return bot.sendMessage(msg.chat.id, txt, getBkashPaymentKeyboard(!!course.paymentLink)); }
             } else if (messageText === 'Nagad') {
                 await updateUserData(userId, { pending_payment_method: 'Nagad' });
-                userStates.set(userId, { ...userState, state: 'nagad_payment' });
-                return bot.sendMessage(msg.chat.id, `💳 Nagad Payment:\n\n✅ নাম্বার ${NAGAD_NUMBER} এ Send Money করেন ।\n✅ Payment এর পর screenshot দিন ।\n💰 Amount: ${course.price} TK`, getNagadPaymentKeyboard());
+                userState.state = 'nagad_payment'; userStates.set(userId, userState);
+                return bot.sendMessage(msg.chat.id, `💳 Nagad:\n✅ Number: ${NAGAD_NUMBER}\n💰 Amount: ${course.price} TK`, getNagadPaymentKeyboard());
             }
         }
-
-        // --- 7. FINAL PAYMENT (Link / Submit) ---
         if (userState.state === 'bkash_payment') {
-            const coursePath = findNodePathByKey(userData.pending_course);
-            const course = getNodeByPath(coursePath);
             if (messageText === '💳 Use bKash Link') {
-                if (course && course.paymentLink) {
-                    await bot.sendMessage(msg.chat.id, `💳 Pay with bKash:\n\n${course.paymentLink}\n\nAfter payment, send the TRX ID here.`, getCancelKeyboard());
-                    return await updateUserData(userId, { waiting_for_proof: JSON.stringify({ courseId: userData.pending_course, paymentMethod: 'bKash' }) });
-                }
+                const link = getNodeByPath(findNodePathByKey(userData.pending_course)).paymentLink;
+                if(link) { await bot.sendMessage(msg.chat.id, `💳 Pay here:\n${link}`, getCancelKeyboard()); return await updateUserData(userId, { waiting_for_proof: JSON.stringify({ courseId: userData.pending_course, paymentMethod: 'bKash' }) }); }
             } else if (messageText === '📝 Submit Payment Proof') {
-                await bot.sendMessage(msg.chat.id, '🔢 Please send the bKash Transaction ID (TRX ID):', getCancelKeyboard());
+                await bot.sendMessage(msg.chat.id, '🔢 Send bKash TRX ID:', getCancelKeyboard());
                 return await updateUserData(userId, { waiting_for_proof: JSON.stringify({ courseId: userData.pending_course, paymentMethod: 'bKash' }) });
             }
         }
-        
-        if (userState.state === 'nagad_payment' && messageText === '📝 Submit Payment Proof') {
-            await bot.sendMessage(msg.chat.id, '📸 Please send the Nagad payment screenshot:', getCancelKeyboard());
-            return await updateUserData(userId, { waiting_for_proof: JSON.stringify({ courseId: userData.pending_course, paymentMethod: 'Nagad' }) });
-        } else if (userState.state === 'nagad_payment' && messageText === '💬 Contact Admin') {
-            return bot.sendMessage(msg.chat.id, `Contact admin: @${ADMIN_USERNAME}`, { reply_markup: { inline_keyboard: [[ { text: '💬 Contact Admin', url: `https://t.me/${ADMIN_USERNAME}` } ]] } });
+        if (userState.state === 'nagad_payment') {
+            if (messageText === '📝 Submit Payment Proof') {
+                await bot.sendMessage(msg.chat.id, '📸 Send Nagad screenshot:', getCancelKeyboard()); return await updateUserData(userId, { waiting_for_proof: JSON.stringify({ courseId: userData.pending_course, paymentMethod: 'Nagad' }) });
+            } else if (messageText === '💬 Contact Admin') return bot.sendMessage(msg.chat.id, `Contact: @${ADMIN_USERNAME}`, { reply_markup: { inline_keyboard: [[{text: 'Admin', url: `https://t.me/${ADMIN_USERNAME}`}]] }});
         }
 
-        // --- 8. DYNAMIC NAVIGATION ENGINE ---
-        if (!userState.state) {
+        // --- 5. DYNAMIC NAVIGATION (Forward & Auto-Healing) ---
+        if (!userState.state && messageText && !messageText.startsWith('/')) {
             const currentNode = getNodeByPath(userState.path);
+            let found = false;
+
             if (currentNode && currentNode.children) {
-                let clickedKey = null;
-                let clickedNode = null;
-                
                 for (const key in currentNode.children) {
                     const child = currentNode.children[key];
                     const btnText = child.type === 'course' ? `${child.name} - ${child.price} TK` : child.name;
                     if (btnText === messageText) {
-                        clickedKey = key;
-                        clickedNode = child;
-                        break;
+                        userState.path.push(key);
+                        found = true;
+                        if (child.type === 'folder') {
+                            userStates.set(userId, userState);
+                            return bot.sendMessage(msg.chat.id, `${child.name}\n\n📚 Available Options:`, getKeyboardForPath(userState.path));
+                        } else if (child.type === 'course') {
+                            userState.state = 'course_view'; userStates.set(userId, userState);
+                            const courseKb = await getCourseKeyboard(userState.path, userId);
+                            const txt = `${child.name}\n\n${child.description}\n\n💰 Price: ${child.price} TK`;
+                            if (child.imageLink) { try { return await bot.sendPhoto(msg.chat.id, child.imageLink, { caption: txt, ...courseKb }); } catch(e){} }
+                            return bot.sendMessage(msg.chat.id, txt, courseKb);
+                        }
                     }
                 }
+            }
 
-                if (clickedNode) {
-                    userState.path.push(clickedKey);
-                    
-                    if (clickedNode.type === 'folder') {
-                        userStates.set(userId, userState);
-                        return bot.sendMessage(msg.chat.id, `${clickedNode.name}\n\n📚 Available Options:`, getKeyboardForPath(userState.path));
-                    } else if (clickedNode.type === 'course') {
-                        userState.state = 'course_view';
-                        userStates.set(userId, userState);
-                        const courseKb = await getCourseKeyboard(userState.path, userId);
-                        const cText = `${clickedNode.name}\n\n${clickedNode.description}\n\n💰 Price: ${clickedNode.price} TK`;
-                        
-                        if (clickedNode.imageLink) {
-                            try { return await bot.sendPhoto(msg.chat.id, clickedNode.imageLink, { caption: cText, ...courseKb }); } catch (error) {}
-                        }
-                        return await bot.sendMessage(msg.chat.id, cText, courseKb);
+            if (!found) { // AUTO-HEALING
+                const recPath = globalSearchByName(messageText);
+                if (recPath) {
+                    userState.path = recPath;
+                    const node = getNodeByPath(recPath);
+                    if (node.type === 'folder') {
+                        userState.state = null; userStates.set(userId, userState);
+                        return bot.sendMessage(msg.chat.id, `${node.name}\n\n📚 Options:`, getKeyboardForPath(userState.path));
+                    } else if (node.type === 'course') {
+                        userState.state = 'course_view'; userStates.set(userId, userState);
+                        const cKb = await getCourseKeyboard(userState.path, userId);
+                        const txt = `${node.name}\n\n${node.description}\n\n💰 Price: ${node.price} TK`;
+                        if (node.imageLink) { try { return await bot.sendPhoto(msg.chat.id, node.imageLink, { caption: txt, ...cKb }); } catch(e){} }
+                        return bot.sendMessage(msg.chat.id, txt, cKb);
                     }
                 }
             }
         }
 
-        // Garbage warning
-        if (messageText && !messageText.startsWith('/')) {
-            // Unhandled text
-        }
     } catch (error) {
-        console.error('Error in message handler:', error.message);
-        bot.sendMessage(msg.chat.id, "⚠️ সিস্টেমে একটি সাময়িক সমস্যা হয়েছে। দয়া করে /start লিখে আবার চেষ্টা করুন। Bot আপডেট করার কারনে দয়া করে Manual Bot ব্যাবহার করুন।");
+        console.error('Error in msg handler:', error.message);
+        bot.sendMessage(msg.chat.id, "⚠️ সিস্টেমে একটি সাময়িক সমস্যা হয়েছে। দয়া করে /start লিখে আবার চেষ্টা করুন।");
     }
 });
 
-// ==========================================
-// 📡 CALLBACK QUERIES (Admin Approvals & Retry)
-// ==========================================
-
-bot.on('callback_query', async (callbackQuery) => {
+bot.on('callback_query', async (query) => {
     try {
-        const data = callbackQuery.data;
-        const chatId = callbackQuery.message.chat.id;
-        const userId = callbackQuery.from.id;
+        const data = query.data; const chatId = query.message.chat.id; const userId = query.from.id;
         
         if (data.startsWith('approve_') || data.startsWith('reject_')) {
             if (!(await isAdmin(userId))) return;
-            
-            const action = data.split('_')[0];
-            const targetUserId = data.split('_')[1];
-            const courseId = data.split('_')[2];
-            
+            const [, targetUserId, courseId] = data.split('_');
             const coursePath = findNodePathByKey(courseId);
             const course = getNodeByPath(coursePath);
-            if (!course) return bot.answerCallbackQuery(callbackQuery.id, { text: '❌ Course not found!' });
+            if (!course) return bot.answerCallbackQuery(query.id, { text: '❌ Course not found!' });
             
-            if (action === 'approve') {
-                const trxId = `MANUAL-${Date.now()}`;
-                const paymentDate = new Date().toISOString().split('T')[0];
-                const menuId = coursePath[0] || 'N/A';
-                const submenuId = coursePath[1] || 'N/A';
-                
-                await addTransaction(trxId, targetUserId, courseId, course.price, 'Nagad', paymentDate);
-                await addUserPurchase(targetUserId, courseId, menuId, submenuId, trxId, 'Nagad', course.price, paymentDate);
-                
-                await bot.sendMessage(targetUserId, `✅ **Your payment for ${course.name} has been approved!**\n\n🎯 Join your course group:\n👉 Click the button below`, { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[ { text: `🎯 Join Group`, url: course.groupLink } ]] } });
-                await bot.editMessageText(`✅ Payment approved for user: ${targetUserId}`, { chat_id: chatId, message_id: callbackQuery.message.message_id });
+            if (data.startsWith('approve')) {
+                const trx = `MANUAL-${Date.now()}`; const dt = new Date().toISOString().split('T')[0];
+                await addTransaction(trx, targetUserId, courseId, course.price, 'Nagad', dt);
+                await addUserPurchase(targetUserId, courseId, coursePath[0]||'NA', coursePath[1]||'NA', trx, 'Nagad', course.price, dt);
+                await bot.sendMessage(targetUserId, `✅ **Payment approved!**\n\n🎯 Join group:`, { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[{text: 'Join Group', url: course.groupLink}]]}});
+                await bot.editMessageText(`✅ Approved for: ${targetUserId}`, { chat_id: chatId, message_id: query.message.message_id });
             } else {
-                await bot.editMessageText(`❌ Payment rejected for user: ${targetUserId}`, { chat_id: chatId, message_id: callbackQuery.message.message_id });
-                await bot.sendMessage(targetUserId, `❌ Your payment proof for ${course.name} was rejected.`, { reply_markup: { inline_keyboard: [[ { text: '💬 Contact Support', url: `https://t.me/${ADMIN_USERNAME}` } ]] } });
+                await bot.editMessageText(`❌ Rejected for: ${targetUserId}`, { chat_id: chatId, message_id: query.message.message_id });
+                await bot.sendMessage(targetUserId, `❌ Payment proof rejected.`, { reply_markup: { inline_keyboard: [[{text: 'Support', url: `https://t.me/${ADMIN_USERNAME}`}]]}});
             }
-            return bot.answerCallbackQuery(callbackQuery.id);
+            return bot.answerCallbackQuery(query.id);
         }
 
         if (data.startsWith('retry_trx_') || data.startsWith('new_payment_')) {
-            const isRetry = data.startsWith('retry_trx_');
             const courseId = data.split('_')[2];
-            const paymentMethod = isRetry ? data.split('_')[3] : null;
-            
             const coursePath = findNodePathByKey(courseId);
             const course = getNodeByPath(coursePath);
-            if (!course) {
-                bot.answerCallbackQuery(callbackQuery.id, { text: '❌ Course not found!' });
-                return bot.sendMessage(chatId, "❌ Course not found!", getMainMenuKeyboard());
-            }
+            if (!course) return bot.sendMessage(chatId, "❌ Not found", getMainMenuKeyboard());
 
-            if (isRetry) {
-                await updateUserData(userId, { pending_course: courseId, pending_payment_method: paymentMethod, waiting_for_proof: JSON.stringify({ courseId, paymentMethod }) });
-                bot.sendMessage(chatId, `🔁 Please send new bKash Transaction ID for ${course.name}:`, getCancelKeyboard());
+            if (data.startsWith('retry')) {
+                await updateUserData(userId, { pending_course: courseId, waiting_for_proof: JSON.stringify({ courseId, paymentMethod: data.split('_')[3] }) });
+                bot.sendMessage(chatId, `🔁 Send TRX ID:`, getCancelKeyboard());
             } else {
-                await updateUserData(userId, { pending_course: courseId, pending_payment_method: null, waiting_for_proof: null });
+                await updateUserData(userId, { pending_course: courseId, waiting_for_proof: null });
                 userStates.set(userId, { path: coursePath, state: 'payment_method' });
-                bot.sendMessage(chatId, `💳 Select payment method for ${course.name}:`, getPaymentMethodKeyboard());
+                bot.sendMessage(chatId, `💳 Select method:`, getPaymentMethodKeyboard());
             }
-            return bot.answerCallbackQuery(callbackQuery.id);
+            return bot.answerCallbackQuery(query.id);
         }
-        
-        if (data === 'main_menu') {
-            userStates.delete(userId);
-            bot.sendMessage(chatId, "🎓 Main Menu", getMainMenuKeyboard());
-        }
-        bot.answerCallbackQuery(callbackQuery.id);
-    } catch (error) {
-        console.error('Error in callback query:', error.message);
-    }
+        if (data === 'main_menu') { userStates.delete(userId); bot.sendMessage(chatId, "🎓 Main Menu", getMainMenuKeyboard()); }
+        bot.answerCallbackQuery(query.id);
+    } catch (e) {}
 });
 
-// Express server
-app.get('/', (req, res) => {
-    res.send(`
-        <h1>Premium Subscription Bot</h1>
-        <p>Bot is running successfully with PostgreSQL Database!</p>
-        <p>Database: premium-subscription-bot-db on Render</p>
-        <p>Last Updated: ${new Date().toISOString()}</p>
-        <hr>
-        <h3>Features:</h3>
-        <ul>
-            <li>✅ Hardcoded courses (auto-updates on deployment)</li>
-            <li>✅ Enhanced bKash verification with time checking</li>
-            <li>✅ Payment date validation (yesterday, today, tomorrow only)</li>
-            <li>✅ Duplicate transaction prevention</li>
-            <li>✅ PostgreSQL integration</li>
-            <li>✅ Admin panel for transaction management</li>
-        </ul>
-    `);
-});
+app.get('/', (req, res) => res.send('<h1>Bot Running (Tree Engine)</h1>'));
+app.listen(PORT, () => console.log(`Server on ${PORT}`));
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
-
-// Initialize System and Start Bot
 async function startSystem() {
     try {
-        // 1. First, fetch courses from GitHub
-        const isSynced = await syncCourseData();
-        if (!isSynced) {
-            console.warn("⚠️ Warning: Bot started but course data is empty. Run /sync manually.");
-        }
-        
-        // 2. Then, initialize Database
+        await syncCourseData();
         await initializeDatabase();
-        console.log('✅ PostgreSQL Database Initialized!');
-        
-        console.log('🚀 Premium Subscription Bot is fully LIVE and Operational!');
-        console.log('Features enabled: Dynamic GitHub DB, Path-based Routing, Cache Invalidation.');
-    } catch (error) {
-        console.error('❌ Error during startup:', error);
-    }
+        console.log('✅ Bot is LIVE with Infinite Tree & DB Support!');
+    } catch (e) { console.error('❌ Startup error:', e); }
 }
-
 startSystem();
