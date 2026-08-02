@@ -50,7 +50,7 @@ const REPO_OWNER = 'PremiumSubscriptions';
 const REPO_NAME = 'CourseDataDB'; 
 
 // ==============================================================
-// 🧠 1. THE DYNAMIC FETCHING ENGINE (Auto-Discover)
+// 🧠 1. THE DYNAMIC FETCHING ENGINE (Auto-Discover & Anti-Cache)
 // ==============================================================
 async function syncCourseData() {
     console.log("🔄 Syncing course data from GitHub...");
@@ -59,8 +59,17 @@ async function syncCourseData() {
 
     try {
         const rootUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/`;
+        
+        // 🚀 Bypassing GitHub API Cache using timestamp & strict headers
         const rootResponse = await axios.get(rootUrl, {
-            headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+            params: { t: Date.now() }, // Cache-Buster
+            headers: { 
+                'Authorization': `token ${GITHUB_TOKEN}`, 
+                'Accept': 'application/vnd.github.v3+json',
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0'
+            }
         });
 
         const jsonFiles = rootResponse.data.filter(item => item.name.endsWith('.json'));
@@ -69,9 +78,19 @@ async function syncCourseData() {
         for (const file of jsonFiles) {
             try {
                 const fileKey = file.name.replace('.json', '');
+                
+                // 🚀 Bypassing Cache for individual files as well
                 const fileResponse = await axios.get(file.url, {
-                    headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+                    params: { t: Date.now() }, // Cache-Buster
+                    headers: { 
+                        'Authorization': `token ${GITHUB_TOKEN}`, 
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    }
                 });
+                
                 const content = Buffer.from(fileResponse.data.content, 'base64').toString('utf-8');
                 newData[fileKey] = JSON.parse(content);
                 console.log(`✅ Loaded: ${file.name}`);
