@@ -327,10 +327,50 @@ bot.onText(/\/admin/, async (msg) => {
 });
 
 bot.onText(/\/sync/, async (msg) => {
-    if (!(await isAdmin(msg.from.id))) return;
+    if (!(await isAdmin(msg.from.id))) return bot.sendMessage(msg.chat.id, '❌ You are not authorized!');
+    
     await bot.sendMessage(msg.chat.id, '🔄 Syncing courses from GitHub Cloud... Please wait.');
     const success = await syncCourseData();
-    bot.sendMessage(msg.chat.id, success ? '✅ **Sync Complete!**' : '❌ **Sync Failed!**', { parse_mode: 'Markdown' });
+    
+    if (success) {
+        await bot.sendMessage(msg.chat.id, '✅ **Sync Complete!**\n\nAll courses have been updated from GitHub.', { parse_mode: 'Markdown' });
+
+        // 🚀 THE HYPER THINKING: Live Broadcast Refresh to ALL Active Users!
+        let refreshCount = 0;
+        
+        for (const [activeUserId, state] of userStates.entries()) {
+            try {
+                // পেমেন্ট স্টেটে থাকা ইউজারদের ডিস্টার্ব না করে, শুধু যারা মেনুতে ঘুরছে তাদের রিফ্রেশ করব
+                if (state.path && !['payment_method', 'bkash_payment', 'nagad_payment'].includes(state.state)) {
+                    
+                    const newKeyboard = getKeyboardForPath(state.path);
+                    const node = getNodeByPath(state.path);
+                    const titleName = node.type === 'root' ? 'Main Menu' : node.name;
+                    
+                    // ইউজারকে নতুন কিবোর্ডসহ একটি অটোমেটিক নোটিফিকেশন দেওয়া
+                    await bot.sendMessage(
+                        activeUserId, 
+                        `🔄 **সিস্টেম আপডেট!**\nনতুন কোর্স/ফোল্ডার যুক্ত হয়েছে। আপনার *${titleName}* অটো-রিফ্রেশ করা হলো:`, 
+                        { parse_mode: 'Markdown', ...newKeyboard }
+                    );
+                    refreshCount++;
+                }
+            } catch (e) {
+                // ইউজার যদি বট ব্লক করে থাকে, তাহলে স্কিপ করবে
+            }
+        }
+
+        // অ্যাডমিনকে রিপোর্ট দেওয়া
+        if (refreshCount > 0) {
+            bot.sendMessage(msg.chat.id, `🚀 **Live Push Successful:** ${refreshCount} জন অ্যাক্টিভ ইউজারের স্ক্রিন অটোমেটিক রিফ্রেশ করা হয়েছে!`);
+        } else {
+            // যদি অ্যাক্টিভ ইউজার না থাকে, তবে অ্যাডমিনের নিজের স্ক্রিনটাই রিফ্রেশ করে দেবে
+            bot.sendMessage(msg.chat.id, "🎓 Main Menu (Refreshed):", getMainMenuKeyboard());
+        }
+
+    } else {
+        await bot.sendMessage(msg.chat.id, '❌ **Sync Failed!** Check console logs.', { parse_mode: 'Markdown' });
+    }
 });
 
 // Admin TRx commands
