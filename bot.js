@@ -515,20 +515,28 @@ bot.on('message', async (msg) => {
         }
         if (userState.state === 'payment_method') {
             const course = getNodeByPath(findNodePathByKey(userData.pending_course));
+            const extraMessage = `আমাদের বিকাশ নতুন নম্বর শুধু Send money\n\n01902912653 ( Bkash Marchent সাময়িকী সময় বন্ধ আছে )\n\n01902912653 (Nagod Send Money)\n\n01634001336 (Nagod Send Money)\n01634001336 ( Bkash Send Money)\n\nSend money করে আমাকে কোর্স নাম লিখে পাঠাও।`;
+            
             if (messageText === 'bKash') {
                 await updateUserData(userId, { pending_payment_method: 'bKash' });
                 userState.state = 'bkash_payment'; userStates.set(userId, userState);
                 
                 const bkashInst = `💳 bKash Payment Instructions:\n\n✅ এই নাম্বার ${BKASH_NUMBER} এ Make Payment করবেন!\n❌ Send Money করলে হবে না ।\n✅ Payment করার পর Transaction ID টা copy করেন ।\n✅ Submit Payment Proof এ ক্লিক করেন ।\n✅ শুধুমাত্র Transaction ID লিখুন।\n✅ Example: 9BG4R2G5N8\n\n⭐ Bkash Payment Auto Approve ⭐\n\nAmount: ${course.price} TK`;
                 
-                try { return await bot.sendPhoto(msg.chat.id, './bkash.jpg', { caption: bkashInst, ...getBkashPaymentKeyboard(!!course.paymentLink) }); } catch(e) { return bot.sendMessage(msg.chat.id, bkashInst, getBkashPaymentKeyboard(!!course.paymentLink)); }
+                try { 
+                    await bot.sendPhoto(msg.chat.id, './bkash.jpg', { caption: bkashInst, ...getBkashPaymentKeyboard(!!course.paymentLink) }); 
+                } catch(e) { 
+                    await bot.sendMessage(msg.chat.id, bkashInst, getBkashPaymentKeyboard(!!course.paymentLink)); 
+                }
+                return bot.sendMessage(msg.chat.id, extraMessage);
             } else if (messageText === 'Nagad') {
                 await updateUserData(userId, { pending_payment_method: 'Nagad' });
                 userState.state = 'nagad_payment'; userStates.set(userId, userState);
                 
                 const nagadInst = `💳 Nagad Payment Instructions:\n\n✅ এই নাম্বার ${NAGAD_NUMBER} এ Send Money করেন ।\n✅ Payment করার পর screenshot নিন ।\n✅ এডমিন কে course নাম সহ screenshot পাঠান ।\n\n⭐ Nagad Payment Manually Approve ⭐\n\nAmount: ${course.price} TK`;
                 
-                return bot.sendMessage(msg.chat.id, nagadInst, getNagadPaymentKeyboard());
+                await bot.sendMessage(msg.chat.id, nagadInst, getNagadPaymentKeyboard());
+                return bot.sendMessage(msg.chat.id, extraMessage);
             }
         }
         if (userState.state === 'bkash_payment') {
