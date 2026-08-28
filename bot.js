@@ -503,6 +503,7 @@ bot.on('message', async (msg) => {
         }
 
         // --- 4. COURSE ACTIONS & PAYMENT ROUTER ---
+                // --- 4. COURSE ACTIONS & PAYMENT ROUTER ---
         if (userState.state === 'course_view') {
             const course = getNodeByPath(userState.path);
             if (messageText === '💳 Buy Now') {
@@ -513,46 +514,52 @@ bot.on('message', async (msg) => {
                 if (userData.purchases.has(userState.path[userState.path.length-1])) return bot.sendMessage(msg.chat.id, `🎯 Join group:`, { reply_markup: { inline_keyboard: [[{text: `Join Group`, url: course.groupLink}]] }});
             }
         }
+        
         if (userState.state === 'payment_method') {
             const course = getNodeByPath(findNodePathByKey(userData.pending_course));
-            const extraMessage = `আমাদের বিকাশ নতুন নম্বর শুধু Send money\n\n01902912653 ( Bkash Marchent সাময়িকী সময় বন্ধ আছে )\n\n01902912653 (Nagod Send Money)\n\n01634001336 (Nagod Send Money)\n01634001336 ( Bkash Send Money)\n\nSend money করে আমাকে কোর্স নাম লিখে পাঠাও।`;
             
+            // নতুন ম্যানুয়াল পেমেন্ট মেসেজ (বিকাশ এবং নগদ উভয়ের জন্যই)
+            const manualPaymentInst = `Payment  Systems ✅\n\n01634001336 ( Bkash Send Money)✅\n\n01902912653 (Nagod Send Money)✅\n01634001336 (Nagod Send Money)✅\n\nSend money করে আমাকে পেমেন্ট Screnshort পাঠাও আর কোর্স নাম লিখে পাঠাও।\n\n➡️ @Mehedi_X71 \n➡️ @Mehedi_X71\n\n💰 Amount: ${course.price} TK`;
+
             if (messageText === 'bKash') {
                 await updateUserData(userId, { pending_payment_method: 'bKash' });
                 userState.state = 'bkash_payment'; userStates.set(userId, userState);
                 
-                const bkashInst = `💳 bKash Payment Instructions:\n\n✅ এই নাম্বার ${BKASH_NUMBER} এ Make Payment করবেন!\n❌ Send Money করলে হবে না ।\n✅ Payment করার পর Transaction ID টা copy করেন ।\n✅ Submit Payment Proof এ ক্লিক করেন ।\n✅ শুধুমাত্র Transaction ID লিখুন।\n✅ Example: 9BG4R2G5N8\n\n⭐ Bkash Payment Auto Approve ⭐\n\nAmount: ${course.price} TK`;
+                /* --- OLD BKASH AUTO APPROVE INSTRUCTIONS (COMMENTED OUT) ---
+                const bkashInst = \`💳 bKash Payment Instructions:\n\n✅ এই নাম্বার ${BKASH_NUMBER} এ Make Payment করবেন!\n❌ Send Money করলে হবে না ।\n✅ Payment করার পর Transaction ID টা copy করেন ।\n✅ Submit Payment Proof এ ক্লিক করেন ।\n✅ শুধুমাত্র Transaction ID লিখুন।\n✅ Example: 9BG4R2G5N8\n\n⭐ Bkash Payment Auto Approve ⭐\n\nAmount: ${course.price} TK\`;
                 
                 try { 
                     await bot.sendPhoto(msg.chat.id, './bkash.jpg', { caption: bkashInst, ...getBkashPaymentKeyboard(!!course.paymentLink) }); 
                 } catch(e) { 
                     await bot.sendMessage(msg.chat.id, bkashInst, getBkashPaymentKeyboard(!!course.paymentLink)); 
                 }
-                return bot.sendMessage(msg.chat.id, extraMessage);
+                ------------------------------------------------------------ */
+
+                // NEW MANUAL SEND MONEY FLOW FOR BKASH
+                try { 
+                    await bot.sendPhoto(msg.chat.id, './bkash-send-money.jpg', { caption: manualPaymentInst, ...getBkashPaymentKeyboard(!!course.paymentLink) }); 
+                } catch(e) { 
+                    await bot.sendMessage(msg.chat.id, manualPaymentInst, getBkashPaymentKeyboard(!!course.paymentLink)); 
+                }
+
             } else if (messageText === 'Nagad') {
                 await updateUserData(userId, { pending_payment_method: 'Nagad' });
                 userState.state = 'nagad_payment'; userStates.set(userId, userState);
                 
-                const nagadInst = `💳 Nagad Payment Instructions:\n\n✅ এই নাম্বার ${NAGAD_NUMBER} এ Send Money করেন ।\n✅ Payment করার পর screenshot নিন ।\n✅ এডমিন কে course নাম সহ screenshot পাঠান ।\n\n⭐ Nagad Payment Manually Approve ⭐\n\nAmount: ${course.price} TK`;
-                
+                /* --- OLD NAGAD INSTRUCTIONS (COMMENTED OUT) ---
+                const nagadInst = \`💳 Nagad Payment Instructions:\n\n✅ এই নাম্বার ${NAGAD_NUMBER} এ Send Money করেন ।\n✅ Payment করার পর screenshot নিন ।\n✅ এডমিন কে course নাম সহ screenshot পাঠান ।\n\n⭐ Nagad Payment Manually Approve ⭐\n\nAmount: ${course.price} TK\`;
                 await bot.sendMessage(msg.chat.id, nagadInst, getNagadPaymentKeyboard());
-                return bot.sendMessage(msg.chat.id, extraMessage);
+                ------------------------------------------------- */
+                
+                // NEW MANUAL SEND MONEY FLOW FOR NAGAD
+                try { 
+                    await bot.sendPhoto(msg.chat.id, './bkash-send-money.jpg', { caption: manualPaymentInst, ...getNagadPaymentKeyboard() }); 
+                } catch(e) { 
+                    await bot.sendMessage(msg.chat.id, manualPaymentInst, getNagadPaymentKeyboard()); 
+                }
             }
         }
-        if (userState.state === 'bkash_payment') {
-            if (messageText === '💳 Use bKash Link') {
-                const link = getNodeByPath(findNodePathByKey(userData.pending_course)).paymentLink;
-                if(link) { await bot.sendMessage(msg.chat.id, `💳 Pay here:\n${link}`, getCancelKeyboard()); return await updateUserData(userId, { waiting_for_proof: JSON.stringify({ courseId: userData.pending_course, paymentMethod: 'bKash' }) }); }
-            } else if (messageText === '📝 Submit Payment Proof') {
-                await bot.sendMessage(msg.chat.id, '🔢 Send bKash TRX ID:', getCancelKeyboard());
-                return await updateUserData(userId, { waiting_for_proof: JSON.stringify({ courseId: userData.pending_course, paymentMethod: 'bKash' }) });
-            }
-        }
-        if (userState.state === 'nagad_payment') {
-            if (messageText === '📝 Submit Payment Proof') {
-                await bot.sendMessage(msg.chat.id, '📸 Send Nagad screenshot:', getCancelKeyboard()); return await updateUserData(userId, { waiting_for_proof: JSON.stringify({ courseId: userData.pending_course, paymentMethod: 'Nagad' }) });
-            } else if (messageText === '💬 Contact Admin') return bot.sendMessage(msg.chat.id, `Contact: @${ADMIN_USERNAME}`, { reply_markup: { inline_keyboard: [[{text: 'Admin', url: `https://t.me/${ADMIN_USERNAME}`}]] }});
-        }
+
 
         // --- 5. DYNAMIC NAVIGATION (Forward & Auto-Healing) ---
         if (!userState.state && messageText && !messageText.startsWith('/')) {
