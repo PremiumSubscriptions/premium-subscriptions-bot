@@ -502,7 +502,6 @@ bot.on('message', async (msg) => {
             return bot.sendMessage(msg.chat.id, '🎓 Main Menu', getMainMenuKeyboard());
         }
 
-        // --- 4. COURSE ACTIONS & PAYMENT ROUTER ---
                 // --- 4. COURSE ACTIONS & PAYMENT ROUTER ---
         if (userState.state === 'course_view') {
             const course = getNodeByPath(userState.path);
@@ -518,8 +517,8 @@ bot.on('message', async (msg) => {
         if (userState.state === 'payment_method') {
             const course = getNodeByPath(findNodePathByKey(userData.pending_course));
             
-            // নতুন ম্যানুয়াল পেমেন্ট মেসেজ (বিকাশ এবং নগদ উভয়ের জন্যই)
-            const manualPaymentInst = `Payment  Systems ✅\n\n01634001336 ( Bkash Send Money)✅\n\n01902912653 (Nagod Send Money)✅\n01634001336 (Nagod Send Money)✅\n\nSend money করে আমাকে পেমেন্ট Screnshort পাঠাও আর কোর্স নাম লিখে পাঠাও।\n\n➡️ @Mehedi_X71 \n➡️ @Mehedi_X71\n\n💰 Amount: ${course.price} TK`;
+            // নতুন আপডেটেড পেমেন্ট মেসেজ (Mono ফরম্যাট সহ)
+            const manualPaymentInst = `Payment  Systems ✅ Runing \n\n✅ \`01632276126\` (Bkash Make payment)\n(বিঃদ্রঃ এই নাম্বারে send money করলে হবেনা, make payment করবেন)\n\n🚫 \`01634001336\` (Bkash Send Money) আপাতত বন্ধ আছে ১ তারিখ চালু হবে লিমিট শেষ। 🚫\n\n\`01902912653\` (Nagad Send Money)✅\n\`01634001336\` (Nagad Send Money)✅\n\nPayment করে আমাকে পেমেন্ট Screnshort পাঠাও আর কোর্স নাম লিখে পাঠাও।\n\n🎯 @Mehedi_X71\n🎯 @Mehedi_X71\n\n💰 Amount: ${course.price} TK`;
 
             if (messageText === 'bKash') {
                 await updateUserData(userId, { pending_payment_method: 'bKash' });
@@ -535,11 +534,11 @@ bot.on('message', async (msg) => {
                 }
                 ------------------------------------------------------------ */
 
-                // NEW MANUAL SEND MONEY FLOW FOR BKASH
+                // NEW MANUAL SEND MONEY FLOW FOR BKASH (WITH MARKDOWN)
                 try { 
-                    await bot.sendPhoto(msg.chat.id, './bkash-send-money.jpg', { caption: manualPaymentInst, ...getBkashPaymentKeyboard(!!course.paymentLink) }); 
+                    await bot.sendPhoto(msg.chat.id, './bkash-send-money.jpg', { caption: manualPaymentInst, parse_mode: 'Markdown', ...getBkashPaymentKeyboard(!!course.paymentLink) }); 
                 } catch(e) { 
-                    await bot.sendMessage(msg.chat.id, manualPaymentInst, getBkashPaymentKeyboard(!!course.paymentLink)); 
+                    await bot.sendMessage(msg.chat.id, manualPaymentInst, { parse_mode: 'Markdown', ...getBkashPaymentKeyboard(!!course.paymentLink) }); 
                 }
 
             } else if (messageText === 'Nagad') {
@@ -551,14 +550,15 @@ bot.on('message', async (msg) => {
                 await bot.sendMessage(msg.chat.id, nagadInst, getNagadPaymentKeyboard());
                 ------------------------------------------------- */
                 
-                // NEW MANUAL SEND MONEY FLOW FOR NAGAD
+                // NEW MANUAL SEND MONEY FLOW FOR NAGAD (WITH MARKDOWN)
                 try { 
-                    await bot.sendPhoto(msg.chat.id, './bkash-send-money.jpg', { caption: manualPaymentInst, ...getNagadPaymentKeyboard() }); 
+                    await bot.sendPhoto(msg.chat.id, './bkash-send-money.jpg', { caption: manualPaymentInst, parse_mode: 'Markdown', ...getNagadPaymentKeyboard() }); 
                 } catch(e) { 
-                    await bot.sendMessage(msg.chat.id, manualPaymentInst, getNagadPaymentKeyboard()); 
+                    await bot.sendMessage(msg.chat.id, manualPaymentInst, { parse_mode: 'Markdown', ...getNagadPaymentKeyboard() }); 
                 }
             }
         }
+
 
 
         // --- 5. DYNAMIC NAVIGATION (Forward & Auto-Healing) ---
