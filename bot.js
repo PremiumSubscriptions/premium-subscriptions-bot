@@ -484,7 +484,7 @@ bot.on('message', async (msg) => {
         if (messageText === '🔥 Our Channel ❤️') return bot.sendMessage(msg.chat.id, '📢 Join channel:', { reply_markup: { inline_keyboard: [[{text: '📢 Channel', url: 'https://t.me/premium_subscriptionss'}]] }});
         if (messageText === '❌ Cancel') { await updateUserData(userId, { pending_course: null, pending_payment_method: null }); userStates.delete(userId); return bot.sendMessage(msg.chat.id, '🚫 Canceled.', getMainMenuKeyboard()); }
 
-        // --- 3. SMART BACK BUTTON ---
+                // --- 3. SMART BACK BUTTON ---
         if (messageText === '⬅️ Back') {
             if (['payment_method', 'bkash_payment', 'nagad_payment'].includes(userState.state)) {
                 userState.state = 'course_view'; userStates.set(userId, userState);
@@ -502,7 +502,7 @@ bot.on('message', async (msg) => {
             return bot.sendMessage(msg.chat.id, '🎓 Main Menu', getMainMenuKeyboard());
         }
 
-                        // --- 4. COURSE ACTIONS & PAYMENT ROUTER ---
+        // --- 4. COURSE ACTIONS & PAYMENT ROUTER ---
         if (userState.state === 'course_view') {
             const course = getNodeByPath(userState.path);
             if (messageText === '💳 Buy Now') {
@@ -518,8 +518,8 @@ bot.on('message', async (msg) => {
             // ✅ Fix: মেমোরি থেকে ডিরেক্ট কোর্স ফেচ করা হলো
             const course = getNodeByPath(userState.path);
             
-            // নতুন আপডেটেড পেমেন্ট মেসেজ (Mono ফরম্যাট সহ)
-            const manualPaymentInst = `Payment  Systems ✅ Runing \n\n✅ \`01632276126\` (Bkash Make payment)\n(বিঃদ্রঃ এই নাম্বারে send money করলে হবেনা, make payment করবেন)\n\n🚫 \`01634001336\` (Bkash Send Money) আপাতত বন্ধ আছে ১ তারিখ চালু হবে লিমিট শেষ। 🚫\n\n\`01902912653\` (Nagad Send Money)✅\n\`01634001336\` (Nagad Send Money)✅\n\nPayment করে আমাকে পেমেন্ট Screnshort পাঠাও আর কোর্স নাম লিখে পাঠাও।\n\n🎯 @Mehedi_X71\n🎯 @Mehedi_X71\n\n💰 Amount: ${course.price} TK`;
+            // ✅ Fix: টেলিগ্রামে _ (আন্ডারস্কোর) হাইড হওয়া ঠেকাতে \\_ দিয়ে এস্কেপ করা হয়েছে 
+            const manualPaymentInst = `Payment  Systems ✅ Runing \n\n✅ \`01632276126\` (Bkash Make payment)\n(বিঃদ্রঃ এই নাম্বারে send money করলে হবেনা, make payment করবেন)\n\n🚫 \`01634001336\` (Bkash Send Money) আপাতত বন্ধ আছে ১ তারিখ চালু হবে লিমিট শেষ। 🚫\n\n\`01902912653\` (Nagad Send Money)✅\n\`01634001336\` (Nagad Send Money)✅\n\nPayment করে আমাকে পেমেন্ট Screnshort পাঠাও আর কোর্স নাম লিখে পাঠাও।\n\n🎯 @Mehedi\\_X71\n🎯 @Mehedi\\_X71\n\n💰 Amount: ${course.price} TK`;
 
             if (messageText === 'bKash') {
                 await updateUserData(userId, { pending_payment_method: 'bKash' });
@@ -536,8 +536,9 @@ bot.on('message', async (msg) => {
                 ------------------------------------------------------------ */
 
                 // NEW MANUAL SEND MONEY FLOW FOR BKASH (WITH MARKDOWN)
+                // ✅ Fix: ছবি './bkash.jpg' করা হয়েছে
                 try { 
-                    await bot.sendPhoto(msg.chat.id, './bkash-send-money.jpg', { caption: manualPaymentInst, parse_mode: 'Markdown', ...getBkashPaymentKeyboard(!!course.paymentLink) }); 
+                    await bot.sendPhoto(msg.chat.id, './bkash.jpg', { caption: manualPaymentInst, parse_mode: 'Markdown', ...getBkashPaymentKeyboard(!!course.paymentLink) }); 
                 } catch(e) { 
                     await bot.sendMessage(msg.chat.id, manualPaymentInst, { parse_mode: 'Markdown', ...getBkashPaymentKeyboard(!!course.paymentLink) }); 
                 }
@@ -552,6 +553,7 @@ bot.on('message', async (msg) => {
                 ------------------------------------------------- */
                 
                 // NEW MANUAL SEND MONEY FLOW FOR NAGAD (WITH MARKDOWN)
+                // ✅ Fix: ছবি './bkash.jpg' করা হয়েছে
                 try { 
                     await bot.sendPhoto(msg.chat.id, './bkash.jpg', { caption: manualPaymentInst, parse_mode: 'Markdown', ...getNagadPaymentKeyboard() }); 
                 } catch(e) { 
@@ -559,9 +561,6 @@ bot.on('message', async (msg) => {
                 }
             }
         }
-
-
-
 
         // --- 5. DYNAMIC NAVIGATION (Forward & Auto-Healing) ---
         if (!userState.state && messageText && !messageText.startsWith('/')) {
