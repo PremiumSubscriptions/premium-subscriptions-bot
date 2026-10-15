@@ -519,7 +519,7 @@ bot.on('message', async (msg) => {
             const course = getNodeByPath(userState.path);
             
             // ✅ Fix: টেলিগ্রামে _ (আন্ডারস্কোর) হাইড হওয়া ঠেকাতে \\_ দিয়ে এস্কেপ করা হয়েছে 
-            const manualPaymentInst = `Payment  Systems ✅ Runing \n\n✅ \`01632276126\` (Bkash Make payment)\n(বিঃদ্রঃ এই নাম্বারে send money করলে হবেনা, make payment করবেন)\n\n🚫 \`01634001336\` (Bkash Send Money) আপাতত বন্ধ আছে ১ তারিখ চালু হবে লিমিট শেষ। 🚫\n\n\`01902912653\` (Nagad Send Money)✅\n\`01634001336\` (Nagad Send Money)✅\n\nPayment করে আমাকে পেমেন্ট Screnshort পাঠাও আর কোর্স নাম লিখে পাঠাও।\n\n🎯 @Mehedi\\_X71\n🎯 @Mehedi\\_X71\n\n💰 Amount: ${course.price} TK`;
+            const manualPaymentInst = `Payment  Systems ✅ Runing \n\n✅ \`01632276126\` (Bkash Make payment)\n(বিঃদ্রঃ এই নাম্বারে send money করলে হবেনা, make payment করবেন)\n\n🚫 \`01634001336\` (Bkash Send Money) আপাতত বন্ধ আছে ১ তারিখ চালু হবে লিমিট শেষ। 🚫\n\n\`01634001336\` (Nagad Send Money)✅\n\nPayment করে আমাকে পেমেন্ট Screnshort পাঠাও আর কোর্স নাম লিখে পাঠাও।\n\n🎯 @Mehedi\\_X71\n🎯 @Mehedi\\_X71\n\n💰 Amount: ${course.price} TK`;
 
             if (messageText === 'bKash') {
                 await updateUserData(userId, { pending_payment_method: 'bKash' });
